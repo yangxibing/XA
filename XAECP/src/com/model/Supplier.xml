@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="supplier">
+	<typeAlias alias="supplier" type="com.model.Supplier"/>
+	<!-- 王永康============================================== -->
+	<insert id="addSupplier" parameterClass="supplier">
+		insert into Supplier
+		(
+			partnerId,
+			partnerName,
+			firstAddress,
+			secondAddress,
+			country,
+			province,
+			city,
+			website,
+			introduction,
+			integrity,
+			blackList,
+			contactPerson,
+			telephone,
+			fax,
+			email,
+			zipCode,
+			partnerType
+		)  values
+		(
+			#partnerId#,
+			#partnerName#,
+			#firstAddress#,
+			#secondAddress#,
+			#country#,
+			#province#,
+			#city#,
+			#website#,
+			#introduction#,
+			#integrity#,
+			#blackList#,
+			#contactPerson#,
+			#telephone#,
+			#fax#,
+			#email#,
+			#zipCode#,
+			#partnerType#
+		)
+	</insert>
+
+	<select id="listSupplier" parameterClass="supplier" resultClass="supplier">
+		select partnerId partnerId,partnerName partnerName,integrity  integrity,blackList blackList,firstAddress firstAddress, integrityLevel integrityLevel
+	    from Supplier	
+		where partnerType = 0
+		<dynamic>
+			<isNotEmpty prepend="and" property="partnerId" >
+				partnerId=#partnerId#
+			</isNotEmpty>
+			<isNotEmpty property="partnerName" prepend="and">
+				partnerName=#partnerName#
+			</isNotEmpty>
+			<isNotEmpty property="city" >
+				<isNotEqual property="city"  compareValue="请选择" prepend="and">
+					city=#city#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty property="integrity" prepend="and">
+				integrity=#integrity#
+			</isNotEmpty>
+			<isNotEmpty property="blackList" prepend="and">
+				blackList=#blackList#
+			</isNotEmpty>
+			
+		</dynamic>
+		
+	</select>
+	
+	<select id="homeListSupplierMore" resultClass="supplier">
+		select partnerId partnerId,partnerName partnerName,integrity integrity,integrityLevel integrityLevel, blackList blackList,firstAddress firstAddress, introduction introduction
+	    from Supplier	
+		where partnerType = 0
+	</select>
+	
+	<select id="supplierCount" resultClass="int" parameterClass="supplier">
+		select count(1)
+		from supplier
+		where partnerType = 0
+		<dynamic>
+			<isNotEmpty prepend="and" property="partnerId" >
+				partnerId=#partnerId#
+			</isNotEmpty>
+			<isNotEmpty property="partnerName" prepend="and">
+				partnerName=#partnerName#
+			</isNotEmpty>
+			<isNotEmpty property="city" >
+				<isNotEqual property="city"  compareValue="请选择" prepend="and">
+					city=#city#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty property="integrity" prepend="and">
+				integrity=#integrity#
+			</isNotEmpty>
+			<isNotEmpty property="blackList" prepend="and">
+				blackList=#blackList#
+			</isNotEmpty>
+			
+		</dynamic>
+	</select>
+	
+	<delete id="deleteSupplier" parameterClass="hashmap">
+		delete from supplier 
+		where partnerId=#partnerId#
+	</delete>
+	<select id="selectSupplier" parameterClass="hashmap" resultClass="supplier">
+		select partnerId partnerId,
+			   partnerName partnerName,
+			   firstAddress firstAddress,
+			   country country,
+			   province province,
+			   city city,
+			   website website,
+			   introduction introduction,
+			   integrity integrity,
+			   blackList blackList,
+			   contactPerson contactPerson,
+			   telephone telephone,
+			   fax fax,
+			   email email,
+			   zipCode zipCode
+		from supplier
+		where partnerId=#partnerId#
+	</select>
+	
+	<update id="updateSupplier" parameterClass="supplier">
+		update supplier
+		set  
+			   partnerName =#partnerName#,
+			   firstAddress =#firstAddress#,
+			   country =#country#,
+			   province =#province#,
+			   city=#city#,
+			   website =#website#,
+			   introduction =#introduction#,
+			   integrity =#integrity#,
+			   blackList =#blackList#,
+			   contactPerson =#contactPerson#,
+			   telephone =#telephone#,
+			   fax =#fax#,
+			   email =#email#,
+			   zipCode =#zipCode#
+		where partnerId=#partnerId#
+	</update>
+	
+	<update id="updateSupplierIntegrityLevel" parameterClass="supplier">
+		update supplier set
+			integrityLevel = integrityLevel + #integrityLevel#
+		where partnerId=#partnerId#
+	</update>
+	
+	<select id="selectLogistics" resultClass="supplier">
+		select partnerId partnerId,partnerName partnerName
+		from supplier
+		where partnerType=2
+	</select>
+	<!-- ============================================ -->
+</sqlMap>

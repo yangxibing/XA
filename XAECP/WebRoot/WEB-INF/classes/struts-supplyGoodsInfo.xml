@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>
+	
+	<package name="supplyGoodsInfo" extends="struts-default">
+	
+		<!-- 2-1供货信息发布管理-供货信息管理 -->
+		<action name="listSupplyGoodsInfo" class="com.supplyGoodsInfo.action.SupplyGoodsInfoAction" method="listSupplyGoodsInfo">
+			<result name="success">/jsp/supplyInfo/provideProductManage.jsp</result>
+		</action>
+		
+		<action name="deleteSupplyGoodsInfo" class="com.supplyGoodsInfo.action.SupplyGoodsInfoAction" method="deleteSupplyGoodsInfo">
+			<result name="success">/jsp/supplyInfo/provideProductManage.jsp</result>
+		</action>
+		
+		<action name="addSupplyGoodsInfo" class="com.supplyGoodsInfo.action.SupplyGoodsInfoAction" method="addSupplyGoodsInfo">
+			<result name="success">/jsp/supplyInfo/provideProductManage.jsp</result>
+		</action>
+		
+		<action name="updateSupplyGoodsInfo" class="com.supplyGoodsInfo.action.SupplyGoodsInfoAction" method="updateSupplyGoodsInfo">
+			<result name="success">/jsp/supplyInfo/provideProductManage.jsp</result>
+		</action>
+		
+		<action name="getSupplyGoodsInfoById" class="com.supplyGoodsInfo.action.SupplyGoodsInfoAction" method="querySupplyGoodsInfoById">
+			<result name="success">/jsp/supplyInfo/provideProductInformation.jsp</result>
+		</action>
+		
+		<action name="homeSupplyInfoMore" class="com.supplyGoodsInfo.action.SupplyGoodsInfoAction"  method="homeListSupplyInfoMore">
+			<result name="success">/jsp/supplyInfo/homeSupplyInfoMore.jsp</result>
+		</action>
+	</package>
+	
+	<package name="ajaxResult" extends="json-default">
+		<action name="selectProductTypeForSupplyGoodsInfo" class="com.supplyGoodsInfo.action.SupplyGoodsInfoAction" method="selectProductType">
+			<result name="productTypeListReturn" type="json"></result>
+		</action>
+		<action name="selectSupplyGoodsInfo" class="com.supplyGoodsInfo.action.SupplyGoodsInfoAction" method="selectSupplyGoodsInfo">
+			<result name="supplyGoodsInfoReturn" type="json"></result>
+		</action>
+		
+		<action name="listSupplyGoodsInfoInHome" class="com.supplyGoodsInfo.action.SupplyGoodsInfoAction" method="listSupplyGoodsInfoInHome">
+            <result name="supplyGoodsInfoLinkList" type="json"></result>
+        </action>
+	</package>
+</struts>

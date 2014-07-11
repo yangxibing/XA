@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>
+
+	<package name="orderManage" extends="struts-default">
+		<!-- 采购订单管理－基地对供应商 -->
+		<action name="listBaseOrder"
+			class="com.orderManage.basePurchase.action.BaseOrderAction" method="listBaseOrder">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderManage.jsp
+			</result>
+		</action>
+		<action name="deleteBaseOrder"
+			class="com.orderManage.basePurchase.action.BaseOrderAction" method="deleteBaseOrder">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderManage.jsp
+			</result>
+		</action>
+		
+		<action name="addBaseOrder" class="com.orderManage.basePurchase.action.BaseOrderAction" method="addBaseOrder">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderManage.jsp</result>
+		</action>
+		
+		<action name="updateBaseOrder" class="com.orderManage.basePurchase.action.BaseOrderAction" method="updateBaseOrder">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderManage.jsp</result>
+		</action>
+		
+		<action name="cancelBaseOrder" class="com.orderManage.basePurchase.action.BaseOrderAction" method="cancelBaseOrder">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderManage.jsp</result>
+		</action>
+		
+		<!-- baseOrderManage.jsp倒数第二、三栏action配置 -->
+		<action name="payForDepositBase" class="com.orderManage.basePurchase.action.BaseOrderAction" method="payForDepositBase">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderDeposit.jsp</result>
+		</action>
+		<action name="payForDepositBaseUpdate" class="com.orderManage.basePurchase.action.BaseOrderAction" method="payForDepositBaseUpdate">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderDeposit.jsp</result>
+		</action>
+		<action name="comfirmReceiveGoodsBase" class="com.orderManage.basePurchase.action.BaseOrderAction" method="comfirmReceiveGoodsBase">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderConfirm.jsp</result>
+		</action>
+		<action name="comfirmReceiveGoodsBaseUpdate" class="com.orderManage.basePurchase.action.BaseOrderAction" method="comfirmReceiveGoodsBaseUpdate">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderConfirm.jsp</result>
+		</action>
+		<action name="payForGoodsBase" class="com.orderManage.basePurchase.action.BaseOrderAction" method="payForGoodsBase">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderPay.jsp</result>
+		</action>
+		<action name="payForGoodsBaseUpdate" class="com.orderManage.basePurchase.action.BaseOrderAction" method="payForGoodsBaseUpdate">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderPay.jsp</result>
+		</action>
+		<action name="baseRejectedMag" class="com.orderManage.basePurchase.action.BaseOrderAction" method="baseRejectedMag">
+			<result name="success">/jsp/orderManage/basePurchase/baseRejectedMag.jsp</result>
+		</action>
+		
+		<action name="baseRejectedInfo" class="com.orderManage.basePurchase.action.BaseOrderAction" method="baseRejectedInfo">
+			<result name="success">/jsp/orderManage/basePurchase/baseRejectedInfo.jsp</result>
+		</action>
+		
+		<action name="baseOrderLogisticsInformation" class="com.orderManage.basePurchase.action.BaseOrderAction" method="baseOrderLogisticsInfo">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderLogisticsInfo.jsp</result>
+		</action>
+		
+		<action name="confirmRejected" class="com.orderManage.basePurchase.action.BaseOrderAction" method="confirmRejected">
+			<result name="success">/jsp/orderManage/basePurchase/baseRejectedInfo.jsp</result>
+		</action>
+		
+		
+		<!-- 调用公共模块的设置默认收货地址 -->
+		<action name="setBaseOrderDefaultAddress" class="com.basicData.action.GoodsAddressAction" method="setDefaultAddress">
+			<result name="success">/jsp/orderManage/basePurchase/baseOrderManage.jsp</result>
+		</action>
+		
+		
+	</package>
+
+	<package name="AjaxDropDownList" extends="json-default">
+		<action name="getAjaxDropDownList" class="com.orderManage.basePurchase.action.AjaxDropDownListAction">
+			<result name="supplierIdNameList" type="json"></result>
+			<result name="centralizedPurchaseIdList" type="json"></result>
+			<result name="planedPurchaseIdList" type="json"></result>
+			<result name="supplierProductList" type="json"></result>
+			<result name="baseReceiveAddressList" type="json"></result>
+		</action>
+		
+		<!-- 点击编辑获取订单详情 -->
+		<action name="selectBaseOrder" class="com.orderManage.basePurchase.action.BaseOrderAction" method="getBaseOrderById">
+			<result name="baseOrderDetailForEdit" type="json"></result>
+		</action>
+		<!-- 根据订单id得到采购订单详情 异步获取-->
+		<action name="getBaseOrderDetail" class="com.orderManage.basePurchase.action.BaseOrderAction" method="getBaseOrderDetail">
+			<result name="baseOrderDetail" type="json"></result>
+		</action>
+		
+		
+	</package>
+</struts>

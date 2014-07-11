@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="baseOrderForBase">
+	<typeAlias alias="baseOrderHB" type="com.model.BaseOrder"/>
+	<typeAlias alias="supplier" type="com.model.Supplier"/>
+	<typeAlias alias="cpPurchase" type="com.model.CentralizedPlanedPurchase"/>
+	<typeAlias alias="goodsAdd" type="com.model.GoodsAddress"/>
+	
+	<select id="listBaseOrder" parameterClass="baseOrderHB" resultClass="baseOrderHB"> 
+		select	bo.baseOrderId baseOrderId,
+	 			bo.supplierId supplierId,   
+ 				su.partnerName supplierName,
+				bo.deposit deposit,     
+	 			bo.orderState orderState,
+	 			bo.deliverDate deliverDate,   
+	 			bo.fare fare,           
+	 			bo.totalPrice totalPrice,     
+	 			bo.CPIId CPIId,          
+	 			bo.PPIId PPIId,          
+	 			bo.logisticsSupplierId logisticsSupplierId,
+	 			bo.logisticsOrderId logisticsOrderId,
+	 			bo.actualRefund actualRefund,
+	 			bo.receiveAddressId receiveAddressId,
+	 			bo.sendAddressId sendAddressId 
+	 	from BaseOrder bo left join Supplier su on bo.supplierId=su.partnerId
+	 	<dynamic prepend="where">
+			<isNotEmpty property="orderState" prepend="and">
+				<isNotEqual property="orderState" compareValue="-1">
+					orderState=#orderState#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty property="CPIId" prepend="and">
+				CPIId=#CPIId#
+			</isNotEmpty>
+			<isNotEmpty property="supplierId" prepend="and">
+				supplierId=#supplierId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="baseOrderTotalCount" parameterClass="baseOrderHB" resultClass="int">
+		select	count(1)
+	 	from BaseOrder bo left join Supplier su on bo.supplierId=su.partnerId
+	 	<dynamic prepend="where">
+			<isNotEmpty property="orderState" prepend="and">
+				<isNotEqual property="orderState" compareValue="-1">
+					orderState=#orderState#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty property="CPIId" prepend="and">
+				CPIId=#CPIId#
+			</isNotEmpty>
+			<isNotEmpty property="supplierId" prepend="and">
+				supplierId=#supplierId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<delete id="deleteBaseOrder" parameterClass="String">
+		delete from BaseOrder
+		where baseOrderId = #value# and orderState = 0
+	</delete>
+	
+	
+	<select id="querySupplierList" resultClass="supplier">
+		select partnerId partnerId,partnerName partnerName
+		from Supplier
+		where partnerType = 0
+	</select>
+	
+	<select id="queryCentralizedPurchaseList" resultClass="cpPurchase">
+		select cpPurchaseInfoId cpPurchaseInfoId,
+			   cpPurchaseInfoTitle cpPurchaseInfoTitle
+		from CentralizedPlanedPurchaseInfo
+		where centraOrplaned = 'false'
+	</select>
+	
+	<select id="queryPlanedPurchaseList" resultClass="cpPurchase">
+		select cpPurchaseInfoId cpPurchaseInfoId,
+			   cpPurchaseInfoTitle cpPurchaseInfoTitle
+		from CentralizedPlanedPurchaseInfo
+		where centraOrplaned = 'true'
+	</select>
+	
+	
+	<select id="getBaseOrderById" parameterClass="String" resultClass="baseOrderHB">
+		select	bo.baseOrderId baseOrderId,
+	 			bo.supplierId supplierId,   
+ 				su.partnerName supplierName,
+				bo.deposit deposit,     
+	 			bo.orderState orderState,
+	 			bo.deliverDate deliverDate,   
+	 			bo.fare fare,           
+	 			bo.totalPrice totalPrice,     
+	 			bo.CPIId CPIId,          
+	 			bo.PPIId PPIId,          
+	 			bo.logisticsSupplierId logisticsSupplierId,
+	 			bo.logisticsOrderId logisticsOrderId,
+	 			bo.actualRefund actualRefund,
+	 			bo.receiveAddressId receiveAddressId,
+	 			bo.sendAddressId sendAddressId 
+	 	from BaseOrder bo left join Supplier su on bo.supplierId=su.partnerId
+	 	where bo.baseOrderId = #value#
+	</select>
+	
+	
+	<select id="getReceiveGoodsAddressByOrderId" parameterClass="String" resultClass="goodsAdd">
+		select gadd.addressId addressId,
+			gadd.userId userId,
+			gadd.defaultOrNot defaultOrNot,
+			gadd.shippingAddress shippingAddress,
+			gadd.zipCode zipCode,
+ 			gadd.contacter contacter,
+	 		gadd.telephone telephone,
+	 		gadd.sendOrReceive sendOrReceive
+		from GoodsAddress gadd, BaseOrder bo
+		where bo.receiveAddressId = gadd.addressId and
+			bo.BaseOrderId = #value#
+	</select>
+	
+	<update id="updateBaseOrderState" parameterClass="baseOrderHB">
+		update BaseOrder set
+			orderState = #orderState#
+		where baseOrderId = #baseOrderId#
+	</update>
+	
+	<update id="updateBaseOrderDepositState" parameterClass="baseOrderHB">
+		update BaseOrder set
+			depositState = #depositState#
+		where baseOrderId = #baseOrderId#
+	</update>
+	
+	<update id="updateBaseOrderRefund" parameterClass="baseOrderHB">
+		update BaseOrder set
+			actualRefund = #actualRefund#
+		where baseOrderId = #baseOrderId#
+	</update>
+	
+	<insert id="addBaseOrder" parameterClass="baseOrderHB">		
+		<selectKey resultClass="String" type="post" keyProperty="baseOrderId" >
+			<![CDATA[
+				insert into BaseOrder
+				(
+					orderState,
+					deliverDate,
+					receiveAddressId,
+					fare,
+					totalPrice,
+					CPIId,
+					PPIId,
+					deposit
+					
+				)  values
+				(
+					#orderState#,
+					#deliverDate#,
+					#receiveAddressId#,
+					#fare#,
+					#totalPrice#,
+					#CPIId#,
+					#PPIId#,
+					#deposit#
+				)   
+	        	select SCOPE_IDENTITY() as value
+        	]]>
+    	</selectKey>  
+	</insert>
+	
+	<update id="updateBaseOrder" parameterClass="baseOrderHB">
+		update BaseOrder set 
+			supplierId = #supplierId#,
+			deposit = #deposit#,
+			orderState = #orderState#,
+			deliverDate = #deliverDate#,
+			fare = #fare#,
+			totalPrice = #totalPrice#,
+			CPIId = #CPIId#,
+			PPIId = #PPIId#,
+			logisticsSupplierId = #logisticsSupplierId#,
+			logisticsOrderId = #logisticsOrderId#,
+			actualRefund = #actualRefund#,
+			receiveAddressId = #receiveAddressId#,
+			sendAddressId = #sendAddressId#,
+			depositState = #depositState#
+		where baseOrderId = #baseOrderId#
+	</update>
+	
+	
+	<select id="getLogisticsInfoForBase" parameterClass="String" resultClass="baseOrderHB">
+		select sup.partnerId logisticsSupplierId,
+			sup.partnerName logisticsName,
+			sup.website logisticsWebsite,
+			pur.logisticsOrderId logisticsOrderId,
+			pur.receiveAddressId receiveAddressId,
+			pur.sendAddressId sendAddressId,
+			recAdd.shippingAddress receiveAddress,
+			recAdd.zipCode receiveZipCode,
+			recAdd.contacter receiver,
+			recAdd.telephone receiveTelephone,
+			sendAdd.shippingAddress sendAddress,
+			sendAdd.zipCode sendZipCode,
+			sendAdd.contacter sender,
+			sendAdd.telephone sendTelephone		
+		from BaseOrder pur left join Supplier sup on pur.logisticsSupplierId = sup.partnerId
+					left join GoodsAddress recAdd on pur.receiveAddressId = recAdd.addressId
+					left join GoodsAddress sendAdd on pur.sendAddressId = sendAdd.addressId
+		where pur.baseOrderId = #value#
+	</select>
+</sqlMap>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>	
+	
+	<!-- main.action -->
+	<package name="centralizedPurchase" extends="struts-default">
+<!-- 姜国强  start -->
+<!-- 
+		<action name="queryEnquiry" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="queryEnquiry">
+			<result name="success">/jsp/centralizedPurchase/enquiryManage.jsp</result>
+		</action>
+		<action name="deleteEnquiry" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="deleteEnquiry">
+			<result name="success">/jsp/centralizedPurchase/enquiryManage.jsp</result>
+		</action>
+		<action name="addEnquiry" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="addEnquiry">
+			<result name="success">/jsp/centralizedPurchase/enquiryManage.jsp</result>
+		</action>
+		<action name="updateEnquiry" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="updateEnquiry">
+			<result name="success">/jsp/centralizedPurchase/enquiryManage.jsp</result>
+		</action>
+		<action name="priceCompareInfo" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="priceCompare">
+			<result name="success">/jsp/centralizedPurchase/priceCompareInformation.jsp</result>
+		</action>
+		<action name="priceCompareMag" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="priceCompare">
+			<result name="success">/jsp/centralizedPurchase/priceCompareManage.jsp</result>
+		</action>
+		<action name="publishPriceCompare" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="publishPriceCompare">
+			<result name="success">/jsp/centralizedPurchase/priceCompareManage.jsp</result>
+		</action>
+ -->		
+<!-- 集中采购信息管理 -->
+		<action name="queryCentralizedPurchaseList" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="queryCentralizedPurchaseList">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchaseManage.jsp</result>
+		</action>
+		<action name="homeCentralizedPurchaseMore" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="homeCentralizedPurchaseMore">
+			<result name="success">/jsp/centralizedPurchase/homeCentralizedPurchaseMore.jsp</result>
+		</action>
+		<action name="deleteCentralizedPurchase" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="deleteCentralizedPurchase">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchaseManage.jsp</result>
+		</action>
+		<action name="addCentralizedPurchase" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="addCentralizedPurchase">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchaseManage.jsp</result>
+		</action>
+		<action name="updateCentralizedPurchase" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="updateCentralizedPurchase">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchaseManage.jsp</result>
+		</action>
+		<action name="combineDemandConfirm" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="combineDemandConfirm">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchaseCombine.jsp</result>
+		</action>	
+		<action name="combineDemandUpdate" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="combineDemandUpdate">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchaseCombine.jsp</result>
+		</action>
+		<action name="getCentralizedPurchaseInfo" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="queryCentralizedPurchaseInfo">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchaseInfo.jsp</result>
+		</action>
+		<action name="browseDemandInfo" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="browseDemandInfo">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchaseDemandInfo.jsp</result>
+		</action>
+		<action name="centralizedPurchaseApply" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="centralizedPurchaseApply">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchaseApply.jsp</result>
+		</action>
+		<action name="centralizedPurchaseCommit" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="centralizedPurchaseCommit">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchaseCommit.jsp</result>
+		</action>
+		<action name="publishPrcie" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="publishPrcie">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchasePublishPrice.jsp</result>
+		</action>
+		<action name="publishPriceCommit" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="publishPriceCommit">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchasePublishPrice.jsp</result>
+		</action>
+		<action name="browsePriceInfo" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="browsePriceInfo">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchasePriceInfo.jsp</result>
+		</action>
+		<action name="browseDemandOrderInfo" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="browseDemandOrderInfo">
+			<result name="success">/jsp/centralizedPurchase/centralizedPurchaseDemandOrder.jsp</result>
+		</action>		
+<!-- 姜国强  end -->
+		
+		<!-- =======王永康start===== -->
+		<action name="listOrders" class="com.centralizedPurchase.action.SellOrderManageAction" method="listOrders">
+			<result name="success">/jsp/centralizedPurchase/baseToPurchaseOrderManage.jsp</result>
+		</action>
+		<action name="saveOrder" class="com.centralizedPurchase.action.SellOrderManageAction" method="saveOrder">
+			<result name="success">/jsp/centralizedPurchase/baseToPurchaseOrderManage.jsp</result>
+		</action>
+		<action name="assureDelivery" class="com.centralizedPurchase.action.SellOrderManageAction" method="assureDelivery">
+			<result name="success">/jsp/centralizedPurchase/baseToPurchaseOrderConfirm.jsp</result>
+		</action>
+		<action name="assureForm" class="com.centralizedPurchase.action.SellOrderManageAction" method="assureForm">
+			<result name="success">/jsp/centralizedPurchase/baseToPurchaseOrderConfirm.jsp</result>
+		</action>
+		<action name="listSupplierOrders" class="com.centralizedPurchase.action.BaseOrderAction" method="listSupplierOrders">
+			<result name="success">/jsp/centralizedPurchase/supplyToBaseOrderManage.jsp</result>
+		</action>
+		<action name="supplyAssureForm" class="com.centralizedPurchase.action.BaseOrderAction" method="assureForm">
+			<result name="success">/jsp/centralizedPurchase/supplyToBaseOrderConfirm.jsp</result>
+		</action>
+		<action name="getReturnGoodsForm" class="com.centralizedPurchase.action.BaseOrderAction" method="getReturnGoodsForm">
+			<result name="success">/jsp/centralizedPurchase/assureGetReturnGoods.jsp</result>
+		</action>
+		<action name="payReturnGoodsForm" class="com.centralizedPurchase.action.BaseOrderAction" method="payReturnGoodsForm">
+			<result name="success">/jsp/centralizedPurchase/supplypayReturnGoods.jsp</result>
+		</action>
+		<action name="returnGoodsDetailForm" class="com.centralizedPurchase.action.BaseOrderAction" method="returnGoodsDetailForm">
+			<result name="success">/jsp/centralizedPurchase/supplyReturnGoodsDetail.jsp</result>
+		</action>
+		<action name="listCPR" class="com.centralizedPurchase.action.CentralizedPlanedPurchaseAction" method="listCPR">
+			<result name="success">/jsp/centralizedPurchase/centralizeRequirementManage.jsp</result>
+		</action>
+		<action name="submitCPIOrder" class="com.centralizedPurchase.action.SellOrderManageAction" method="submitCPIOrder">
+			<result name="success">/jsp/centralizedPurchase/centralizeRequirementManage.jsp</result>
+		</action>
+		<action name="getCPIByCPIId" class="com.centralizedPurchase.action.CentralizedPlanedPurchaseAction"  method="getCPIByCPIId">
+			<result name="success">/jsp/centralizedPurchase/centralizePurchaseInformation.jsp</result>
+		</action>
+		<action name="listSupplyPurchaseInformation" class="com.purchaseTenderInfo.action.SupplyPurchaseInformationAction" method="listSupplyPurchaseInformation">
+			<result name="success">/jsp/purchaseTenderInfo/purchaseTenderManage.jsp</result>
+		</action>
+		<action name="savePurchaseTender" class="com.purchaseTenderInfo.action.SupplyPurchaseInformationAction" method="savePurchaseTender">
+			<result name="success">/jsp/purchaseTenderInfo/purchaseTenderManage.jsp</result>
+		</action>
+		<action name="updatePurchaseTender" class="com.purchaseTenderInfo.action.SupplyPurchaseInformationAction" method="updatePurchaseTender">
+			<result name="success">/jsp/purchaseTenderInfo/purchaseTenderManage.jsp</result>
+		</action>
+		
+		<action name="deletePurchaseTenderInfo" class="com.purchaseTenderInfo.action.SupplyPurchaseInformationAction" method="deletePurchaseTenderInfo">
+			<result name="success">/jsp/purchaseTenderInfo/purchaseTenderManage.jsp</result>
+		</action>
+		<action name="getPTbyid" class="com.purchaseTenderInfo.action.SupplyPurchaseInformationAction" method="queryPTbyid">
+			<result name="success">/jsp/purchaseTenderInfo/purchaseTenderInfo.jsp</result>
+		</action>
+		
+		<action name="homeCaigouInfoMore" class="com.purchaseTenderInfo.action.SupplyPurchaseInformationAction" method="homeListAllCaigouInfo">
+			<result name="success">/jsp/purchaseTenderInfo/homeCaigouInfoMore.jsp</result>
+		</action>
+		<!-- =========王永康end========= -->
+	</package>
+	
+	<package name="ajaxCP" extends="json-default">
+<!-- 
+		<action name="queryProductType" class="com.common.QueryProductType" method="queryProductType">
+			<result type="json"></result>
+		</action>
+	
+		<action name="getEnquiryStr" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="getEnquiryStr">
+			<result type="json"></result>
+		</action>
+ -->			
+		<!--=============王永康start=================-->
+		<action name="selectProducts" class="com.centralizedPurchase.action.PurchaseOrderDetailAction" method="selectProducts">
+			<result type="json"></result>
+		</action>
+		<action name="defaultAddress" class="com.centralizedPurchase.action.SellOrderManageAction" method="defaultAddress">
+			<result type="json"></result>
+		</action>
+		<action name="assureSendGoods" class="com.centralizedPurchase.action.SellOrderManageAction" method="assureSendGoods">
+			<result type="json"></result>
+		</action>
+		<action name="ajaxTest" class="com.centralizedPurchase.action.PurchaseOrderDetailAction" method="AjaxTest">
+			<result name="ajaxList" type="json"></result>
+		</action>
+		<action name="getAllPurchasers" class="com.centralizedPurchase.action.SellOrderManageAction" method="getAllPurchasers">
+			<result name="purchasers" type="json"></result>
+		</action>
+		<action name="assuerGetGoods" class="com.centralizedPurchase.action.SellOrderManageAction" method="assuerGetGoods">
+			<result type="json"></result>
+		</action>
+		<action name="assuerPayGoods" class="com.centralizedPurchase.action.SellOrderManageAction" method="assuerPayGoods">
+			<result type="json"></result>
+		</action>
+		<action name="baseOrderProducts" class="com.centralizedPurchase.action.BaseOrderAction" method="baseOrderProducts">
+			<result name="baseOrderProducts" type="json"></result>
+		</action>
+		<action name="selectProductByPId" class="com.centralizedPurchase.action.BaseOrderAction" method="selectProductByPId">
+			<result name="product" type="json"></result>
+		</action>
+		<action name="updateBaseOrderAndDetail" class="com.centralizedPurchase.action.BaseOrderAction" method="updateBaseOrderAndDetail">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="supplyAssureSendGoods" class="com.centralizedPurchase.action.BaseOrderAction" method="assureSendGoods">
+			<result type="json"></result>
+		</action>
+		<action name="assureGetReturnGoods" class="com.centralizedPurchase.action.BaseOrderAction" method="assureGetReturnGoods">
+			<result type="json"></result>
+		</action>
+		<action name="updateActualRefund" class="com.centralizedPurchase.action.BaseOrderAction" method="updateActualRefund">
+			<result type="json"></result>
+		</action>
+		<action name="selectProductsByCPIIdAndSupplierId" class="com.centralizedPurchase.action.CentralizedPlanedPurchaseAction" method="selectProductsByCPIIdAndSupplierId">
+			<result name="selectProducts" type="json"></result>
+		</action>
+		<action name="cancelDemand" class="com.centralizedPurchase.action.SellOrderManageAction" method="cancelDemand">
+			<result type="json"></result>
+		</action>
+		<action name="selectProductType" class="com.purchaseTenderInfo.action.SupplyPurchaseInformationAction" method="selectProductType">
+			<result name="productTypesReturn" type="json"></result>
+		</action>
+		<action name="listAllSupplyPurchaseInformation" class="com.purchaseTenderInfo.action.SupplyPurchaseInformationAction" method="listAllSupplyPurchaseInformation">
+			<result name="ptName" type="json"></result>
+		</action>
+		<!-- ===========王永康end================== -->
+	</package>
+	
+<!-- 姜国强  start -->
+	<package name="ajaxCentralizedPurchase" extends="json-default">
+		<action name="homeCentralizedPurchaseList" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="homeCentralizedPurchaseList">
+			<result name="list" type="json"></result>
+		</action>
+		<action name="getConditionQueryList" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="queryConditionQueryList">
+			<result name="queryList" type="json"></result>
+		</action>
+		<action name="getProductTypeTreeRoot" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="queryProductTypeTreeRoot">
+			<result name="treeRoot" type="json"></result>
+		</action>
+		<action name="getProductTypeTreeBranch" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="queryProductTypeTreeBranch">
+			<result name="treeBranch" type="json"></result>
+		</action>
+		<action name="getCentralizedPurchaseById" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="queryCentralizedPurchaseById">
+			<result name="purchaseAjax" type="json"></result>
+		</action>
+		<action name="centralizedPurchaseCommitUpdate" class="com.centralizedPurchase.action.CentralizedPurchaseAction" method="centralizedPurchaseCommitUpdate">
+			<result name="message" type="json"></result>
+		</action>
+	</package>
+<!-- 姜国强  end -->
+
+</struts>

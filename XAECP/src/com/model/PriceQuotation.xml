@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="priceQuotation">
+	<typeAlias alias="quotation" type="com.model.PriceQuotation"/>
+	
+	<resultMap class="com.model.PriceQuotation" id="supplierProduct">
+		<result property="productId" column="productId" />
+		<result property="productName" column="productName" />
+		<result property="supplierId" column="supplierId" />
+		<result property="productTypeId" column="productTypeId" />
+		<result property="basePrice" column="basePrice" nullValue="0.00"/>
+		<result property="measureUnit" column="measureUnit" />
+		<result property="format" column="format" />
+		<result property="remark" column="remark" />
+	</resultMap>
+	
+	<select id="queryPriceQuotation" parameterClass="quotation" resultClass="quotation">
+		select p.productId productId,
+			sP.productName productName,
+			s.partnerId supplierId,
+			s.partnerName supplierName,
+			pT.productTypeId productTypeId,
+			pT.productTypeName productTypeName,
+			sP.basePrice basePrice,
+			sP.measureUnit measureUnit,
+			sP.format format,
+			sP.remark remark,
+			p.price price,
+			p.number number
+	    from Product p left join SupplierProduct sP on sP.productId = p.productId
+	    		left join Supplier s on sP.supplierId = s.partnerId
+	    		left join ProductType pT on sP.productTypeId= pT.productTypeId
+	</select>
+	
+	<select id="quotationTotalCount" parameterClass="quotation" resultClass="int">
+		select count(1)
+		from Product
+	</select>
+	
+	<select id="getQuotationAddList" parameterClass="quotation" resultClass="quotation">
+		select sP.productId productId,
+			sP.productName productName,
+			s.partnerId supplierId,
+			s.partnerName supplierName,
+			pT.productTypeId productTypeId,
+			pT.productTypeName productTypeName,
+			sP.basePrice basePrice,
+			sP.measureUnit measureUnit,
+			sP.format format,
+			sP.remark remark
+	    from SupplierProduct sP left join Product p on sP.productId = p.productId
+	    						left join Supplier s on sp.supplierId = s.partnerId 
+	    						left join ProductType pT on sp.productTypeId= pT.productTypeId
+	    where p.productId is null
+	</select>
+	
+	<select id="getPriceQuotationById" parameterClass="String" resultClass="quotation">
+		select sP.productId productId,
+			sP.productName productName,
+			s.partnerId supplierId,
+			s.partnerName supplierName,
+			pT.productTypeId productTypeId,
+			pT.productTypeName productTypeName,
+			sP.basePrice basePrice,
+			sP.measureUnit measureUnit,
+			sP.format format,
+			sP.remark remark,
+			p.price price,
+			p.number number
+	    from Product p left join SupplierProduct sP on sP.productId = p.productId
+	    		left join Supplier s on sP.supplierId = s.partnerId
+	    		left join ProductType pT on sP.productTypeId= pT.productTypeId
+	    where sP.productId = #value#
+	</select>
+	
+	<insert id="addPriceQuotation" parameterClass="quotation">
+		insert into Product
+		(
+			productId,
+			price,
+			number
+		)  values
+		(
+			#productId#,
+			#price#,
+			#number#
+		)
+	</insert>
+	
+	<update id="updatePriceQuotation"  parameterClass="quotation">
+		update Product set 
+			productId = #productId#,
+			price  = #price#,
+			number = #number#
+		where productId = #productId#
+	</update>
+	
+	<delete id="deletePriceQuotationById" parameterClass="String">
+		delete from Product
+		where productId = #value#
+	</delete>
+	
+</sqlMap>

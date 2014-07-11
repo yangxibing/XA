@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="purchaser">
+	<typeAlias alias="purchaser" type="com.model.Supplier"/>
+	
+	
+	<insert id="addPurchaser" parameterClass="purchaser">
+		insert into Supplier
+		(
+			partnerId,
+			partnerName,
+			partnerType,
+			partnerLevel,
+			orderRate,
+			firstAddress,
+			secondAddress,
+			country,
+			province,
+			city,
+			website,
+			introduction,
+			integrity,
+			blackList,
+			contactPerson,
+			telephone,
+			fax,
+			email,
+			zipCode
+		)  values
+		(
+			#partnerId#,
+			#partnerName#,
+			#partnerType#,
+			#partnerLevel#,
+			#orderRate#,
+			#firstAddress#,
+			#secondAddress#,
+			#country#,
+			#province#,
+			#city#,
+			#website#,
+			#introduction#,
+			#integrity#,
+			#blackList#,
+			#contactPerson#,
+			#telephone#,
+			#fax#,
+			#email#,
+			#zipCode#
+		)
+	</insert>
+	
+	<update id="updatePurchaser" parameterClass="purchaser">
+		update Supplier set 
+			partnerId = #partnerId#,
+			partnerName = #partnerName#,
+			partnerLevel = #partnerLevel#,
+			orderRate = #orderRate#,
+			firstAddress = #firstAddress#,
+			secondAddress = #secondAddress#,
+			country = #country#,
+			province = #province#,
+			city = #city#,
+			website = #website#,
+			introduction = #introduction#,
+			blackList = #blackList#,
+			contactPerson = #contactPerson#,
+			telephone = #telephone#,
+			fax = #fax#,
+			email = #email#,
+			zipCode = #zipCode#
+		where partnerId = #partnerId#
+	</update>
+	
+	<select id="listPurchaser" parameterClass="purchaser" resultClass="purchaser">
+		select partnerId partnerId,
+			partnerName partnerName,
+			partnerType partnerType,
+			partnerLevel partnerLevel,
+			orderRate orderRate,
+			integrity integrity,
+			blackList blackList,
+			firstAddress firstAddress,
+			secondAddress secondAddress,
+			city city,
+			province province,
+			country country,
+			contactPerson contactPerson,
+			telephone telephone,
+			fax fax,
+			email email,
+			zipCode zipCode,
+			website website,
+			integrityLevel integrityLevel,
+			introduction introduction
+	    from Supplier	
+		<dynamic prepend="where">
+			<isNotEmpty property="partnerType" prepend="and">
+				partnerType=#partnerType#
+			</isNotEmpty>
+			<isNotEmpty property="partnerId" prepend="and">
+				partnerId=#partnerId#
+			</isNotEmpty>
+			<isNotEmpty property="partnerName" prepend="and">
+				partnerName=#partnerName#
+			</isNotEmpty>
+			<isNotEmpty property="city" prepend="and">
+				city=#city#
+			</isNotEmpty>
+			<isNotNull property="partnerLevel" prepend="and">
+				partnerLevel=#partnerLevel#
+			</isNotNull>
+			<isNotNull property="blackList" prepend="and">
+				blackList=#blackList#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<select id="purchaserTotalCount" parameterClass="purchaser" resultClass="int">
+		select count(1)
+		from supplier
+		<dynamic prepend="where">
+			<isNotEmpty property="partnerType" prepend="and">
+				partnerType=#partnerType#
+			</isNotEmpty>
+			<isNotEmpty property="partnerId" prepend="and">
+				partnerId=#partnerId#
+			</isNotEmpty>
+			<isNotEmpty property="partnerName" prepend="and">
+				partnerName=#partnerName#
+			</isNotEmpty>
+			<isNotEmpty property="city" prepend="and">
+				city=#city#
+			</isNotEmpty>
+			<isNotNull property="partnerLevel" prepend="and">
+				partnerLevel=#partnerLevel#
+			</isNotNull>
+			<isNotNull property="blackList" prepend="and">
+				blackList=#blackList#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<select id="getPurchaserById" parameterClass="String" resultClass="purchaser">
+		select partnerId partnerId,
+			partnerName partnerName,
+			partnerType partnerType,
+			partnerLevel partnerLevel,
+			orderRate orderRate,
+			integrity integrity,
+			blackList blackList,
+			firstAddress firstAddress,
+			secondAddress secondAddress,
+			city city,
+			province province,
+			country country,
+			contactPerson contactPerson,
+			telephone telephone,
+			fax fax,
+			email email,
+			zipCode zipCode,
+			website website,
+			integrityLevel integrityLevel,
+			introduction introduction
+		from Supplier
+		where partnerId = #value#
+	</select>
+	
+	<delete id="deletePurchaserById" parameterClass="String">
+		delete from Supplier
+		where partnerId = #value#
+	</delete>
+	
+</sqlMap>

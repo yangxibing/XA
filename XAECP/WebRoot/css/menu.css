@@ -1,0 +1,41 @@
+@charset "utf-8";
+ul{ list-style:none;margin:0; padding:0;}
+li{margin:0; padding:0;}
+
+#menu{ width:135px; height:20px; z-index:9999;}
+#menu li ul{ display:none; z-index:9999;}
+#menu li ul li{ float:none; z-index:9999;}
+*html #menu li{display:inline;}
+#menu li ul a{ float:none; height:20px; line-height:20px; padding:0 10px;}
+#menu .height-auto{line-height:20px; padding:0 10px;}
+
+.second-menu,.third-menu{position:absolute;}
+
+.first-menu li{ float:left; position:relative;}
+.first-menu a{ float:left;display:block; padding:0 20px; height:20px; line-height:20px; background:#EEE; font-size:14px; }
+.first-menu a{border:1px solid #77C6FF;}
+.first-menu a:hover{ background:#4698ca;}
+
+.second-menu{top:22px;}
+*html .second-menu{top:22px;}
+*+html .second-menu{top:22px;}
+.second-menu a{border:1px solid #77C6FF; border-width:0 1px 1px 1px;}
+.second-menu{right:0;}
+*html .second-menu{ right:-1px;}
+.second-menu a{ font-size:11px;}
+
+.third-menu{width:180px;top:0; left:175px;}
+.third-menu a{ background:#EEE; font-weight:normal; border:1px solid #77C6FF; border-width:1px 1px 0 0;}
+.third-menu{border:1px solid #77C6FF; border-width:0 0 1px 1px;}
+
+#FirstLevelSubMenu{ width:177px;}
+#titleMenu{ width:135px;background:url(../images/selectDownArrow.gif) no-repeat 160px center;}
+
+
+
+
+
+
+
+
+

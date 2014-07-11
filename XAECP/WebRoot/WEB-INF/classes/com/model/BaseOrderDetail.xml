@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="baseOrderDetail">
+	<typeAlias alias="orderDetail" type="com.model.BaseOrderDetail"/>
+	
+	<!--  
+	<resultMap class="com.model.BaseOrderDetail" id="orderDetailResultMap">
+		<result property="baseOrderId" column="baseOrderId"/>
+		<result property="productId" column="productId"/>
+		<result property="price" column="price" nullValue="0" javaType="Double"/>
+		<result property="number" column="number" nullValue="0" javaType="Double"/>
+		<result property="measureUnit" column="measureUnit"/>
+		<result property="returnNumber" column="returnNumber"nullValue="0" javaType="Double"/>
+	</resultMap>
+	-->
+	<typeAlias alias="baseOrderDetail" type="com.model.BaseOrderDetail"/>
+	<select id="getProductByOrderId" parameterClass="string" resultClass="baseOrderDetail">
+		select baseOrderId baseOrderId,
+			   productId productId,
+			   number number,
+			   price price,
+			   measureUnit measureUnit,
+			   returnNumber returnNumber
+	    from BaseOrderDetail
+	    where baseOrderId=#value#
+	</select>
+
+	
+	<select id="listBaseOrderDetail" parameterClass="String" resultClass="orderDetail">	
+		select  detail.baseOrderId baseOrderId,
+	 			detail.productId productId,
+	 			sp.productName productName,
+	 			su.partnerName supplierName,
+	 			detail.price price,
+				detail.number number,
+	 			detail.measureUnit measureUnit,
+	 			detail.returnNumber returnNumber
+	 	from BaseOrderDetail detail, SupplierProduct sp, Supplier su
+		where detail.productId = sp.productId and
+			sp.supplierId = su.partnerId and
+			detail.baseOrderId = #value#
+	</select>
+	
+	<insert id="addBaseProduct" parameterClass="orderDetail">
+		insert into Product(
+			productId,
+			number,
+			price
+		)values(
+			#productId#,
+			#number#,
+			#price#
+		)
+	</insert>
+	
+	<update id="updateBaseProduct" parameterClass="orderDetail">
+		update Product set 
+			number = number + #number#
+		where productId = #productId#
+	</update>
+	
+	<update id="updateBaseOrderDetailReject" parameterClass="orderDetail">
+		update BaseOrderDetail set
+			returnNumber = #returnNumber#
+		where baseOrderId = #baseOrderId# and productId = #productId#
+	</update>
+	
+	
+	<insert id="addBaseOrderDetail" parameterClass="orderDetail">
+		insert into BaseOrderDetail
+		(
+			baseOrderId,
+			productId,
+			price,
+			number,
+			measureUnit
+		)  values
+		(
+			#baseOrderId#,
+			#productId#,
+			#price#,
+			#number#,
+			#measureUnit#
+		)
+	</insert>
+	
+	
+	<update id="updateBaseOrderDetail" parameterClass="orderDetail">
+		update BaseOrderDetail set
+			price = #price#,
+			number = #number#,
+			measureUnit = #measureUnit#
+		where baseOrderId = #baseOrderId# and
+			productId = #productId#
+	</update>
+</sqlMap>

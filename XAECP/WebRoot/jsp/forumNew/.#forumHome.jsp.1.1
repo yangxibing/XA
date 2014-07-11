@@ -1,0 +1,518 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>论坛</title>
+<link href="../../css/global.css" rel="stylesheet" type="text/css"/>
+<link href="../../css/luntanHome.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<div id="whole" class="CENTER">
+<!--[if !IE]>-------------------------------------<![endif]-->
+    <table id="login" cellpadding="0" cellspacing="0" class="CENTER">
+        <tr>
+            <td align="left" id="loginLeft">西安印刷包装行业信息发布及集中采购网站</td>
+            <td align="right">用户名：
+            <input type="text" class="HOMETEXT"/>
+             密码：
+            <input type="password" class="HOMETEXT"/>
+            <input type="button" class="HOMEBUTTON" value="登录" />
+            <input type="button" onclick="javascript:window.location.href = 'forumRegister.html'" class="HOMEBUTTON" value="注册会员" />
+            <input type="button" class="HOMEBUTTON" value="忘记密码？" />
+            <input type="button" class="HOMEBUTTON" value="注销" /></td>
+        </tr>
+    </table>
+<!--[if !IE]>-------------------------------------<![endif]-->
+    <div id="logo" class="CENTER">
+    	<img src="../../images/luntan.jpg" align="left"/>
+    </div>
+<!--[if !IE]>-------------------------------------<![endif]-->
+    <div id="daoHang" class="CENTER">   
+        <ul id="navigation">
+            <li>2012年12月12日 星期日</li>     
+            <li><a href="../../home.jsp">基地首页</a></li>
+            <li><a href="forumHome.jsp">论坛首页</a></li>
+            <li><a href="#">新手须知</a></li>
+            <li><a href="forumPublish.jsp">我要发帖</a></li>
+        </ul> 
+    </div>
+    
+    <div id="content" class="CENTER">
+    	<div id="left">
+            <div id="left1" class="DIVTITLE">
+                <span class="TITLELEFTSPAN">全站搜索</span>
+            </div>
+            <div id="left1Cnt" class="DIVCNT">
+               <input id="searchInput" type="text" />
+               <input id="searchButton" type="button" value="搜索" class="BUTTON"/>
+            </div>
+            
+            <img id="adv1" src="../../images/adv4.jpg" />
+         <!--[if !IE]>-------------------------------------<![endif]-->  
+           
+            <div id="left1" class="DIVTITLE">
+                <span class="TITLELEFTSPAN">版主推荐</span>
+            </div>
+            <div id="leftHot" class="DIVCNT">
+            	<ul id="tieList">
+                	<li><span><a href="forumContent.jsp">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                </ul>
+            </div>
+            
+         <!--[if !IE]>-------------------------------------<![endif]-->  
+           	<img id="adv1" src="../../images/adv4.jpg" />
+           
+            <div id="left1" class="DIVTITLE">
+                <span class="TITLELEFTSPAN">论坛公告</span>
+            </div>
+            <div id="leftAnnouncement" class="DIVCNT">
+            	<ul id="tieAnnounce">
+                	<li><span><a href="#">XXXXXXXXXXXXXXXXXXXXXXXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                </ul>
+            </div>
+            
+         <!--[if !IE]>-------------------------------------<![endif]-->  
+            <img id="adv1" src="../../images/adv4.jpg" />
+            <div id="left1" class="DIVTITLE">
+                <span class="TITLELEFTSPAN">帮助</span>
+            </div>
+            <div id="help" class="DIVCNT">
+            	<ul id="tieHelp">
+                	<li><span><a href="#">XXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                    <li><span><a href="#">XXXXXXX</a></span></li>
+                </ul>
+            </div>
+        </div>
+        <div id="right">
+            <div id="transaction" class="DIVTITLE">
+                <span class="TITLELEFTSPAN">&nbsp;交易区</span>
+            </div>
+            <div id="transactionNew" class="SMALLTITLE">
+                <span class="FLOATLEFT">&nbsp;最新贴</span>
+                <span class="FLOATRIGHT"><a href="#">更多</a>&nbsp;</span>
+            </div>
+            <div id="transactionHot" class="SMALLTITLE">
+                <span class="FLOATLEFT">&nbsp;最热帖</span>
+                <span class="FLOATRIGHT"><a href="forumList.html">更多</a>&nbsp;</span>
+            </div>
+            <div id="transactionNewCnt" class="SMALLCNT">
+            	<table class="forumTable" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="transactionHotCnt" class="SMALLCNT">
+            	<table class="forumTable" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="forumContent.html">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                </table>
+            </div>
+            
+    <!--[if !IE]>-------------------------------------<![endif]-->  
+          
+            <div id="transaction" class="DIVTITLE">
+                <span class="TITLELEFTSPAN">&nbsp;交易区</span>
+            </div>
+            <div id="transactionNew" class="SMALLTITLE">
+                <span class="FLOATLEFT">&nbsp;最新贴</span>
+                <span class="FLOATRIGHT"><a href="#">更多</a>&nbsp;</span>
+            </div>
+            <div id="transactionHot" class="SMALLTITLE">
+                <span class="FLOATLEFT">&nbsp;最热帖</span>
+                <span class="FLOATRIGHT"><a href="#">更多</a>&nbsp;</span>
+            </div>
+            <div id="transactionNewCnt" class="SMALLCNT">
+            	<table class="forumTable" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="transactionHotCnt" class="SMALLCNT">
+            	<table class="forumTable" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                </table>
+            </div>
+            
+   <!--[if !IE]>-------------------------------------<![endif]-->
+            
+            <div id="transaction" class="DIVTITLE">
+                <span class="TITLELEFTSPAN">&nbsp;交易区</span>
+            </div>
+            <div id="transactionNew" class="SMALLTITLE">
+                <span class="FLOATLEFT">&nbsp;最新贴</span>
+                <span class="FLOATRIGHT"><a href="#">更多</a>&nbsp;</span>
+            </div>
+            <div id="transactionHot" class="SMALLTITLE">
+                <span class="FLOATLEFT">&nbsp;最热帖</span>
+                <span class="FLOATRIGHT"><a href="#">更多</a>&nbsp;</span>
+            </div>
+            <div id="transactionNewCnt" class="SMALLCNT">
+            	<table class="forumTable" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">[2011-11-11]</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="transactionHotCnt" class="SMALLCNT">
+            	<table class="forumTable" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                    <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                     <tr>
+                    	<td class="LEFTTD"><img src="../../images/newMark.jpg" /></td>
+                        <td class="MIDDLETD"><A href="#">XXXXXXXXXXXXXXXX</A></td>
+                        <td class="RIGHTTD">人气：123456</td>
+                    </tr>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div id="copyRight" class="CENTER">
+        <p align="center">西安印刷包装产业基地版权所有Copyright&copy;2011-2016</p>
+        <p align="center">服务热线：029-8966866</p>
+    </div>
+</div>
+</body>
+</html>
+

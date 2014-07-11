@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC 
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<include file="struts-basicData.xml"/>
+	<include file="struts-centralizedPurchase.xml"/>
+	<include file="struts-systemManage.xml"/>
+	<include file="struts-baseInformation.xml"></include>
+	<include file="structs-enquiry.xml"></include>
+	<include file="structs-purchaseOrder.xml" />
+	<include file="struts-planPurchase.xml"/>
+	<include file="struts-orderManage.xml"/>
+	<include file="struts-supplyGoodsInfo.xml"/>
+	<include file="struts-database.xml"/>
+	<include file="struts-bbs.xml"/>
+	<constant name="struts.multipart.saveDir" value="/tmp"/>
+</struts>

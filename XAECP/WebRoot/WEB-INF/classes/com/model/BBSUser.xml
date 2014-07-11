@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="BBSUser">
+	<typeAlias alias="bbsuser" type="com.model.BBSUser"/>
+	<select id="checkUserAccount" parameterClass="String" resultClass="bbsuser">
+		select BBSId loginAccount,
+			   password password,
+			   email email,
+			   remark remark
+		from BBSUser
+		where BBSId = #value#;
+	</select>
+	
+	<insert id="registerUser" parameterClass="bbsuser">
+		insert into BBSUser
+		(
+			BBSId,
+			password,
+			email,
+			remark
+		)  values
+		(
+			#loginAccount#,
+			#password#,
+			#email#,
+			#remark#
+		)
+	</insert>
+	
+	<select id="BBSUserListLogin" parameterClass="bbsuser" resultClass="bbsuser">
+		select BBSId loginAccount,
+			   password password,
+			   email email,
+			   remark remark
+		from BBSUser
+		where BBSId = #loginAccount# and password = #password#
+	</select>
+	
+	
+	<select id="XAUserListLogin" parameterClass="bbsuser" resultClass="bbsuser">
+		select xauser.userId loginAccount,
+			xauser.password password	
+		from XAUser xauser 
+		where xauser.userId = #loginAccount# and xauser.password = #password#
+	</select>
+	
+	<select id="queryUserByAccount" parameterClass="String" resultClass="bbsuser">
+		select BBSId loginAccount,
+			   password password,
+			   email email,
+			   remark remark,
+			   userType userType
+		from BBSUser
+		where BBSId = #loginAccount#
+	</select>
+</sqlMap>

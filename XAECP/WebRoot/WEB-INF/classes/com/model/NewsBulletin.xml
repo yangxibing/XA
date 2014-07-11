@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="newsBulletin">
+	<typeAlias alias="news" type="com.model.NewsBulletin"/>
+
+	<insert id="addNewsBulletin" parameterClass="news">
+		insert into NewsBulletinPrice(
+			publishType,
+			title,
+			publishContent,
+			visitNumber,
+			publisher,
+			publishDate
+		) values (
+			#publishType#,
+			#title#,
+			#publishContent#,
+			#visitNumber#,
+			#publisher#,
+			#publishDate#		
+		)
+	</insert>
+	
+	<update id="updateNewsBulletin" parameterClass="news">
+		update NewsBulletinPrice set
+			publishType = #publishType#,
+			title = #title#,
+			publishContent = #publishContent#
+		where id = #id#
+	</update>
+	
+	<update id="visitNumberPlusPuls" parameterClass="String">
+		update NewsBulletinPrice set
+			visitNumber = visitNumber + 1
+		where id = #value#		
+	</update>
+
+	<select id="getNewsBulletinList" parameterClass="news" resultClass="news">
+		select nbp.id id,
+				nbp.publishType publishType,
+				nbp.title title,
+				nbp.publishContent publishContent,
+				nbp.visitNumber visitNumber,
+				nbp.publishDate publishDate,
+				xauser.userId publisher,
+				xauser.userName publisherName
+		from NewsBulletinPrice nbp left join XAUser xauser on nbp.publisher = xauser.userId
+		<dynamic prepend="where">
+			<isNotEmpty property="id" prepend="and">
+				nbp.id = #id#
+			</isNotEmpty>
+			<isNotEmpty property="publishType" prepend="and">
+				nbp.publishType = #publishType#
+			</isNotEmpty>
+			<isNotEmpty property="publisher" prepend="and">
+				nbp.publisher = #publisher#
+			</isNotEmpty>
+			<isNotEmpty property="title" prepend="and">
+				title LIKE '%$title$%'
+			</isNotEmpty>			
+		</dynamic>
+		order by nbp.publishDate DESC
+	</select>
+	
+	<select id="newsTotalCount" parameterClass="news" resultClass="int">
+		select count(1)
+		from NewsBulletinPrice
+		<dynamic prepend="where">
+			<isNotEmpty property="id" prepend="and">
+				id = #id#
+			</isNotEmpty>
+			<isNotEmpty property="publishType" prepend="and">
+				publishType = #publishType#
+			</isNotEmpty>
+			<isNotEmpty property="publisher" prepend="and">
+				publisher = #publisher#
+			</isNotEmpty>
+			<isNotEmpty property="title" prepend="and">
+				title LIKE '%$title$%'
+			</isNotEmpty>
+		</dynamic>	
+	</select>
+	
+	<select id="getNewsBulletinById" parameterClass="String" resultClass="news">
+		select nbp.id id,
+				nbp.publishType publishType,
+				nbp.title title,
+				nbp.publishContent publishContent,
+				nbp.visitNumber visitNumber,
+				nbp.publishDate publishDate,
+				xauser.userId publisher,
+				xauser.userName publisherName
+		from NewsBulletinPrice nbp left join XAUser xauser on nbp.publisher = xauser.userId
+		where nbp.id = #value#
+	</select>
+	
+	<delete id="deleteNewsBulletinById" parameterClass="String">
+		delete from NewsBulletinPrice
+		where id = #value#
+	</delete>
+</sqlMap>

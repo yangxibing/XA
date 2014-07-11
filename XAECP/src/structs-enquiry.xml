@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>	
+	
+	<!-- main.action -->
+	<package name="enquiry" extends="struts-default">
+		<action name="queryEnquiry" class="com.centralizedPurchase.action.EnquiryAction" method="queryEnquiry">
+			<result name="success">/jsp/centralizedPurchase/enquiryManage.jsp</result>
+		</action>
+		<action name="deleteEnquiry" class="com.centralizedPurchase.action.EnquiryAction" method="deleteEnquiry">
+			<result name="success">/jsp/centralizedPurchase/enquiryManage.jsp</result>
+		</action>
+		<action name="addEnquiry" class="com.centralizedPurchase.action.EnquiryAction" method="addEnquiry">
+			<result name="success">/jsp/centralizedPurchase/enquiryManage.jsp</result>
+		</action>
+		<action name="updateEnquiry" class="com.centralizedPurchase.action.EnquiryAction" method="updateEnquiry">
+			<result name="success">/jsp/centralizedPurchase/enquiryManage.jsp</result>
+		</action>
+		<action name="priceCompareInfo" class="com.centralizedPurchase.action.EnquiryAction" method="priceCompare">
+			<result name="success">/jsp/centralizedPurchase/priceCompareInformation.jsp</result>
+		</action>
+		<action name="priceCompareMag" class="com.centralizedPurchase.action.EnquiryAction" method="priceCompare">
+			<!-- <result name="success">/jsp/centralizedPurchase/priceCompareManage.jsp</result> -->
+			<result name="success">/jsp/centralizedPurchase/priceCompareManage.jsp</result>
+		</action>
+		<action name="publishPriceCompare" class="com.centralizedPurchase.action.EnquiryAction" method="publishPriceCompare">
+			<result name="success">/jsp/centralizedPurchase/priceCompareManage.jsp</result>
+		</action>
+		
+	</package>
+	
+	<package name="ajaxEnquiry" extends="json-default">
+		<action name="queryProductType" class="com.common.QueryProductType" method="queryProductType">
+			<result name="ajaxResult" type="json"></result>
+		</action>
+		<action name="getEnquiryStr" class="com.centralizedPurchase.action.EnquiryAction" method="queryEnquiryStr">
+			<result name="enquiryStr" type="json"></result>
+		</action>
+		<action name="queryProductTypeList" class="com.centralizedPurchase.action.EnquiryAction" method="queryProductTypeList">
+			<result name="productTypeList" type="json"></result>
+		</action>
+		
+		<action name="queryProductTypeListServerSide" class="com.centralizedPurchase.action.EnquiryAction" method="queryProductTypeListServerSide">
+			<result name="root" type="json"></result>
+		</action>
+		
+	</package>
+	
+<!-- 胡博 start -->
+
+	<!-- 报价管理 -->
+	<package name="quoteManage" extends="struts-default">
+		<action name="queryEnquiryForQuote" class="com.centralizedPurchase.action.QuoteManageAction" method="listEnquiry">
+			<result name="success">/jsp/centralizedPurchase/quoteManage.jsp</result>
+		</action>
+	</package>
+	
+	
+	<package name="productQuote" extends="struts-default">
+		<action name="queryQuote" class="com.centralizedPurchase.action.ProductQuoteManageAction" method="listProductQuote">
+			<result name="success">/jsp/centralizedPurchase/quote.jsp</result>
+		</action>
+		
+		<action name="addQuote" class="com.centralizedPurchase.action.ProductQuoteManageAction" method="addProductQuote">
+			<result name="success">/jsp/centralizedPurchase/quote.jsp</result>
+		</action>
+		
+		<action name="deleteQuote" class="com.centralizedPurchase.action.ProductQuoteManageAction" method="deleteProductQuote">
+			<result name="success">/jsp/centralizedPurchase/quote.jsp</result>
+		</action>
+		
+		<action name="updateQuote" class="com.centralizedPurchase.action.ProductQuoteManageAction" method="updateProductQuote">
+			<result name="success">/jsp/centralizedPurchase/quote.jsp</result>
+		</action>
+		
+		<action name="formalQuote" class="com.centralizedPurchase.action.ProductQuoteManageAction" method="formalProductQuote">
+			<result name="success">/jsp/centralizedPurchase/quote.jsp</result>
+		</action>
+		
+		<action name="queryQuoteDetailAfterFormalQuote" class="com.centralizedPurchase.action.ProductQuoteManageAction" method="listProductQuoteDetailAfterFromal">
+			<result name="success">/jsp/centralizedPurchase/quoteDetailInfo.jsp</result>
+		</action>
+		
+		<action name="queryAskCompareResult" class="com.centralizedPurchase.action.EnquiryAction" method="priceCompare">
+			<result name="success">/jsp/centralizedPurchase/priceCompareInformation.jsp</result>
+		</action>
+	</package>
+	
+	<package name="ajaxQuote" extends="json-default">
+		<!--  在报价管理页面查询出询价信息后，点击询价详细信息后异步调用该Action，显示询价单详细信息-->
+		<action name="getEnquiryForQuoteById" class="com.centralizedPurchase.action.QuoteManageAction" method="getEnquiryForQuoteById">
+			<result type="json"></result>
+		</action>
+		
+		<action name="getQuoteStr" class="com.centralizedPurchase.action.ProductQuoteManageAction" method="getProductQuoteById">
+			<result type="json"></result>
+		</action>
+		
+		<action name="queryProduct" class="com.centralizedPurchase.action.GetProductIdNameAction" method="queryProductIdNameListBySupplierId">
+			<result type="json"></result>
+		</action>
+	</package>
+
+</struts>

@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="centralizedPurchase">
+	<typeAlias alias="purchase" type="com.model.CentralizedPlanedPurchase"/>
+	<typeAlias alias="demand" type="com.model.CentralizedPurchaseDemand"/>
+	<typeAlias alias="supplyPrice" type="com.model.CentralizedPurchaseSupplyPrice"/>
+	<typeAlias alias="productType" type="com.model.ProductType"/>
+	<typeAlias alias="product" type="com.model.SupplierProduct"/>
+	
+	<insert id="addCentralizedPurchase" parameterClass="purchase"> 
+		insert into CentralizedPlanedPurchaseInfo(
+			cpPurchaseInfoTitle,
+			productTypeId,
+			purchasePriceInterval,
+			publishDate,
+			publisher,
+			deadline,
+			telephone,
+			briefExplain,
+			centralizedPurchaseState,
+			measureUnit,
+			centraOrplaned
+		)values(
+			#cpPurchaseInfoTitle#,
+			#productTypeId#,
+			#purchasePriceInterval#,
+			#publishDate#,
+			#publisher#,
+			#deadline#,
+			#telephone#,
+			#briefExplain#,
+			#centralizedPurchaseState#,
+			#measureUnit#,
+			#centraOrplaned#
+		)
+	</insert>
+	
+	<insert id="addCentralizedPurchaseDemand" parameterClass="demand">
+		insert into CentralizedPurchaseDemand(
+			CPIId,
+			purchaserId,
+			demandNumber,
+			demandState,
+			reportDemandTime
+		) values (
+			#CPIId#,
+			#purchaserId#,
+			#demandNumber#,
+			#demandState#,
+			#reportDemandTime#
+		)
+	</insert>
+	
+	<insert id="addCentralizedPurchaseSupplyPrice" parameterClass="supplyPrice">
+		insert into CentralizedPurchaseSupplyPrice(
+			CPIId,
+			productId,
+			price
+		) values (
+			#CPIId#,
+			#productId#,
+			#price#
+		)		
+	</insert>
+	
+	<select id="getCentralizedPurchaseTitleList" parameterClass="purchase" resultClass="purchase">
+			select cppi.cpPurchaseInfoId cpPurchaseInfoId,
+				cppi.cpPurchaseInfoTitle cpPurchaseInfoTitle,
+				pt.productTypeId productTypeId,
+				pt.productTypeName productTypeName,
+				cppi.purchasePriceInterval purchasePriceInterval,
+				cppi.publishDate publishDate,
+				xauser.userId publisher,
+				xauser.userName publisherName,
+				cppi.deadline deadline,				
+				cppi.telephone telephone,
+				cppi.briefExplain briefExplain,
+				cppi.centralizedPurchaseState centralizedPurchaseState,
+				cppi.measureUnit measureUnit,
+				cppi.combinePlanedNum combinePlanedNum,
+				cppi.isEnterOrderProcess isEnterOrderProcess,
+				cppi.centraOrplaned centraOrplaned								
+			from CentralizedPlanedPurchaseInfo cppi left join ProductType pt on cppi.productTypeId = pt.productTypeId
+							left join XAUser xauser on cppi.publisher = xauser.userId
+			<dynamic prepend="where">
+				<isNotEmpty property="cpPurchaseInfoId" prepend="and">
+					cppi.cpPurchaseInfoId=#cpPurchaseInfoId#
+				</isNotEmpty>
+				<isNotEmpty property="centraOrplaned" prepend="and">
+					cppi.centraOrplaned=#centraOrplaned#
+				</isNotEmpty>
+			</dynamic>
+			order by cppi.publishDate DESC, cppi.deadline ASC
+	</select>
+	
+	<select id="getCentralizedPurchase" parameterClass="purchase" resultClass="purchase">
+			<dynamic>
+				<isNotEmpty property="productTypeId">
+					<![CDATA[ 
+						declare @idtable table(id varchar(10), level int)
+						declare @level int
+						set @level = 1
+						insert into @idtable select #productTypeId#, @level
+						while @@rowcount > 0
+							begin
+								set @level = @level + 1
+								insert into @idtable
+									select a.productTypeId, @level
+									from ProductType a, @idtable b
+									where a.parentProductTypeId = b.id and b.level = @level - 1
+							end
+					]]>				
+				</isNotEmpty>
+			</dynamic>
+
+				select cppi.cpPurchaseInfoId cpPurchaseInfoId,
+					cppi.cpPurchaseInfoTitle cpPurchaseInfoTitle,
+					pt.productTypeId productTypeId,
+					pt.productTypeName productTypeName,
+					cppi.purchasePriceInterval purchasePriceInterval,
+					cppi.publishDate publishDate,
+					xauser.userId publisher,
+					xauser.userName publisherName,
+					cppi.deadline deadline,				
+					cppi.telephone telephone,
+					cppi.briefExplain briefExplain,
+					cppi.centralizedPurchaseState centralizedPurchaseState,
+					cppi.measureUnit measureUnit,
+					cppi.combinePlanedNum combinePlanedNum,
+					cppi.isEnterOrderProcess isEnterOrderProcess,
+					cppi.centraOrplaned centraOrplaned								
+				from CentralizedPlanedPurchaseInfo cppi left join ProductType pt on cppi.productTypeId = pt.productTypeId
+								left join XAUser xauser on cppi.publisher = xauser.userId
+								<dynamic>
+									<isNotEmpty property="productTypeId" prepend=",">
+										@idtable tb
+									</isNotEmpty>
+								</dynamic>
+				<dynamic prepend="where">
+					<isNotEmpty property="cpPurchaseInfoId" prepend="and">
+						cppi.cpPurchaseInfoId=#cpPurchaseInfoId#
+					</isNotEmpty>
+					<isNotEmpty property="productTypeId" prepend="and">
+						cppi.productTypeId = tb.id
+					</isNotEmpty>
+					<isNotEmpty property="centralizedPurchaseState" prepend="and">
+						<isNotEqual property="centralizedPurchaseState" compareValue="-1">
+							cppi.centralizedPurchaseState=#centralizedPurchaseState#
+						</isNotEqual>
+					</isNotEmpty>
+					<isNotEmpty property="centraOrplaned" prepend="and">
+						cppi.centraOrplaned=#centraOrplaned#
+					</isNotEmpty>
+					<isNotEmpty property="deadlineDate" prepend="and">
+						<![CDATA[ cppi.deadline > #deadlineDate# ]]>
+					</isNotEmpty>
+				</dynamic>
+				order by cppi.publishDate DESC, cppi.deadline ASC
+	</select>
+	
+	<select id="centralizedPurchaseTotalCount" parameterClass="purchase" resultClass="int">
+			<dynamic>
+				<isNotEmpty property="productTypeId">
+					<![CDATA[ 
+						declare @idtable table(id varchar(10), level int)
+						declare @level int
+						set @level = 1
+						insert into @idtable select #productTypeId#, @level
+						while @@rowcount > 0
+							begin
+								set @level = @level + 1
+								insert into @idtable
+									select a.productTypeId, @level
+									from ProductType a, @idtable b
+									where a.parentProductTypeId = b.id and b.level = @level - 1
+							end
+					]]>				
+				</isNotEmpty>
+			</dynamic>
+
+				select count(1)							
+				from CentralizedPlanedPurchaseInfo cppi
+								<dynamic>
+									<isNotEmpty property="productTypeId" prepend=",">
+										@idtable tb
+									</isNotEmpty>
+								</dynamic>
+				<dynamic prepend="where">
+					<isNotEmpty property="cpPurchaseInfoId" prepend="and">
+						cppi.cpPurchaseInfoId=#cpPurchaseInfoId#
+					</isNotEmpty>
+					<isNotEmpty property="productTypeId" prepend="and">
+						cppi.productTypeId = tb.id
+					</isNotEmpty>
+					<isNotEmpty property="centralizedPurchaseState" prepend="and">
+						<isNotEqual property="centralizedPurchaseState" compareValue="-1">
+							cppi.centralizedPurchaseState=#centralizedPurchaseState#
+						</isNotEqual>
+					</isNotEmpty>
+					<isNotEmpty property="centraOrplaned" prepend="and">
+						cppi.centraOrplaned=#centraOrplaned#
+					</isNotEmpty>
+					<isNotEmpty property="deadlineDate" prepend="and">
+						<![CDATA[ cppi.deadline > #deadlineDate# ]]>
+					</isNotEmpty>
+				</dynamic>
+	</select>
+	
+	<select id="countCentralizedPurchaseDemand" parameterClass="demand" resultClass="int">
+		select count(1)
+		from CentralizedPurchaseDemand
+		where CPIId = #CPIId# and purchaserId = #purchaserId#
+	</select>
+	
+	<select id="getCentralizedPurchaseDemandList" parameterClass="demand" resultClass="demand">
+		select cpd.CPIId CPIId,
+				sup.partnerId purchaserId,
+				sup.partnerName purchaserName,
+				cpd.demandNumber demandNumber,
+				cpd.demandState demandState,
+				cpd.reportDemandTime reportDemandTime,
+				cppi.measureUnit measureUnit
+		from CentralizedPurchaseDemand cpd left join Supplier sup on cpd.purchaserId = sup.partnerId
+					left join CentralizedPlanedPurchaseInfo cppi on cpd.CPIId = cppi.cpPurchaseInfoId
+		<dynamic prepend="where">
+			<isNotEmpty property="CPIId" prepend="and">
+				cpd.CPIId = #CPIId#
+			</isNotEmpty>
+			<isNotEmpty property="purchaserId" prepend="and">
+				cpd.purchaserId = #purchaserId#
+			</isNotEmpty>
+			<isNotEmpty property="demandState" prepend="and">
+				cpd.demandState = #demandState#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="getCentralizedPurchaseById" parameterClass="String" resultClass="purchase">
+			select cppi.cpPurchaseInfoId cpPurchaseInfoId,
+				cppi.cpPurchaseInfoTitle cpPurchaseInfoTitle,
+				pt.productTypeId productTypeId,
+				pt.productTypeName productTypeName,
+				cppi.purchasePriceInterval purchasePriceInterval,
+				cppi.publishDate publishDate,
+				xauser.userId publisher,
+				xauser.userName publisherName,
+				cppi.deadline deadline,				
+				cppi.telephone telephone,
+				cppi.briefExplain briefExplain,
+				cppi.centralizedPurchaseState centralizedPurchaseState,
+				cppi.measureUnit measureUnit,
+				cppi.combinePlanedNum combinePlanedNum,
+				cppi.isEnterOrderProcess isEnterOrderProcess,
+				cppi.centraOrplaned centraOrplaned								
+			from CentralizedPlanedPurchaseInfo cppi left join ProductType pt on cppi.productTypeId = pt.productTypeId
+							left join XAUser xauser on cppi.publisher = xauser.userId
+			where cppi.cpPurchaseInfoId=#value#
+	</select>
+	
+	<select id="getProductTypeList" parameterClass="productType" resultClass="productType">
+		select productTypeId productTypeId,
+			productTypeName productTypeName,
+			parentProductTypeId parentProductTypeId,
+			remark remark
+		from ProductType
+		<dynamic prepend="where">
+			<isNotEmpty property="productTypeId" prepend="and">
+				productTypeId = #productTypeId#
+			</isNotEmpty>
+		</dynamic>
+		order by productTypeId ASC		
+	</select>
+	
+	<select id="getProductListByParantId" parameterClass="productType" resultClass="productType">
+		select productTypeId productTypeId,
+			productTypeName productTypeName,
+			parentProductTypeId parentProductTypeId,
+			remark remark
+		from ProductType
+		<dynamic prepend="where">
+			<isNotEmpty property="parentProductTypeId" prepend="and">
+				<isEqual property="parentProductTypeId" compareValue="NULL">
+					parentProductTypeId is null
+				</isEqual>
+				<isNotEqual property="parentProductTypeId" compareValue="NULL">
+					parentProductTypeId = #parentProductTypeId#
+				</isNotEqual>
+			</isNotEmpty>
+		</dynamic>
+		order by parentProductTypeId ASC
+	</select>	
+	
+	<select id="getProductListByType" parameterClass="String" resultClass="product">
+					<![CDATA[ 
+						declare @idtable table(id varchar(10), level int)
+						declare @level int
+						set @level = 1
+						insert into @idtable select #value#, @level
+						while @@rowcount > 0
+							begin
+								set @level = @level + 1
+								insert into @idtable
+									select a.productTypeId, @level
+									from ProductType a, @idtable b
+									where a.parentProductTypeId = b.id and b.level = @level - 1
+							end
+					]]>				
+	
+		select sup.productId productId,
+			sup.basePrice basePrice,
+			sup.productName productName,
+			sup.supplierId supplierId,
+			sup.productTypeId productTypeId,
+			sup.measureUnit measureUnit,
+			sup.format format,
+			sup.remark remark
+		from SupplierProduct sup, @idtable tb
+		where sup.productTypeId = tb.id
+	</select>
+	
+	<select id="getCentralizedPurchaseSupplyPriceList" parameterClass="String" resultClass="supplyPrice">
+		select cpsp.CPIId CPIId,
+				sup.productId productId,
+				sup.productName productName,
+				cpsp.price price
+		from CentralizedPurchaseSupplyPrice cpsp left join SupplierProduct sup on cpsp.productId = sup.productId
+		where cpsp.CPIId = #value#
+	</select>
+	
+	<update id="updateCentralizedPurchase" parameterClass="purchase">
+		update CentralizedPlanedPurchaseInfo set
+			cpPurchaseInfoTitle = #cpPurchaseInfoTitle#,
+			productTypeId = #productTypeId#,
+			purchasePriceInterval = #purchasePriceInterval#,
+			publishDate = #publishDate#,
+			publisher = #publisher#,
+			deadline = #deadline#,
+			telephone = #telephone#,
+			briefExplain = #briefExplain#,
+			centralizedPurchaseState = #centralizedPurchaseState#,
+			measureUnit = #measureUnit#,
+			centraOrplaned = #centraOrplaned#
+		where cpPurchaseInfoId = #cpPurchaseInfoId#
+	</update>
+	
+	<update id="updateCentralizedPurchaseState" parameterClass="purchase">
+		update CentralizedPlanedPurchaseInfo set
+				centralizedPurchaseState = #centralizedPurchaseState#
+		where cpPurchaseInfoId = #cpPurchaseInfoId#
+	</update>
+	
+	<update id="updateCentralizedPurchaseCombineNumber" parameterClass="purchase">
+		update CentralizedPlanedPurchaseInfo set
+				combinePlanedNum = #combinePlanedNum#
+		where cpPurchaseInfoId = #cpPurchaseInfoId#
+	</update>
+	
+	<update id="updateCentralizedPurchaseDemandState" parameterClass="demand">
+		update CentralizedPurchaseDemand set
+				demandState = #demandState#
+		where CPIId = #CPIId#
+		<dynamic>
+			<isNotEmpty property="originalState" prepend="and">
+				demandState = #originalState#
+			</isNotEmpty>
+		</dynamic>
+	</update>
+	
+	<delete id="deleteCentralizedPurchaseById" parameterClass="String">
+		delete from CentralizedPlanedPurchaseInfo
+		where cpPurchaseInfoId=#cpPurchaseInfoId#
+	</delete>
+</sqlMap>

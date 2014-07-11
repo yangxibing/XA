@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="BBSReply">
+	<typeAlias alias="bbsReply" type="com.model.BBSReply"/>
+	<typeAlias alias="bbsSubject" type="com.model.BBSSubject"/>
+	
+	<insert id="insertBBSReply" parameterClass="bbsReply">
+		<selectKey resultClass="String" type="post" keyProperty="subjectResponseId" >
+			<![CDATA[
+				insert into BBSReply (
+					subjectId,
+					responseContent,
+					responser,
+					responseTime
+				) values (
+					#subjectId#,
+					#responseContent#,
+					#responser#,
+					#responseTime#		
+				)
+				select SCOPE_IDENTITY() as value
+			]]>
+		</selectKey>
+	</insert>
+	
+	<select id="getBBSReplyById" parameterClass="String" resultClass="bbsReply">
+		select subjectResponseId subjectResponseId,
+			subjectId subjectId,
+			responseContent responseContent,
+			responser responser,
+			responseTime responseTime
+		from BBSReply
+		where subjectResponseId = #value#	
+	</select>
+	
+	<select id="bbsHomeNewSubjectList" resultClass="bbsSubject">
+		select top 20
+			subjectId subjectId,
+			subjectTitle subjectTitle,
+			subjectCreatTime subjectCreatTime
+		from BBSSubject
+		order by subjectCreatTime DESC
+	</select>
+	
+	<select id="bbsMoreNewSubjectList" resultClass="bbsSubject">
+		select subjectId subjectId,
+			subjectTitle subjectTitle,
+			subjectCreatTime subjectCreatTime
+		from BBSSubject
+		order by subjectCreatTime DESC	
+	</select>
+	
+	<select id="bbsReplyNewTotalCount" resultClass="int">
+		select count(1)
+		from BBSSubject	
+	</select>
+	
+	<select id="bbsHomeHotSubjectList" parameterClass="java.util.Date" resultClass="bbsSubject">
+		select top 20
+			subjectId subjectId,
+			subjectTitle subjectTitle,
+			responseNumber responseNumber
+		from BBSSubject
+		where <![CDATA[ subjectCreatTime >= #beginTimeDate# ]]>
+		order by responseNumber DESC	
+	</select>
+	
+	<select id="bbsMoreHotSubjectList" parameterClass="java.util.Date" resultClass="bbsSubject">
+		select subjectId subjectId,
+			subjectTitle subjectTitle,
+			responseNumber responseNumber
+		from BBSSubject
+		where <![CDATA[ subjectCreatTime >= #beginTimeDate# ]]>
+		order by responseNumber DESC			
+	</select>
+	
+	<select id="bbsReplyHotTotalCount"  parameterClass="java.util.Date" resultClass="int">
+		select count(1)
+		from BBSSubject
+		where <![CDATA[ subjectCreatTime >= #beginTimeDate# ]]>		
+	</select>
+	
+	<select id="bbsHomeRecommendSubjectList" resultClass="bbsSubject">
+		select top 10
+			subjectId subjectId,
+			subjectTitle subjectTitle
+		from BBSSubject
+		where recommendOrNot = 'true'
+		order by subjectCreatTime DESC
+	</select>
+	
+	<select id="getBBSSubjectById" parameterClass="String" resultClass="bbsSubject">
+		select subjectId subjectId,
+			subjectTitle subjectTitle,
+			subjectContent subjectContent,
+			recommendOrNot recommendOrNot,
+			responseNumber responseNumber,
+			readNumber readNumber,
+			lastResponserId lastResponserId,
+			lastResponseTime lastResponseTime,
+			subjectCreator subjectCreator,
+			subjectCreatTime subjectCreatTime
+		from BBSSubject
+		where subjectId = #value#
+	</select>
+	
+	<select id="getBBSReplyBySubjectId" parameterClass="String" resultClass="bbsReply">
+		select subjectResponseId subjectResponseId,
+			subjectId subjectId,
+			responseContent responseContent,
+			responser responser,
+			responseTime responseTime
+		from BBSReply
+		where subjectId = #value#
+	</select>
+	
+	<select id="bbsReplyTotalCount" parameterClass="String" resultClass="int">
+		select count(1)
+		from BBSReply
+		where subjectId = #value#		
+	</select>
+	
+	<select id="bbsSubjectTotalCount" parameterClass="String" resultClass="int">
+		select count(1)
+		from BBSSubject
+		where subjectTitle LIKE '%$value$%'	
+	</select>
+	
+	<select id="getBBSSubjectByTitle" parameterClass="String" resultClass="bbsSubject">
+		select subjectId subjectId,
+			subjectTitle subjectTitle,
+			subjectContent subjectContent,
+			recommendOrNot recommendOrNot,
+			responseNumber responseNumber,
+			readNumber readNumber,
+			lastResponserId lastResponserId,
+			lastResponseTime lastResponseTime,
+			subjectCreator subjectCreator,
+			subjectCreatTime subjectCreatTime
+		from BBSSubject
+		where subjectTitle LIKE '%$value$%'
+	</select>
+	
+	<update id="bbsSubjectReadPlusPlus" parameterClass="String">
+		update BBSSubject set
+			readNumber = readNumber + 1
+		where subjectId = #value#
+	</update>
+	
+	<update id="bbsSubjectReplyPlusPlus" parameterClass="String">
+		update BBSSubject set
+			responseNumber = responseNumber + 1
+		where subjectId = #value#
+	</update>
+	
+	<update id="recommendSubject" parameterClass="String">
+		update BBSSubject set
+			recommendOrNot = 'true'
+		where subjectId = #value#	
+	</update>
+	
+	<update id="cancelRecommendSubject" parameterClass="String">
+		update BBSSubject set
+			recommendOrNot = 'false'
+		where subjectId = #value#		
+	</update>
+	
+	<delete id="removeBBSSubjectById" parameterClass="String">
+		delete from BBSSubject
+		where subjectId = #value#
+	</delete>
+	
+	<delete id="removeSubjectReply" parameterClass="bbsReply">
+		delete from BBSReply
+		<dynamic prepend="where">
+			<isNotEmpty property="subjectResponseId" prepend="and">
+				subjectResponseId=#subjectResponseId#
+			</isNotEmpty>	
+			<isNotEmpty property="subjectId" prepend="and">
+				subjectId=#subjectId#
+			</isNotEmpty>					
+		</dynamic>
+	</delete>
+</sqlMap>

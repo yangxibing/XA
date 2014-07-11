@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* CSS Document */
+
+ul,li{ margin:0; padding:0; border:0;}
+#whole{ width:1003px;}
+#login{ width:1003px; font-size:12px; background-color:#EAEAEA; margin-bottom:5px;}
+#login span{ text-align:left;}
+#logo{ width:1003px; height:140px; background-image:url(../images/up_01.jpg); margin-bottom:5px;}
+#copyRight{ clear:both; width:1003px; height:60px; background-image:url(../images/cpyBg.png); background-repeat:repeat-x;}
+
+.DIVTITLE{ background-image:url(../images/moreTitleBg.jpg);background-repeat:repeat-x; border:1px solid #A0CFFE; height:20px; margin-left:auto; margin-right:auto;}
+.DIVTITLE span{ padding-top:3px; padding-left:3px; padding-right:3px;}
+.DIVTITLE span a{ text-decoration:none; font-size:12PX; margin-top:10PX; vertical-align:baseline; font-weight:bold; color:#06C;}
+.DIVTITLE span a:hover{ color:#F33; text-decoration:underline;}
+.DIVCNT{ background-color:#FDFEFF; height:700px; height:auto; border-width:0 1px 1px 1px; border-style:solid; border-color:#A0CFFE;margin-left:auto; margin-right:auto; padding-top:1px; padding-bottom:5px;}
+
+#lead span{ font-size:12px; line-height:20px; padding-left:5px;}
+#content{ list-style-image:url(../images/contentMark.jpg); padding-left:45px; width:900px;}
+#content li{ width:900px; clear:both; line-height:20px; height:20px; text-align:left; vertical-align:top;margin-bottom:4px; border-bottom:1px dotted #ccc;}
+#content li a { display:block; float:left; width:750px; height:20px; vertical-align:top;overflow:hidden;text-overflow:ellipsis; white-space:nowrap;}
+#content em{ width:90px; float:right; line-height:20px; height:20px; vertical-align:top; font-size:12px; font-style:normal;}
+#next{ width:1003px; height:18px; background-color:#79AFEB; margin-bottom:5px; text-align:center; font-size:12px;}
+#next span{ line-height:18px;}
+#next span a{ color:#04477C; text-decoration:underline;}
+#next span a:hover{ text-decoration:underline; color:#F60;}

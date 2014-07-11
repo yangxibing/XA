@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>	
+	
+	<!-- main.action -->
+	<package name="database" extends="struts-default">
+		<action name="backup" class="com.database.action.DatabaseAction" method="backup">
+			<result name="success" >/home.jsp</result>
+		</action>
+		<action name="restore" class="com.database.action.DatabaseAction" method="restore">
+			<result name="success">/home.jsp</result>
+		</action>
+		
+		<!-- 报表统计 -->
+		<action name="reportAnalysis" class="com.database.action.ReportAnalysisAction" method="reportAnalysis">
+			<result name="success">/jsp/systemManage/reportAnalysis.jsp</result>
+		</action>
+	</package>
+</struts>

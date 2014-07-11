@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">   	
+    
+<sqlMap namespace="reportAnalysis">
+   	<typeAlias alias="purchaseOrder" type="com.model.PurchaseOrder"/>
+   	<typeAlias alias="baseOrder" type="com.model.BaseOrder"/>
+   	<typeAlias alias="report" type="com.model.ReportAnalysis"/>
+
+	<select id="purchaserReportAnalysis" parameterClass="purchaseOrder" resultClass="report">
+		select month(po.deliverDate) monthNo,
+			count(*) orderCount,
+			sum(po.totalPrice) totalAmount
+		from PurchaseOrder po left join Supplier sup on po.purchaserId=sup.partnerId
+		<dynamic prepend="where">
+			<isNotEmpty property="begin" prepend="and">
+				<![CDATA[ po.deliverDate >= #begin# ]]>			
+			</isNotEmpty>
+			<isNotEmpty property="end" prepend="and">
+				<![CDATA[ po.deliverDate < #end# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="purchaserName" prepend="and">
+				sup.partnerName LIKE '%$purchaserName$%'				
+			</isNotEmpty>
+		</dynamic>
+		group by month(po.deliverDate)
+		order by month(po.deliverDate) ASC
+	</select>
+	
+	<select id="baseReportAnalysis" parameterClass="baseOrder" resultClass="report">
+		select month(bo.deliverDate) monthNo,
+			count(*) orderCount,
+			sum(bo.totalPrice) totalAmount
+		from BaseOrder bo left join Supplier sup on bo.supplierId=sup.partnerId
+		<dynamic prepend="where">
+			<isNotEmpty property="begin" prepend="and">
+				<![CDATA[ bo.deliverDate >= #begin# ]]>			
+			</isNotEmpty>
+			<isNotEmpty property="end" prepend="and">
+				<![CDATA[ bo.deliverDate < #end# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="supplierName" prepend="and">
+				sup.partnerName LIKE '%$supplierName$%'				
+			</isNotEmpty>
+		</dynamic>
+		group by month(bo.deliverDate)
+		order by month(bo.deliverDate) ASC		
+	</select>	
+</sqlMap>

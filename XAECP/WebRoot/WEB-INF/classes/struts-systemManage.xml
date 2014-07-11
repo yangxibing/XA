@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>	
+	
+	<!-- main.action -->
+	<package name="systemManage" extends="struts-default">
+<!-- 王永康start=========================================================== -->
+	
+		<action name="listActors" class="com.systemManage.action.ActionManageAction" method="listActors">
+			<result name="success">/jsp/systemManage/actorManage.jsp</result>
+		</action>
+<!-- 王永康end=========================================================== -->
+<!-- 姜国强start=========================================================== -->
+		
+<!-- 用户管理模块 -->		
+		<action name="purchaserRegister" class="com.systemManage.action.UserManageAction" method="purchaserRegister">
+			<result name="success">/jsp/systemManage/purchaserRegister.jsp</result>
+		</action>
+		<action name="purchaserRegisterSubmit" class="com.systemManage.action.UserManageAction" method="purchaserRegisterSubmit">
+			<result name="success">/jsp/systemManage/purchaserRegister.jsp</result>
+		</action>
+		<action name="supplierRegister" class="com.systemManage.action.UserManageAction" method="supplierRegister">
+			<result name="success">/jsp/systemManage/supplierRegister.jsp</result>
+		</action>
+		<action name="supplierRegisterSubmit" class="com.systemManage.action.UserManageAction" method="supplierRegisterSubmit">
+			<result name="success">/jsp/systemManage/supplierRegister.jsp</result>
+		</action>
+		<action name="logisticRegister" class="com.systemManage.action.UserManageAction" method="logisticRegister">
+			<result name="success">/jsp/systemManage/logisticsRegister.jsp</result>
+		</action>
+		<action name="logisticRegisterSubmit" class="com.systemManage.action.UserManageAction" method="logisticRegisterSubmit">
+			<result name="success">/jsp/systemManage/logisticsRegister.jsp</result>
+		</action>
+		<action name="administratorRegisterSubmit" class="com.systemManage.action.UserManageAction" method="administratorRegisterSubmit">
+			<result name="success">/jsp/systemManage/administratorRegister.jsp</result>
+		</action>
+	
+		<action name="queryXAUserList" class="com.systemManage.action.UserManageAction" method="queryXAUserList">
+			<result name="success">/jsp/systemManage/userManage.jsp</result>
+		</action>
+		<action name="deleteSelectedUser" class="com.systemManage.action.UserManageAction" method="deleteSelectedUser">
+			<result name="success">/jsp/systemManage/userManage.jsp</result>
+		</action>
+		<action name="addXAUser" class="com.systemManage.action.UserManageAction" method="addXAUser">
+			<result name="success">/jsp/systemManage/userManage.jsp</result>
+		</action>
+		<action name="updateXAUser" class="com.systemManage.action.UserManageAction" method="updateXAUser">
+			<result name="success">/jsp/systemManage/userManage.jsp</result>
+		</action>
+		<action name="checkRegisterApply" class="com.systemManage.action.UserManageAction" method="checkRegisterApply">
+			<result name="success">/jsp/systemManage/userManage.jsp</result>
+		</action>
+		<action name="modifyPassword" class="com.systemManage.action.UserManageAction" method="modifyPassword">
+			<result name="success">/jsp/systemManage/passwordModify.jsp</result>
+		</action>
+		
+<!-- 用户登录信息查看模块 -->		
+		<action name="queryXAUserLogInfo" class="com.systemManage.action.LogLookupAction" method="queryXAUserLogInfo">
+			<result name="success">/jsp/systemManage/logLookup.jsp</result>
+		</action>
+		
+<!-- 姜国强end=========================================================== -->
+	
+	</package>
+	
+	<package name="ajaxSystemManage" extends="json-default">
+<!-- 王永康start=========================================================== -->
+
+		<action name="newActor" class="com.systemManage.action.ActionManageAction" method="newActor">
+			<result type="json"></result>
+		</action>
+		<action name="checkRegisterExistAjax" class="com.systemManage.action.UserManageAction" method="checkRegisterExistAjax">
+			<result type="json" name="checkRegisterExistAjax"></result>
+		</action>
+		<action name="updateActor" class="com.systemManage.action.ActionManageAction" method="updateActor">
+			<result type="json"></result>
+		</action>
+		<action name="deleteActor" class="com.systemManage.action.ActionManageAction" method="deleteActor">
+			<result type="json"></result>
+		</action>
+		<action name="checkActorIdExist" class="com.systemManage.action.ActionManageAction" method="checkActorIdExist">
+			<result name="idExitOrNot" type="json"></result>
+		</action>
+		<action name="listFunction" class="com.systemManage.action.ActionManageAction" method="listFunction">
+			<result name="functions" type="json"></result>
+		</action>
+		<action name="saveActorFunction" class="com.systemManage.action.ActionManageAction" method="saveActorFunction">
+			<result type="json"></result>
+		</action>
+		<action name="passwordFindBack" class="com.systemManage.action.UserManageAction" method="passwordFindBack">
+			<result name="passwordFindBackAjax" type="json">/jsp/systemManage/getBackPaa.jsp</result>
+		</action>
+<!-- 王永康end=========================================================== -->
+<!-- 姜国强start=========================================================== -->
+	<action name="querySearchInfo" class="com.systemManage.action.UserManageAction" method="querySearchInfo">
+			<result name="list" type="json"></result>
+		</action>
+		<action name="getXAUserById" class="com.systemManage.action.UserManageAction" method="queryXAUserById">
+			<result name="user" type="json"></result>
+		</action>
+		<action name="XAUserLogin" class="com.systemManage.action.UserManageAction" method="XAUserLogin">
+			<result name="login" type="json"></result>
+		</action>
+		<action name="XAUserLogout" class="com.systemManage.action.UserManageAction" method="XAUserLogout">
+			<result name="logout" type="json"></result>
+		</action>
+		<action name="modifyPassword" class="com.systemManage.action.UserManageAction" method="modifyPassword">
+			<result name="modifyPassword" type="json"></result>
+		</action>
+<!-- 姜国强end=========================================================== -->
+
+	</package>
+	<!-- ============================================== -->
+
+	
+</struts>

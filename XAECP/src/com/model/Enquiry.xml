@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="enquiry">
+	<typeAlias alias="productType" type="com.model.ProductType"/>
+	<typeAlias alias="enquiry" type="com.model.Enquiry"/>
+	<typeAlias alias="quote" type="com.model.Quote"/>
+	
+	<select id="getProductTypeInEnquiry" resultClass="productType">
+		select productTypeId productTypeId,
+			productTypeName productTypeName,
+			parentProductTypeId parentProductTypeId,
+			remark remark
+		from ProductType
+	</select>
+	
+	<select id="queryEnquiry" parameterClass="enquiry" resultClass="enquiry">
+			<dynamic>
+				<isNotEmpty property="productTypeId">
+					<![CDATA[ 
+						declare @idtable table(id varchar(10), level int)
+						declare @level int
+						set @level = 1
+						insert into @idtable select #productTypeId#, @level
+						while @@rowcount > 0
+							begin
+								set @level = @level + 1
+								insert into @idtable
+									select a.productTypeId, @level
+									from ProductType a, @idtable b
+									where a.parentProductTypeId = b.id and b.level = @level - 1
+							end
+					]]>				
+				</isNotEmpty>
+			</dynamic>	
+	
+		select aP.askPriceId askPriceId,
+			pT.productTypeId productTypeId,
+			pT.productTypeName productTypeName,
+			aP.measureUnit measureUnit,
+			aP.number number,
+			aP.deadline deadline,
+			aP.askPriceState askPriceState,
+			aP.remark remark
+		from AskPrice aP left join ProductType pT on aP.productTypeId = pT.productTypeId
+		<dynamic>
+			<isNotEmpty property="productTypeId" prepend=",">
+				@idtable tb
+			</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="where">
+			<isNotEmpty property="productTypeId" prepend="and">
+				aP.productTypeId = tb.id
+			</isNotEmpty>
+			<isNotEmpty property="askPriceId" prepend="and">
+				aP.askPriceId=#askPriceId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="enquiryTotalCount" parameterClass="enquiry" resultClass="int">
+			<dynamic>
+				<isNotEmpty property="productTypeId">
+					<![CDATA[ 
+						declare @idtable table(id varchar(10), level int)
+						declare @level int
+						set @level = 1
+						insert into @idtable select #productTypeId#, @level
+						while @@rowcount > 0
+							begin
+								set @level = @level + 1
+								insert into @idtable
+									select a.productTypeId, @level
+									from ProductType a, @idtable b
+									where a.parentProductTypeId = b.id and b.level = @level - 1
+							end
+					]]>				
+				</isNotEmpty>
+			</dynamic>	
+	
+		select count(1)
+		from AskPrice aP
+		<dynamic>
+			<isNotEmpty property="productTypeId" prepend=",">
+				@idtable tb
+			</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="where">
+			<isNotEmpty property="productTypeId" prepend="and">
+				aP.productTypeId = tb.id
+			</isNotEmpty>
+			<isNotEmpty property="askPriceId" prepend="and">
+				aP.askPriceId=#askPriceId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="getEnquiryById" parameterClass="String" resultClass="enquiry">
+		select askPriceId askPriceId,
+			productTypeId productTypeId,
+			measureUnit measureUnit,
+			number number,
+			deadline deadline,
+			askPriceState askPriceState,
+			remark remark
+		from AskPrice
+		where askPriceId = #value#
+	</select>
+	
+	<select id="getQuotesInEnquiry" parameterClass="quote" resultClass="quote">
+		select ans.answerPriceId answerPriceId,
+			ans.askPriceId askPriceId,
+			ans.productId productId,
+			pro.productName productName,
+			ans.supplierId supplierId,
+			sup.partnerName supplierName,
+			ans.price price,
+			ans.remark remark,
+			ans.isAnswer isAnswer,
+			ans.isSelected isSelected
+		from AnswerPrice ans left join SupplierProduct pro on ans.productId=pro.productId
+							 left join Supplier sup on ans.supplierId=sup.partnerId
+		<dynamic prepend="where">
+			<isNotEmpty property="askPriceId" prepend="and">
+				ans.askPriceId = #askPriceId#
+			</isNotEmpty>
+			<isEqual property="isAnswer" compareValue="true" prepend="and">
+				ans.isAnswer = 'true'
+			</isEqual>
+			<isEqual property="isSelected" compareValue="true" prepend="and">
+				ans.isSelected = 'true'
+			</isEqual>
+		</dynamic>
+	</select>
+	
+	<insert id="addEnquiry" parameterClass="enquiry">
+		insert into AskPrice
+		(
+			productTypeId,
+			measureUnit,
+			number,
+			deadline,
+			askPriceState
+		)  values
+		(
+			#productTypeId#,
+			#measureUnit#,
+			#number#,
+			#deadline#,
+			#askPriceState#
+		)
+	</insert>
+	
+	<delete id="deleteEnquiryById" parameterClass="String">
+		delete from AskPrice
+		where askPriceId=#value#
+	</delete>
+	
+	<update id="updateEnquiry" parameterClass="enquiry">
+		update AskPrice set
+			productTypeId = #productTypeId#,
+			measureUnit = #measureUnit#,
+			number = #number#,
+			deadline = #deadline#,
+			askPriceState = #askPriceState#
+		where askPriceId = #askPriceId#
+	</update>
+	
+	<update id="selectedQuoteById" parameterClass="String">
+		update AnswerPrice set
+			isSelected = 'true'
+		where answerPriceId = #value#
+	</update>
+	
+	<update id="updateEnquiryState" parameterClass="enquiry">
+		update AskPrice set
+			askPriceState = 2
+		where askPriceId = #askPriceId#
+	</update>
+	
+</sqlMap>

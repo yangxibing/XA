@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>	
+	
+	<!-- 计划采购信息管理 -->
+	<package name="planPurchase" extends="struts-default">
+	
+		<!-- 返回组合条件查询结果Action -->
+		<action name="listPlanedPurchaseInfo" class="com.planPurchase.action.PlanedPurchaseAction" method="listPlanedPurchaseInfo">
+			<result name="success">/jsp/planedPurchase/planedPurchaseInfoManage.jsp</result>
+		</action>
+		
+		<action name="addPlanedPurchaseInfo" class="com.planPurchase.action.PlanedPurchaseAction" method="addPlanedPurchaseInfo">
+			<result name="success">/jsp/planedPurchase/planedPurchaseInfoManage.jsp</result>
+		</action>
+		
+		<action name="updatePlanedPurchaseInfo" class="com.planPurchase.action.PlanedPurchaseAction" method="updatePlanedPurchaseInfo">
+			<result name="success">/jsp/planedPurchase/planedPurchaseInfoManage.jsp</result>
+		</action>
+		
+		<action name="deletePlanedPurchaseInfo" class="com.planPurchase.action.PlanedPurchaseAction" method="deletePlanedPurchaseInfo">
+			<result name="success">/jsp/planedPurchase/planedPurchaseInfoManage.jsp</result>
+		</action>	
+	</package>
+	
+	<package name="planPurchaseAjax" extends="json-default">
+		<!-- 用于点击编辑后异步返回json数据到编辑页面 -->
+		<action name="selectPlanedPurchaseInfo" class="com.planPurchase.action.PlanedPurchaseAction" method="selectPlanedPurchaseInfo">
+			<result type="json"></result>
+		</action>
+	</package>
+</struts>

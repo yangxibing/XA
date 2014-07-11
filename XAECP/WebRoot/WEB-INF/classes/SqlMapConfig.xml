@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+    <settings   
+        cacheModelsEnabled="false"  
+        enhancementEnabled="true"  
+        lazyLoadingEnabled="true"  
+        errorTracingEnabled="true"  
+        maxRequests="32"  
+        maxSessions="10"  
+        maxTransactions="5"  
+        useStatementNamespaces="true"  
+    /> 
+    
+  <sqlMap resource="com/model/Supplier.xml"/>
+  <sqlMap resource="com/model/supplierProduct.xml"/>
+  <sqlMap resource="com/model/supplierProductPrice.xml"/>
+  <sqlMap resource="com/model/upload.xml"/>
+  <sqlMap resource="com/model/purchaseOrder-wyk.xml"/>
+  <sqlMap resource="com/model/purchaseOrderDetail.xml"/>
+  <sqlMap resource="com/model/BaseOrder.xml"/>
+  <sqlMap resource="com/model/BaseOrderDetail.xml"/>
+  <sqlMap resource="com/model/CentralizedPlanedPurchase.xml"/>
+  <sqlMap resource="com/model/SupplyPurchaseInformation.xml"/>
+  <sqlMap resource="com/model/Actor.xml"/>
+  <sqlMap resource="com/model/SystemManage.xml"/>
+  <sqlMap resource="com/model/database.xml"/>
+  
+<!-- 姜国强 start -->
+	<sqlMap resource="com/model/Purchaser.xml"/>  
+	<sqlMap resource="com/model/BiddingExpert.xml" />
+	<sqlMap resource="com/model/NewsBulletin.xml" />
+    <sqlMap resource="com/model/PriceQuotation.xml" />	
+    <sqlMap resource="com/model/Enquiry.xml" />    
+    <sqlMap resource="com/model/CentralizedPurchase.xml"/>    
+    <sqlMap resource="com/model/PurchaseOrder.xml" />  
+    <sqlMap resource="com/model/GoodsAddress.xml" />
+    <sqlMap resource="com/model/XALog.xml" />    
+    <sqlMap resource="com/model/BBSReply.xml"/> 
+    <sqlMap resource="com/model/ReportAnalysis.xml"/> 
+<!-- 姜国强 end -->
+
+
+<!-- hubo -->
+	<sqlMap resource="com/model/Logistics.xml"/>
+	<sqlMap resource="com/model/ProductType.xml"/>
+	<sqlMap resource="com/model/AnswerPrice.xml"/>
+	<sqlMap resource="com/model/PlanedPurchaseInfo.xml"/>
+	<sqlMap resource="com/model/BaseOrderForBase.xml"/>
+	<sqlMap resource="com/model/BBSUser.xml"/>
+	<sqlMap resource="com/model/BBSSubject.xml"/>
+</sqlMapConfig>

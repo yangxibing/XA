@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="supplyPurchaseInformation">
+	<typeAlias alias="supplyPurchaseInformation" type="com.model.SupplyPurchaseInformation"/>
+	
+	<select id="listSupplyPurchaseInformation"  resultClass="supplyPurchaseInformation" parameterClass="supplyPurchaseInformation">
+		select 
+				s1.id id,
+				s1.title title,
+				(case 
+					when s1.publishType=0 then '供货'
+					when s1.publishType=1 then '采购'
+					when s1.publishType=2 then '招标'
+				 end ) as publishTypeName,
+				p1.productTypeName productTypeName,
+				p1.productTypeId productTypeId,
+				CONVERT(varchar(10), s1.effectiveDate, 120 ) effectiveDate,
+				s2.partnername partnerName,
+				s1.visitNumber visitNumber,
+				s1.publisher publisher,
+				CONVERT(varchar(10), s1.publishDate, 120 )  publishDate,
+				s1.supplierId supplierId,
+				s1.publishContent publishContent,
+				s1.publishType publishType
+		from SupplyPurchaseInformation s1,productType p1,supplier s2
+		where s1.productTypeId=p1.productTypeId
+			and s1.supplierId = s2.partnerId
+			<dynamic>
+				<isNotNull property="id" prepend="and">
+					s1.id=#id#
+				</isNotNull>
+				<isNotNull property="supplierId" prepend="and">
+					s1.supplierId = #supplierId#
+				</isNotNull>
+			</dynamic>
+		order by id desc
+	</select>
+	
+	
+	<select id="purchaseTenderInfoTotalCount" parameterClass="supplyPurchaseInformation" resultClass="int">
+		select count(1)
+		from SupplyPurchaseInformation s1,productType p1,supplier s2
+		where s1.productTypeId=p1.productTypeId
+			and s1.supplierId = s2.partnerId
+			<dynamic>
+				<isNotNull property="id" prepend="and">
+					s1.id=#id#
+				</isNotNull>
+				<isNotNull property="supplierId" prepend="and">
+					s1.supplierId = #supplierId#
+				</isNotNull>
+			</dynamic>
+	</select>
+	
+	<select id="homeAllCaigouInfoTotalCount" resultClass="int">
+		select count(1)
+		from SupplyPurchaseInformation
+		where publishType=1 or publishType=2
+	</select>
+	
+	<select id="homeListAllCaigouInfo" resultClass="supplyPurchaseInformation">
+		select 
+				s1.id id,
+				s1.title title,
+				CONVERT(varchar(10), s1.effectiveDate, 120 ) effectiveDate,
+				s1.visitNumber visitNumber,
+				s1.publisher publisher,
+				CONVERT(varchar(10), s1.publishDate, 120 )  publishDate,
+				s1.supplierId supplierId,
+				s1.publishContent publishContent,
+				s1.publishType publishType
+		from SupplyPurchaseInformation s1
+		where s1.publishType=1 or s1.publishType=2
+	</select>
+	
+	<select id="selectProductType" resultClass="com.model.ProductType">
+		select 
+				productTypeId productTypeId,
+				productTypeName productTypeName,
+				parentProductTypeId parentProductTypeId
+		from productType
+	</select>
+	
+	<insert id="savePurchaseTender" parameterClass="supplyPurchaseInformation">
+		insert into 
+			SupplyPurchaseInformation(
+										title,
+										publishType,
+										productTypeId,
+										effectiveDate,
+										publishContent,
+										visitNumber,
+										supplierId,
+										publisher,
+										publishDate
+										
+										)values(
+										#title#,
+										#publishType#,
+										#productTypeId#,
+										#effectiveDate#,
+										#publishContent#,
+										'0',
+										#supplierId#,
+										#publisher#,
+										CONVERT(varchar, getdate(), 120 ) 
+										)
+	</insert>
+	
+	<select id="getUserNameByUserId" parameterClass="string" resultClass="string">
+		select userName
+		from XAUser
+		where userId=#value#
+	</select>
+	
+	<update id="updatePurchaseTender" parameterClass="supplyPurchaseInformation">
+		update supplyPurchaseInformation
+		set title=#title#,
+			productTypeId=#productTypeId#,
+			effectiveDate=#effectiveDate#,
+			publishType=#publishType#,
+			publishContent=#publishContent#
+		where id=#id#
+	</update>
+	
+	<delete id="deletePurchaseTenderInfo" parameterClass="string">
+		delete 
+		from supplyPurchaseInformation
+		where id=#value#
+	</delete>
+	
+	<select id="listAllSupplyPurchaseInformation" parameterClass="hashmap" resultClass="supplyPurchaseInformation">
+		select top $number$ title title,id id
+		from supplyPurchaseInformation
+		<![CDATA[
+		where (id <= (
+						select min(id)
+						from( 
+								select top $start$ id id
+								from supplyPurchaseInformation
+								where publishType!=0
+								order by id desc
+						)as t
+		
+					)
+				)and publishType!=0
+		order by id desc
+		]]>
+	</select>
+	
+	<update id="visitNumAddOne" parameterClass="int">
+		update supplyPurchaseInformation
+		set visitNumber=visitNumber+1
+		where id=#value#
+	</update>
+	
+	
+	<select id="getSupplyGoodsInfoById" parameterClass="int" resultClass="supplyPurchaseInformation">
+		select sp.id id,
+			sp.title title,
+			sp.productTypeId productTypeId,
+			pt.productTypeName productTypeName,
+			CONVERT(varchar(10), sp.effectiveDate, 120) effectiveDate,
+			s2.partnername partnerName,
+			sp.visitNumber visitNumber,
+			sp.publishContent publishContent,
+			sp.publisher publisher,
+			CONVERT(varchar(10), sp.publishDate, 120 )  publishDate
+		from SupplyPurchaseInformation sp left join productType pt on sp.productTypeId = pt.productTypeId
+				left join supplier s2 on sp.supplierId = s2.partnerId
+		where sp.id = #value# 
+	</select>
+	
+	<select id="listSupplyGoodsInfo" parameterClass="supplyPurchaseInformation" resultClass="supplyPurchaseInformation">
+		select s1.id id,
+			s1.title title,
+			p1.productTypeName productTypeName,
+			CONVERT(varchar(10), s1.effectiveDate, 120) effectiveDate,
+			s2.partnerName partnerName,
+			s1.visitNumber visitNumber,
+			s1.publisher publisher,
+			CONVERT(varchar(10), s1.publishDate, 120) publishDate	
+		from SupplyPurchaseInformation s1 left join productType p1 on s1.productTypeId= p1.productTypeId
+									left join supplier s2 on s1.supplierId = s2.partnerId
+		where s1.supplierId = #supplierId# and s1.publishType = 0
+	</select>
+	
+	
+	<select id="supplyGoodsInfoTotalCount" parameterClass ="supplyPurchaseInformation" resultClass="int">
+		select count(1)
+		from SupplyPurchaseInformation s1 left join productType p1 on s1.productTypeId= p1.productTypeId
+									left join supplier s2 on s1.supplierId = s2.partnerId
+		where s1.supplierId = #supplierId# and s1.publishType = 0
+	</select>
+	
+	<select id="supplyGoodsInfoAllTotalCount" resultClass="int">
+		select count(1)
+		from SupplyPurchaseInformation
+		where publishType=0
+	</select>
+	
+	<select id="listAllSupplyGoodsInfoForMore" resultClass="supplyPurchaseInformation">
+		select s1.id id,
+			s1.title title,
+			p1.productTypeName productTypeName,
+			CONVERT(varchar(10), s1.effectiveDate, 120) effectiveDate,
+			s2.partnerName partnerName,
+			s1.visitNumber visitNumber,
+			s1.publisher publisher,
+			CONVERT(varchar(10), s1.publishDate, 120) publishDate	
+		from SupplyPurchaseInformation s1 left join productType p1 on s1.productTypeId= p1.productTypeId
+									left join supplier s2 on s1.supplierId = s2.partnerId
+		where publishType=0
+	</select>
+	
+	<delete id="deleteSupplyGoodsInfo" parameterClass="String">
+		delete from SupplyPurchaseInformation
+		where id=#value#
+	</delete>
+	
+	<insert id="addSupplyGoodsInfo" parameterClass="supplyPurchaseInformation">
+		insert into 
+			SupplyPurchaseInformation(
+										title,
+										publishType,
+										productTypeId,
+										effectiveDate,
+										publishContent,
+										visitNumber,
+										supplierId,
+										publisher,
+										publishDate
+										
+										)values(
+										#title#,
+										#publishType#,
+										#productTypeId#,
+										#effectiveDate#,
+										#publishContent#,
+										'0',
+										#supplierId#,
+										#publisher#,
+										CONVERT(varchar, getdate(), 120 ) 
+										)
+	</insert>
+	
+	<update id="updateSupplyGoodsInfo" parameterClass="supplyPurchaseInformation">
+		update supplyPurchaseInformation
+		set title=#title#,
+			productTypeId=#productTypeId#,
+			effectiveDate=#effectiveDate#,
+			publishContent=#publishContent#
+		where id=#id#
+	</update>
+	
+	
+		
+	<select id="listAllSupplyGoodsInfo" parameterClass="hashmap" resultClass="supplyPurchaseInformation">
+		select top $number$ title title,id id
+		from supplyPurchaseInformation
+		<![CDATA[
+		where (id <= (
+						select min(id)
+						from( 
+								select top $start$ id id
+								from supplyPurchaseInformation
+								where publishType=0
+								order by id desc
+						)as t
+		
+					)
+				) and publishType=0
+		order by id desc
+		]]>
+	</select>
+</sqlMap>

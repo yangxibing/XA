@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="goodsAddress">
+	<typeAlias alias="address" type="com.model.GoodsAddress"/>
+	
+	<insert id="addGoodsAddress" parameterClass="address">
+		<selectKey resultClass="String" type="post" keyProperty="addressId" >
+			<![CDATA[	
+				insert into GoodsAddress(
+					userId,
+					defaultOrNot,
+					shippingAddress,
+					zipCode,
+					contacter,
+					telephone,
+					sendOrReceive
+				) values (
+					#userId#,
+					#defaultOrNot#,
+					#shippingAddress#,
+					#zipCode#,
+					#contacter#,
+					#telephone#,
+					#sendOrReceive#			
+				)
+				select SCOPE_IDENTITY() as value
+        	]]>	
+        </selectKey> 	
+	</insert>
+	
+	<select id="queryGoodsAddressList" parameterClass="address" resultClass="address">
+		select addressId addressId,
+			userId userId,
+			defaultOrNot defaultOrNot,
+			shippingAddress shippingAddress,
+			zipCode zipCode,
+			contacter contacter,
+			telephone telephone,
+			sendOrReceive sendOrReceive
+	    from GoodsAddress
+		<dynamic prepend="where">
+			<isNotEmpty property="userId" prepend="and">
+				userId=#userId#
+			</isNotEmpty>
+			<isNotEmpty property="sendOrReceive" prepend="and">
+				sendOrReceive=#sendOrReceive#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="getGoodsAddressById" parameterClass="String" resultClass="address">
+		select addressId addressId,
+			userId userId,
+			defaultOrNot defaultOrNot,
+			shippingAddress shippingAddress,
+			zipCode zipCode,
+			contacter contacter,
+			telephone telephone,
+			sendOrReceive sendOrReceive
+	    from GoodsAddress
+	    where addressId = #value#
+	</select>
+	
+	<update id="resetDefaultAddress" parameterClass="address">
+		update GoodsAddress set 
+			defaultOrNot = 'false'
+		<dynamic prepend="where">
+			<isNotEmpty property="userId" prepend="and">
+				userId = #userId#
+			</isNotEmpty>
+		</dynamic>
+	</update>
+	
+	<update id="setDefaultAddress" parameterClass="address">
+		update GoodsAddress set 
+			defaultOrNot = 'true'
+		<dynamic prepend="where">
+			<isNotEmpty property="userId" prepend="and">
+				userId = #userId#
+			</isNotEmpty>
+			<isNotEmpty property="addressId" prepend="and">
+				addressId = #addressId#
+			</isNotEmpty>
+		</dynamic>
+	</update>
+	
+	<update id="updateGoodsAddress">
+		update GoodsAddress set
+			userId = #userId#,
+			defaultOrNot = #defaultOrNot#,
+			shippingAddress = #shippingAddress#,
+			zipCode = #zipCode#,
+			contacter = #contacter#,
+			telephone = #telephone#,
+			sendOrReceive = #sendOrReceive#
+		where addressId = #addressId# 
+	</update>
+	
+	<delete id="deleteGoodsAddressById" parameterClass="String">
+		delete from GoodsAddress
+			where addressId = #value#
+	</delete>
+	
+</sqlMap>

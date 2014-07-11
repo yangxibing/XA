@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="planedPurchase">
+	<typeAlias alias="cpPurchase" type="com.model.CentralizedPlanedPurchase"/>
+	
+	<resultMap class="com.model.CentralizedPlanedPurchase" id="cpResultMap">
+		<result property="cpPurchaseInfoId" column="cpPurchaseInfoId" javaType="String"/>
+		<result property="cpPurchaseInfoTitle" column="cpPurchaseInfoTitle"/>
+		<result property="productTypeId" column="productTypeId"/>
+		<result property="productTypeName" column="productTypeName"/>
+		<result property="purchasePriceInterval" column="purchasePriceInterval"/>
+		<result property="publishDate" column="publishDate" nullValue="null"/>
+		<result property="publisher" column="publisher"/>
+		<result property="deadline" column="deadline" nullValue="null"/>
+		<result property="telephone" column="telephone"/>
+		<result property="briefExplain" column="briefExplain"/>
+	    <result property="centralizedPurchaseState" column="centralizedPurchaseState" nullValue="0"/>
+	    <result property="measureUnit" column="measureUnit"/>
+	    <result property="combinePlanedNum" column="combinePlanedNum" nullValue="0"/>
+	    <result property="isEnterOrderProcess" column="isEnterOrderProcess" nullValue="false"/>
+	</resultMap>
+	<select id="listPlanedPurchaseInfo" parameterClass="cpPurchase" resultMap="cpResultMap">
+			<dynamic>
+				<isNotEmpty property="productTypeId">
+					<![CDATA[ 
+						declare @idtable table(id varchar(10), level int)
+						declare @level int
+						set @level = 1
+						insert into @idtable select #productTypeId#, @level
+						while @@rowcount > 0
+							begin
+								set @level = @level + 1
+								insert into @idtable
+									select a.productTypeId, @level
+									from ProductType a, @idtable b
+									where a.parentProductTypeId = b.id and b.level = @level - 1
+							end
+					]]>				
+				</isNotEmpty>
+			</dynamic>	
+	
+		select  cp.cpPurchaseInfoId cpPurchaseInfoId, 
+				cp.cpPurchaseInfoTitle cpPurchaseInfoTitle,
+				cp.productTypeId productTypeId,
+				pt.productTypeName productTypeName,
+	 			cp.purchasePriceInterval purchasePriceInterval,
+	 			cp.publishDate publishDate,
+	 			cp.publisher publisher,
+	 			cp.deadline deadline,
+	 			cp.telephone telephone,
+	 			cp.briefExplain briefExplain,
+	 			cp.centralizedPurchaseState centralizedPurchaseState,
+	 			cp.measureUnit measureUnit,
+	 			cp.combinePlanedNum combinePlanedNum,
+	 			cp.isEnterOrderProcess isEnterOrderProcess 
+		from   CentralizedPlanedPurchaseInfo cp left join ProductType pt on cp.productTypeId = pt.productTypeId
+								<dynamic>
+									<isNotEmpty property="productTypeId" prepend=",">
+										@idtable tb
+									</isNotEmpty>
+								</dynamic>
+		where 	cp.centraOrplaned = 1		
+		<dynamic>
+			<isNotEmpty property="isEnterOrderProcess" prepend="and">
+				cp.isEnterOrderProcess=#isEnterOrderProcess#
+			</isNotEmpty>
+			<isNotEmpty property="productTypeId" prepend="and">
+				cp.productTypeId = tb.id
+			</isNotEmpty>
+				
+		</dynamic>
+	  	
+	  	<!--  where  cp.isEnterOrderProcess=#isEnterOrderProcess# and
+				cp.productTypeId=#productTypeId#
+		-->
+	</select>
+	
+	<select id="planedPurchaseInfoTotalCount" parameterClass="cpPurchase" resultClass="int">
+			<dynamic>
+				<isNotEmpty property="productTypeId">
+					<![CDATA[ 
+						declare @idtable table(id varchar(10), level int)
+						declare @level int
+						set @level = 1
+						insert into @idtable select #productTypeId#, @level
+						while @@rowcount > 0
+							begin
+								set @level = @level + 1
+								insert into @idtable
+									select a.productTypeId, @level
+									from ProductType a, @idtable b
+									where a.parentProductTypeId = b.id and b.level = @level - 1
+							end
+					]]>				
+				</isNotEmpty>
+			</dynamic>
+		select  count(1)
+		from   CentralizedPlanedPurchaseInfo cp
+								<dynamic>
+									<isNotEmpty property="productTypeId" prepend=",">
+										@idtable tb
+									</isNotEmpty>
+								</dynamic>
+		where 	cp.centraOrplaned = 1	
+		<dynamic>		
+			<isNotEmpty property="isEnterOrderProcess" prepend="and">
+				cp.isEnterOrderProcess=#isEnterOrderProcess#
+			</isNotEmpty>
+			<isNotEmpty property="productTypeId" prepend="and">
+				cp.productTypeId = tb.id
+			</isNotEmpty>  
+		</dynamic>
+	</select>
+	
+	
+	<select id="getPlanedPurchaseInfoById" parameterClass="String" resultMap="cpResultMap">
+		select  cpPurchaseInfoId cpPurchaseInfoId, 
+				cpPurchaseInfoTitle cpPurchaseInfoTitle,
+				pt.productTypeId productTypeId,
+				pt.productTypeName productTypeName,
+	 			purchasePriceInterval purchasePriceInterval,
+	 			publishDate publishDate,
+	 			publisher publisher,
+	 			deadline deadline,
+	 			telephone telephone,
+	 			briefExplain briefExplain,
+	 			centralizedPurchaseState centralizedPurchaseState,
+	 			measureUnit measureUnit,
+	 			combinePlanedNum combinePlanedNum,
+	 			isEnterOrderProcess isEnterOrderProcess 
+		from   CentralizedPlanedPurchaseInfo cppi left join ProductType pt on cppi.productTypeId = pt.productTypeId
+		where cppi.cpPurchaseInfoId=#value#
+	</select>
+	
+	
+	<insert id="addPlanedPurchaseInfo" parameterClass="cpPurchase">
+		insert into CentralizedPlanedPurchaseInfo
+		(
+			cpPurchaseInfoTitle,
+			productTypeId,
+			measureUnit,
+			combinePlanedNum
+		)  values
+		(
+			#cpPurchaseInfoTitle#,
+			#productTypeId#,
+			#measureUnit#,
+			#combinePlanedNum#
+		)
+	</insert>
+	
+	<update id="updatePlanedPurchaseInfo"  parameterClass="cpPurchase">
+		update CentralizedPlanedPurchaseInfo set 
+			cpPurchaseInfoTitle=#cpPurchaseInfoTitle#,
+			productTypeId=#productTypeId#,
+			measureUnit=#measureUnit#,
+			combinePlanedNum=#combinePlanedNum# 
+		where cpPurchaseInfoId = #cpPurchaseInfoId#
+	</update>
+	
+	<delete id="deletePlanedPurchaseInfoById" parameterClass="String">
+		delete from CentralizedPlanedPurchaseInfo
+		where cpPurchaseInfoId = #value#
+	</delete>
+	
+</sqlMap>

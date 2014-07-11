@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd" default-autowire="byName">
+     
+    <!-- 定义数据源 -->      
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+	<property name="url" value="jdbc:sqlserver://127.0.0.1:1433;DatabaseName=xaecp_WYX"/>
+	<property name="username" value="sa"/>
+	<property name="password" value="111111"/>
+    </bean>
+<!-- 王永康start -->
+    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>classpath:SqlMapConfig.xml</value>
+		</property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- dao层 -->
+	 <bean id="supplierDao" class="com.basicData.dao.SupplierDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="supplierProductDao" class="com.basicData.dao.SupplierProductDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="uploadDao" class="com.basicData.dao.UploadDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="productPriceDao" class="com.basicData.dao.ProductPriceDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="sellOrderManageDao" class="com.centralizedPurchase.dao.SellOrderManageDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="purchaseOrderDetailDao" class="com.centralizedPurchase.dao.PurchaseOrderDetailDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="baseOrderDao" class="com.centralizedPurchase.dao.BaseOrderDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="centralizedPlanedPurchaseDao" class="com.centralizedPurchase.dao.CentralizedPlanedPurchaseDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="supplyPurchaseInformationDao" class="com.purchaseTenderInfo.dao.SupplyPurchaseInformationDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="actorManageDao" class="com.systemManage.dao.ActorManageDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="databaseDao" class="com.database.dao.DatabaseDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <!-- service层 -->
+	 <bean id="supplierService" class="com.basicData.service.SupplierServiceImpl">
+	 	<property name="supplierDao" ref="supplierDao"></property>
+	 </bean>
+	 <bean id="supplierProductService" class="com.basicData.service.SupplierProductServiceImpl">
+	 	<property name="supplierProductDao" ref="supplierProductDao"></property>
+	 </bean>
+	 <bean id="uploadService" class="com.basicData.service.UploadServiceImpl"/>
+	 <bean id="productPriceService" class="com.basicData.service.ProductPriceServiceImpl"></bean>
+	 <bean id="sellOrderManageService" class="com.centralizedPurchase.service.SellOrderManageServiceImpl"/>
+	 <bean id="purchaseOrderDetailService" class="com.centralizedPurchase.service.PurchaseOrderDetailServiceImpl"/>
+	 <bean id="baseOrderService" class="com.centralizedPurchase.service.BaseOrderServiceImpl"/>
+	 <bean id="centralizedPlanedPurchaseService" class="com.centralizedPurchase.service.CentralizedPlanedPurchaseServiceImpl"/>
+	 <bean id="supplyPurchaseInformationService" class="com.purchaseTenderInfo.service.SupplyPurchaseInformationServiceImpl"/>
+	 <bean id="actorManageService" class="com.systemManage.service.ActorManageServiceImpl"/>
+	 <bean id="databaseService" class="com.database.service.DatabaseServiceImpl"/>
+	 <!-- action层 -->
+	 <bean id="supplierAction" class="com.basicData.action.SupplierAction">
+	 	<property name="supplierService" ref="supplierService"></property>
+	 </bean>
+	 <bean id="supplierProductAction" class="com.basicData.action.SupplierProductAction">
+	 	<property name="supplierProductService" ref="supplierProductService"></property>
+	 </bean>
+	 <bean id="uploadAction" class="com.basicData.action.UploadAction"></bean>
+	 <bean id="productPriceAction" class="com.basicData.dao.ProductPriceDaoImpl"/>
+	 <bean id="sellOrderManageAction" class="com.centralizedPurchase.action.SellOrderManageAction"/>
+	 <bean id="purchaseOrderDetailAction" class="com.centralizedPurchase.action.PurchaseOrderDetailAction"/>
+	 <bean id="baseOrderAction" class="com.centralizedPurchase.action.BaseOrderAction"/>
+	 <bean id="centralizedPlanedPurchaseAction" class="com.centralizedPurchase.action.CentralizedPlanedPurchaseAction"/>
+	 <bean id="supplyPurchaseInformationAction" class="com.purchaseTenderInfo.action.SupplyPurchaseInformationAction"/>
+	 <bean id="actorManageAction" class="com.systemManage.action.ActionManageAction"></bean>
+	 <bean id="databaseAction" class="com.database.action.DatabaseAction"/>
+<!-- 王永康end -->
+
+<!--  姜国强start-->
+<!-- UserManage -->
+	 <!-- dao层 -->
+	 <bean id="userManageDao" class="com.systemManage.dao.UserManageDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <!-- service层 -->
+	 <bean id="userManageService" class="com.systemManage.service.UserManageServiceImpl">
+	 	<property name="userManageDao" ref="userManageDao"></property>
+	 </bean>
+	 
+	 <!-- action层 -->
+	 <bean id="userManageAction" class="com.systemManage.action.UserManageAction">
+	 	<property name="userManageService" ref="userManageService"></property>
+	 </bean>
+	 
+<!-- PurchaseManage -->
+	 <!-- dao层 -->
+	 <bean id="purchaserDao" class="com.basicData.dao.PurchaserDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+
+	 <!-- service层 -->
+	 <bean id="purchaserService" class="com.basicData.service.PurchaserServiceImpl">
+	 	<property name="purchaserDao" ref="purchaserDao"></property>
+	 </bean>
+	 
+	 <!-- action层 -->	 
+	 <bean id="purchaserAction" class="com.basicData.action.PurchaserAction">
+	 	<property name="purchaserService" ref="purchaserService"></property>
+	 </bean>
+
+<!-- BiddingExpertManage -->
+	 <!-- dao层 -->
+	 <bean id="biddingExpertDao" class="com.basicData.dao.BiddingExpertDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+
+	 <!-- service层 -->
+	 <bean id="biddingExpertService" class="com.basicData.service.BiddingExpertServiceImpl">
+	 	<property name="biddingExpertDao" ref="biddingExpertDao"></property>
+	 </bean>
+	 
+	 <!-- action层 -->	 
+	 <bean id="biddingExpertAction" class="com.basicData.action.BiddingExpertAction">
+	 	<property name="biddingExpertService" ref="biddingExpertService"></property>
+	 </bean>
+
+<!-- 新闻/公告发布管理 -->
+	 <!-- dao层 -->
+	 <bean id="newsBulletinDao" class="com.baseInformation.dao.NewsBulletinDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <!-- service层 -->
+	 <bean id="newsBulletinService" class="com.baseInformation.service.NewsBulletinServiceImpl">
+	 	<property name="newsBulletinDao" ref="newsBulletinDao"></property>
+	 </bean>
+	 <!-- action层 -->
+	 <bean id="newsBulletinAction" class="com.baseInformation.action.NewsBulletinAction">
+	 	<property name="newsBulletinService" ref="newsBulletinService"></property>
+	 </bean>	
+
+  <!-- 价格行情发布管理 -->
+	 <!-- dao层 -->
+	 <bean id="priceQuotationDao" class="com.baseInformation.dao.PriceQuotationDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <!-- service层 -->
+	 <bean id="priceQuotationService" class="com.baseInformation.service.PriceQuotationServiceImpl">
+	 	<property name="priceQuotationDao" ref="priceQuotationDao"></property>
+	 </bean>
+	 <!-- action层 -->
+	 <bean id="baseInformationAction" class="com.baseInformation.action.BaseInformationAction">
+	 	<property name="priceQuotationService" ref="priceQuotationService"></property>
+	 </bean>
+	 <bean id="priceQuotationAction" class="com.baseInformation.action.PriceQuotationAction">
+	 	<property name="priceQuotationService" ref="priceQuotationService"></property>
+	 </bean>
+
+<!-- enquiry -->
+	 <!-- dao层 -->
+	 <bean id="enquiryDao" class="com.centralizedPurchase.dao.EnquiryDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <!-- service层 -->
+	 <bean id="enquiryService" class="com.centralizedPurchase.service.EnquiryServiceImpl">
+	 	<property name="enquiryDao" ref="enquiryDao"></property>
+	 </bean>
+	 
+	 <!-- action层 -->
+	 <bean id="enquiryAction" class="com.centralizedPurchase.action.EnquiryAction">
+	 	<property name="enquiryService" ref="enquiryService"></property>
+	 </bean>
+	 <bean id="queryProductType" class="com.common.QueryProductType">
+	 	<property name="enquiryService" ref="enquiryService"></property>
+	 </bean>
+
+<!-- centralizedPurchase -->
+	 <!-- dao层 -->
+	 <bean id="centralizedPurchaseDao" class="com.centralizedPurchase.dao.CentralizedPurchaseDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <!-- service层 -->
+	 <bean id="centralizedPurchaseService" class="com.centralizedPurchase.service.CentralizedPurchaseServiceImpl">
+	 	<property name="centralizedPurchaseDao" ref="centralizedPurchaseDao"></property>
+	 </bean>
+	 
+	 <!-- action层 -->
+	 <bean id="centralizedPurchaseAction" class="com.centralizedPurchase.action.CentralizedPurchaseAction">
+	 	<property name="centralizedPurchaseService" ref="centralizedPurchaseService"></property>
+	 </bean>	
+
+<!-- GoodsAddress -->
+	 <!-- dao层 -->
+	 <bean id="goodsAddressDao" class="com.basicData.dao.GoodsAddressDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <!-- service层 -->
+	 <bean id="goodsAddressService" class="com.basicData.service.GoodsAddressServiceImpl">
+	 	<property name="goodsAddressDao" ref="goodsAddressDao"></property>
+	 </bean>
+	 <!-- action层 -->
+	 <bean id="goodsAddressAction" class="com.basicData.action.GoodsAddressAction">
+	 	<property name="goodsAddressService" ref="goodsAddressService"></property>
+	 </bean>
+	 
+<!-- PurchaseOrder -->
+	 <!-- dao层 -->
+	 <bean id="purchaseOrderDao" class="com.centralizedPurchase.dao.PurchaseOrderDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <!-- service层 -->
+	 <bean id="purchaseOrderService" class="com.centralizedPurchase.service.PurchaseOrderServiceImpl">
+	 	<property name="purchaseOrderDao" ref="purchaseOrderDao"></property>
+	 </bean>
+	 
+	 <!-- action层 -->
+	 <bean id="purchaseOrderAction" class="com.centralizedPurchase.action.PurchaseOrderAction">
+	 	<property name="purchaseOrderService" ref="purchaseOrderService"></property>
+	 </bean>
+
+<!-- XALog -->	
+	 <!-- dao层 -->
+	 <bean id="logLookupDao" class="com.systemManage.dao.LogLookupDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <!-- service层 -->
+	 <bean id="logLookupService" class="com.systemManage.service.LogLookupServiceImpl">
+	 	<property name="logLookupDao" ref="logLookupDao"></property>
+	 </bean>
+	 
+	 <!-- action层 -->
+	 <bean id="logLookupAction" class="com.systemManage.action.LogLookupAction">
+	 	<property name="logLookupService" ref="logLookupService"></property>
+	 </bean>	 
+	 
+<!-- BBSReply -->
+	 <!-- dao层 -->
+	 <bean id="bbsReplyDao" class="com.bbs.dao.BBSReplyDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <!-- service层 -->
+	 <bean id="bbsReplyService" class="com.bbs.service.BBSReplyServiceImpl">
+	 	<property name="bbsReplyDao" ref="bbsReplyDao"></property>
+	 </bean>
+	 
+	 <!-- action层 -->
+	 <bean id="bbsReplyAction" class="com.bbs.action.BBSReplyAction">
+	 	<property name="bbsReplyService" ref="bbsReplyService"></property>
+	 </bean>
+	 
+<!-- 报表统计 -->
+	 <!-- dao层 -->
+	 <bean id="reportAnalysisDao" class="com.database.dao.ReportAnalysisDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <!-- service层 -->
+	 <bean id="reportAnalysisService" class="com.database.service.ReportAnalysisServiceImpl">
+	 	<property name="reportAnalysisDao" ref="reportAnalysisDao"></property>
+	 </bean>
+	 
+	 <!-- action层 -->
+	 <bean id="reportAnalysisAction" class="com.database.action.ReportAnalysisAction">
+	 	<property name="reportAnalysisService" ref="reportAnalysisService"></property>
+	 </bean>
+	 	 	  	 	 	 	
+<!--  姜国强end-->
+
+<!-- hubo start -->
+
+<!-- logistics -->
+	 <bean id="logisticsDao" class="com.basicData.dao.LogisticsDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="logisticsService" class="com.basicData.service.LogisticsServiceImpl">
+	 	<property name="logisticsDao" ref="logisticsDao"></property>
+	 </bean>
+	 <bean id="logisticsAction" class="com.basicData.action.LogisticsAction">
+	 	<property name="logisticsService" ref="logisticsService"></property>
+	 </bean>
+	 
+<!-- productType -->
+	 <bean id="productTypeDao" class="com.basicData.dao.ProductTypeDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 <bean id="productTypeService" class="com.basicData.service.ProductTypeServiceImpl">
+	 	<property name="productTypeDao" ref="productTypeDao"></property>
+	 </bean>
+	 <bean id="productTypeAction" class="com.basicData.action.ProductTypeAction">
+	 	<property name="productTypeService" ref="productTypeService"></property>
+	 </bean>
+	 
+ <!--  产品管理－产品目录管理-->
+	 <bean id="productCatalogDao" class="com.basicData.dao.ProductCatalogDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <bean id="productCatalogService" class="com.basicData.service.ProductCatalogServiceImpl"></bean>
+	 <bean id="productCatalogAction" class="com.basicData.action.ProductCatalogAction"></bean>
+	 
+<!-- 用于报价管理 -->
+	 <bean id="quoteManageDao" class="com.centralizedPurchase.dao.QuoteManageDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	  <bean id="quoteManageService" class="com.centralizedPurchase.service.QuoteManageServiceImpl">
+	 	<property name="quoteManageDao" ref="quoteManageDao"></property>
+	 </bean>
+	 
+	 <bean id="quoteManageAction" class="com.centralizedPurchase.action.QuoteManageAction">
+	 	<property name="quoteManageService" ref="quoteManageService"></property>
+	 </bean>
+	 
+	<!-- 用于报价管理－产品报价 -->
+	 <bean id="getProductIdNameAction" class="com.centralizedPurchase.action.GetProductIdNameAction">
+	 	<property name="quoteManageService" ref="quoteManageService"></property>
+	 </bean>
+	 
+	 <bean id="productQuoteManageAction" class="com.centralizedPurchase.action.ProductQuoteManageAction">
+	 	<property name="quoteManageService" ref="quoteManageService"></property>
+	 </bean>
+	 
+	 <!-- 计划采购信息管理 -->
+	 <bean id="planedPurchaseDao" class="com.planPurchase.dao.PlanedPurchaseDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <bean id="planedPurchaseService" class="com.planPurchase.service.PlanedPurchaseServiceImpl">
+	 	<property name="planedPurchaseDao" ref="planedPurchaseDao"></property>
+	 </bean>
+	 
+	 <bean id="PlanedPurchaseAction" class="com.planPurchase.action.PlanedPurchaseAction">
+	 	<property name="planedPurchaseService" ref="planedPurchaseService"></property>
+	 </bean>
+	 
+	 
+	 <!-- 采购订单管理－基地对供应商 -->
+	 <bean id="baseOrderDaoForBase" class="com.orderManage.basePurchase.dao.BaseOrderDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <bean id="baseOrderServiceForBase" class="com.orderManage.basePurchase.service.BaseOrderServiceImpl"></bean>
+	 <bean id="baseOrderActionForBase" class="com.orderManage.basePurchase.action.BaseOrderAction"></bean>
+	 <bean id="ajaxDropDownListAction" class="com.orderManage.basePurchase.action.AjaxDropDownListAction"></bean>
+	 
+	 
+	 <!-- 2-1供货信息发布管理-供货信息管理 -->
+	 <bean id="supplyGoodsInfoDao" class="com.supplyGoodsInfo.dao.SupplyGoodsInfoDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <bean id="supplyGoodsInfoService" class="com.supplyGoodsInfo.service.SupplyGoodsInfoServiceImpl"></bean>
+	 <bean id="supplyGoodsInfoAction" class="com.supplyGoodsInfo.action.SupplyGoodsInfoAction"></bean>
+	 
+	  <bean id="userManageDaoBBS" class="com.bbs.dao.UserManageDaoImplBBS">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <bean id="userMangeServiceBBS" class="com.bbs.service.UserMangeServiceImplBBS"> 
+	 </bean>
+	 
+	 <bean id="userManageActionBBS" class="com.bbs.action.UserManageActionBBS"></bean>
+	 
+	 
+	 <bean id="forumManageDao" class="com.bbs.dao.ForumManageDaoImpl">
+	 	<property name="sqlMapClient">
+	 		<ref local="sqlMapClient"></ref>
+	 	</property>
+	 </bean>
+	 
+	 <bean id="forumManageService" class="com.bbs.service.ForumManageServiceImpl"></bean>
+	 <bean id="forumManageAction" class="com.bbs.action.ForumManageAction"></bean>
+<!-- hubo end -->
+</beans>

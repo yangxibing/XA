@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="productType">
+	<typeAlias alias="productType" type="com.model.ProductType"/>
+	<insert id="addProductType" parameterClass="productType">
+		insert into ProductType
+		(
+			productTypeId,
+			productTypeName,
+			parentProductTypeId,
+			remark
+		)  values
+		(
+			#productTypeId#,
+			#productTypeName#,
+			#parentProductTypeId#,
+			#remark#
+		)
+	</insert>
+	
+	<select id="listProductType" parameterClass="productType" resultClass="productType">
+		select p1.productTypeId productTypeId, p1.productTypeName productTypeName, p1.parentProductTypeId  parentProductTypeId, p1.remark remark, p2.productTypeName parentProductTypeName  
+	    from ProductType p1 left join ProductType p2 on p1.parentProductTypeId = p2.productTypeId
+		<dynamic prepend="where">
+			<isNotEmpty property="productTypeId" prepend="and">
+				p1.productTypeId=#productTypeId#
+			</isNotEmpty>
+			<isNotEmpty property="productTypeName" prepend="and">
+				p1.productTypeName LIKE '%$productTypeName$%'
+			</isNotEmpty>
+			<isNotEmpty property="parentProductTypeId" prepend="and">
+				p1.parentProductTypeId=#parentProductTypeId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="productTypeTotalCount" resultClass="int">
+		select count(1)
+	    from ProductType p1
+		<dynamic prepend="where">
+			<isNotEmpty property="productTypeId" prepend="and">
+				p1.productTypeId=#productTypeId#
+			</isNotEmpty>
+			<isNotEmpty property="productTypeName" prepend="and">
+				p1.productTypeName LIKE '%$productTypeName$%'
+			</isNotEmpty>
+			<isNotEmpty property="parentProductTypeId" prepend="and">
+				p1.parentProductTypeId=#parentProductTypeId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="getAllProductType" resultClass="productType">
+		select productTypeId productTypeId, productTypeName productTypeName, parentProductTypeId  parentProductTypeId, remark remark 
+	    from ProductType
+	    order by productTypeId
+	</select>
+	
+	<select id="queryProductType" parameterClass="productType" resultClass="productType">
+		select productTypeId productTypeId, productTypeName productTypeName, parentProductTypeId parentProductTypeId, remark remark  
+		from ProductType 
+		<dynamic prepend="where">
+			<isNotEmpty property="productTypeId" prepend="and">
+				productTypeId=#productTypeId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<delete id="deleteProductType" parameterClass="String">
+		delete from ProductType
+		where productTypeId = #value#
+	</delete>
+	
+	<update id="updateProductType" parameterClass="productType">
+		update ProductType set
+			productTypeId = #productTypeId#,
+			productTypeName = #productTypeName#,
+			parentProductTypeId = #parentProductTypeId#,
+			remark = #remark#
+		where productTypeId = #productTypeId#
+	</update>
+</sqlMap>

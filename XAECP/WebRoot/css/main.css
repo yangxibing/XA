@@ -1,0 +1,150 @@
+body{
+	margin:0;
+	padding:0;
+	background-color:#FFF;
+	text-align:center;}
+div{
+	margin:0;
+	padding:0;
+	text-align:center;}
+.SY{
+	width:1003px;
+	margin-left:auto;
+	margin-right:auto;}
+#copyRight{
+	margin-top:2px;}
+#inputText{
+	height:18px;}
+#inputBt{
+	height:22px;}
+#login{
+	font-size:14px;
+	height:20px;
+	float:left;
+	padding-top:3px;
+	padding-bottom:3px;
+	background-color:#F6F6F6;}
+#name{
+	float:left;
+	padding-top:3px;
+	}
+#input{
+	float:right;}
+#logo{
+	height:140px;
+	background-image:url(../images/luntan.jpg);
+	float:left;
+	position:relative;
+	top:3px;
+	}
+#logo h1 span{
+	display:none;}
+	
+#daoHang{
+	height:35px;
+	background-image:url(../images/daoHang.png);
+	position:relative;
+	top:3px;
+	clear:both;}
+	
+#daoHang ul{
+	list-style-type:none;
+	margin:0;
+	padding:0;}
+#daoHang ul li{
+	float:left;
+	margin:0;
+	padding:8px 16px 5px;
+	border-left:1px  #CCC solid;
+	}
+#daoHang ul #first{
+	position:relative;
+	left:10px;
+	padding-right:25px;
+	border-left:none;
+	color:#000;}
+#daoHang ul li a{
+	display:block;
+	color:#000;
+	font:bold;
+	text-decoration:none;}
+#daoHang ul li a:hover{
+	color:#FC6;
+	text-decoration:underline;}
+#souSuoFather{
+	height:24px;
+	margin-bottom:8px;}
+#souSuo{
+	margin-top:10px;
+	height:24px;}
+#head{
+	clear:both;
+	height:22px;
+	background-color:#BAE5F7;
+	float:left;
+	position:relative;
+	top:2px;
+	margin-bottom:3px;}
+#nextPage{
+	font-size:14px;
+	margin-top:3px;
+	height:22px;
+	background-color:#BAE5F7;
+	float:right;}
+#nextCnt{
+	float:right;}
+#nextCnt ul{
+	margin:0;
+	padding:0;
+	list-style-type:none;}
+#nextCnt ul li{
+	float:left;
+	padding:3px 5px 0}
+#tie{
+	padding-top:1px;
+	float:left;}
+#tieCnt{
+	margin-top:3px;
+	height:22px;
+	background-color:#F6F6F6;
+	float:left;
+	clear:both;
+	margin-left:auto;
+	margin-right:auto;}
+#t1{
+	width:100px;}
+#t2{
+	width:450px;
+	border-width:1px;
+	border-left-style:solid;
+	border-left-color:#FFF;}
+#t3{
+	width:100px;
+	border-width:1px;
+	border-left-style:solid;
+	border-left-color:#FFF;}
+#t4{
+	width:100px;
+	border-width:1px;
+	border-left-style:solid;
+	border-left-color:#FFF;
+	border-right-style:solid;
+	border-right-color:#FFF;}
+#t5{
+	width:100px;
+	}
+#t6{
+	width:153px;
+	border-width:1px;
+	border-left-style:solid;
+	border-left-color:#FFF;}
+.List{
+	width:1003px;
+	float:left;}
+.right{
+	float:right;}
+.left{
+	float:left;}
+span{
+	padding:0;
+	margin:0;}

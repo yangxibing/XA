@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap >
+	<typeAlias alias="purchaseOrder" type="com.model.PurchaseOrder"/>
+	<typeAlias alias="supplier" type="com.model.Supplier"/>
+
+	<select id="listOrders" resultClass="purchaseOrder" parameterClass="purchaseOrder">
+		select 
+				
+					purchaseOrderId purchaseOrderId,
+					purchaserId purchaserId,
+					orderState orderState,
+					deposit deposit,
+					fare fare,
+					totalPrice totalPrice,
+					CPIId CPIId,
+					sendAddressId sendAddressId,
+					deliverDate deliverDate,
+					actualRefund actualRefund
+				
+		from PurchaseOrder
+		<dynamic prepend="where">
+			<isNotEmpty property="orderState" prepend="and">
+				orderState=#orderState#
+			</isNotEmpty>
+			<isNotEmpty property="CPIId" prepend="and">
+				CPIId=#CPIId#
+			</isNotEmpty>
+			<isNotEmpty property="purchaserId" prepend="and">
+					purchaserId=#purchaserId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="baseSellOrderTotalCount" parameterClass="purchaseOrder" resultClass="int">
+		select count(1)
+		from PurchaseOrder
+		<dynamic prepend="where">
+			<isNotEmpty property="orderState" prepend="and">
+				orderState=#orderState#
+			</isNotEmpty>
+			<isNotEmpty property="CPIId" prepend="and">
+				CPIId=#CPIId#
+			</isNotEmpty>
+			<isNotEmpty property="purchaserId" prepend="and">
+					purchaserId=#purchaserId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="getNameByPurchaseId" resultClass="string" parameterClass="string">
+		select partnerName
+		from Supplier
+		where partnerId=#value#
+	</select>
+	<select id="getOrderRateByPId" resultClass="double" parameterClass="string">
+		select orderRate
+		from Supplier
+		where partnerId=#value#
+	</select>
+	
+	<update id="saveOrder" parameterClass="purchaseOrder">
+		update purchaseOrder
+		set fare=#fare#
+			,totalPrice=#totalPrice#
+		where purchaseOrderId=#purchaseOrderId#
+	</update>
+	<update id="assureDelivery" parameterClass="int">
+		update purchaseOrder
+		set orderState = 4
+		where purchaseOrderId=#value#
+	</update>
+	<select id="assureForm" parameterClass="string" resultClass="purchaseOrder">
+		select 
+				
+					purchaseOrderId purchaseOrderId,
+					purchaserId purchaserId,
+					orderState orderState,
+					deposit deposit,
+					fare fare,
+					totalPrice totalPrice,
+					CPIId CPIId,
+					sendAddressId sendAddressId,
+					deliverDate deliverDate
+				
+		from PurchaseOrder
+		where purchaseOrderId=#value#
+	</select>
+	
+	<select id="getProductNameById" parameterClass="string" resultClass="string">
+		select productName
+		from supplierProduct
+		where productId=#value#
+	</select>
+	
+	<select id="selectGoodsAddress" resultClass="com.model.GoodsAddress" parameterClass="hashmap">
+		select 		
+					g3.shippingAddress sendAddress,
+				    g3.zipCode zipCode, 
+				    g3.telephone telephone,
+				    g3.contacter contacter,
+				    g3.addressId addressId,
+				    g3.defaultOrNot defaultOrNot
+		from GoodsAddress g3
+		where g3.userId =#userId#
+			and g3.sendOrReceive=#sendOrReceive#
+			  
+	</select>
+	
+	<update id="defaultAddress" parameterClass="string">
+		update GoodsAddress
+		set defaultOrNot=1
+		where addressId=#value#
+	</update>
+	<update id="elseAddress" parameterClass="string">
+		update GoodsAddress
+		set defaultOrNot=0
+		where addressId=#value#
+	</update>
+	
+	<update id="assureSendGoods" parameterClass="purchaseOrder">
+		update PurchaseOrder
+		set
+				logisticsSupplierId=#logisticsSupplierId#,
+				logisticsOrderId=#logisticsOrderId#,
+				sendAddressId=#sendAddressId#,
+				orderState=4
+		where purchaseOrderId=#purchaseOrderId#
+				
+	</update>
+	
+	<select id="getAllSuppliers" resultClass="com.model.Supplier">
+		select partnerId partnerId,
+			   partnerName partnerName
+	    from supplier
+	    where partnerType=1
+	</select>
+	
+	<update id="assuerGetGoods" parameterClass="string">
+		update purchaseOrder
+		set orderState=8
+		where purchaseOrderId=#value#
+	</update>
+	
+	<update id="assuerPayGoods" parameterClass="string">
+		update purchaseOrder
+		set orderState=9
+		where purchaseOrderId=#value#
+	</update>
+	
+	<select id="getCountByPOId" parameterClass="string" resultClass="int">
+		select count(purchaseOrderId)
+		from PurchaseOrder
+		where CPIId = (
+						select CPIId
+						from PurchaseOrder
+						where purchaseOrderId='2'
+		)
+		and orderState!=3
+		and orderState!=6
+		and orderState!=9
+		
+	</select>
+	
+	<update id="CPIIdComplete" parameterClass="string">
+		update centralizedPlanedPurchaseInfo
+		set centralizedPurchaseState=6
+		where cpPurchaseInfoId = (
+									select CPIId
+									from purchaseOrder
+									where purchaseOrderId=#value#
+		)
+	</update>
+	
+	<update id="SellOrderManageupdateProduct" parameterClass="hashmap">
+		update product
+		<dynamic prepend="set">
+			<isEqual property="flag" compareValue="发货">
+				number=number-#number#
+			</isEqual>
+			<isEqual property="flag" compareValue="收到退货">
+				number=number+#number#
+			</isEqual>
+		</dynamic>
+		where productId=#productId#
+	</update>
+	
+	<select id="insertPurchaseOrder" parameterClass="purchaseOrder" resultClass="int">
+		insert into 
+		purchaseOrder(purchaserId,
+					  orderState,
+					  deliverDate,
+					  receiveAddressId,
+					  fare,
+					  totalPrice,
+					  CPIId
+					  )values(
+					  #purchaserId#,
+					  #orderState#,
+					  #deliverDate#,
+					 #receiveAddressId#,
+					  #fare#,
+					  #totalPrice#,
+					  #CPIId#
+					  )
+		 select @@IDENTITY as purchaseOrderId
+		
+	</select>
+	
+	<insert id="insertPurchaseOrderDetail" parameterClass="hashmap">
+		insert into
+		purchaseOrderDetail(
+							purchaseOrderId,
+							productId,
+							measureUnit,
+							price,
+							number
+							)values(
+							#purchaseOrderId#,
+							#productId#,
+							#measureUnit#,
+							#price#,
+							#number#
+							)
+		
+	</insert>
+</sqlMap>

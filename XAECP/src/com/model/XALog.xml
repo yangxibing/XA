@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="XALog">
+	<typeAlias alias="xalog" type="com.model.XALog"/>
+	
+	<insert id="addXALog" parameterClass="xalog">
+		insert into XALog(
+			userId,
+			partnerId,
+			actorId,
+			loginTime,
+			remark
+		) values (
+			#userId#,
+			#partnerId#,
+			#actorId#,
+			#loginTime#,
+			#remark#		
+		)
+	</insert>
+	
+	<select id="getXAUserLogInfoByLog" parameterClass="xalog" resultClass="xalog">
+		select xalog.id id,
+			xalog.userId userId,
+			xauser.userName userName,
+			xalog.partnerId partnerId,
+			partner.partnerName partnerName,
+			xalog.actorId actorId,
+			actor.actorName actorName,
+			xalog.loginTime loginTime,
+			xalog.remark remark
+		from XALog xalog left join Actor actor on xalog.actorId = actor.actorId
+				left join XAUser xauser on xalog.userId = xauser.userId
+				left join Supplier partner on xalog.partnerId = partner.partnerId
+		<dynamic prepend="where">
+			<isNotEmpty property="id" prepend="and">
+				xalog.id = #id#
+			</isNotEmpty>
+			<isNotEmpty property="actorId" prepend="and">
+				xalog.actorId = #actorId#
+			</isNotEmpty>
+			<isNotEmpty property="partnerId" prepend="and">
+				xalog.partnerId = #partnerId#
+			</isNotEmpty>
+			<isNotEmpty property="userId" prepend="and">
+				xalog.userId = #userId#
+			</isNotEmpty>
+			<isNotEmpty property="beginTime" prepend="and">
+				<![CDATA[ loginTime >= #beginTimeDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+				<![CDATA[ loginTime <= #endTimeDate# ]]>
+			</isNotEmpty>
+		</dynamic>
+		order by xalog.id DESC
+	</select>
+	
+	<select id="xalogTotalCount" parameterClass="xalog" resultClass="int">
+		select count(1)
+		from XALog xalog
+		<dynamic prepend="where">
+			<isNotEmpty property="id" prepend="and">
+				xalog.id = #id#
+			</isNotEmpty>
+			<isNotEmpty property="actorId" prepend="and">
+				xalog.actorId = #actorId#
+			</isNotEmpty>
+			<isNotEmpty property="partnerId" prepend="and">
+				xalog.partnerId = #partnerId#
+			</isNotEmpty>
+			<isNotEmpty property="userId" prepend="and">
+				xalog.userId = #userId#
+			</isNotEmpty>
+			<isNotEmpty property="beginTime" prepend="and">
+				<![CDATA[ xalog.loginTime >= #beginTimeDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endTime" prepend="and">
+				<![CDATA[ xalog.loginTime <= #endTimeDate# ]]>
+			</isNotEmpty>
+		</dynamic>		
+	</select>
+</sqlMap>

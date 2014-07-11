@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>
+	
+	<package name="bbsUserManage" extends="struts-default">
+		
+	</package>
+	
+	<!-- 姜国强start -->
+	<package name="BBSReply" extends="struts-default">
+		<action name="bbsHomeReplyProcess" class="com.bbs.action.BBSReplyAction" method="bbsHomeReplyProcess">
+			<result name="success">/jsp/forumNew/forumContent.jsp</result>
+		</action>
+		<action name="bbsSubjectSearch" class="com.bbs.action.BBSReplyAction" method="bbsSubjectSearch">
+			<result name="success">/jsp/forumNew/forumSearch.jsp</result>
+		</action>
+		<action name="removeBBSSubject" class="com.bbs.action.BBSReplyAction" method="removeBBSSubject">
+			<result name="success">/jsp/forumNew/forumHome.jsp</result>
+		</action>
+		<action name="addBBSSubjectReply" class="com.bbs.action.BBSReplyAction" method="addBBSSubjectReply">
+			<result name="success">/jsp/forumNew/forumContent.jsp</result>
+		</action>
+		<action name="removeBBSSubjectReply" class="com.bbs.action.BBSReplyAction" method="removeBBSSubjectReply">
+			<result name="success">/jsp/forumNew/forumContent.jsp</result>
+		</action>
+		
+	</package>
+	<package name="ajaxBBSReply" extends="json-default">
+		<action name="bbsHomeNewSubjectList" class="com.bbs.action.BBSReplyAction" method="bbsHomeNewSubjectList">
+			<result name="list" type="json"></result>
+		</action>
+		<action name="bbsHomeHotSubjectList" class="com.bbs.action.BBSReplyAction" method="bbsHomeHotSubjectList">
+			<result name="list" type="json"></result>
+		</action>
+		<action name="bbsHomeRecommendSubjectList" class="com.bbs.action.BBSReplyAction" method="bbsHomeRecommendSubjectList">
+			<result name="list" type="json"></result>
+		</action>
+		<action name="bbsMoreNewSubjectList" class="com.bbs.action.BBSReplyAction" method="bbsMoreNewSubjectList">
+			<result name="list" type="json"></result>
+		</action>
+		<action name="bbsMoreHotSubjectList" class="com.bbs.action.BBSReplyAction" method="bbsMoreHotSubjectList">
+			<result name="list" type="json"></result>
+		</action>
+		<action name="submitBBSReply" class="com.bbs.action.BBSReplyAction" method="submitBBSReply">
+			<result name="bbsReply" type="json"></result>
+		</action>
+		<action name="recommendSubject" class="com.bbs.action.BBSReplyAction" method="recommendSubject">
+			<result type="json"></result>
+		</action>
+		<action name="cancelRecommendSubject" class="com.bbs.action.BBSReplyAction" method="cancelRecommendSubject">
+			<result type="json"></result>
+		</action>
+	</package>
+	<!-- 姜国强end -->
+	
+	<package name="bbsJSON" extends="json-default">
+		<action name="checkUserAccount" class="com.bbs.action.UserManageActionBBS" method="checkUserAccount">
+			<result name="checkResult" type="json"></result>
+		</action>
+		
+		<action name="BBSUserLogin" class="com.bbs.action.UserManageActionBBS" method="bbsUserLogin">
+			<result name="login" type="json"></result>
+		</action>
+		
+		<action name="BBSUserLogout" class="com.bbs.action.UserManageActionBBS" method="bbsUserLogout">
+			<result name="logout" type="json"></result>
+		</action>	
+		
+		<action name="publishForum" class="com.bbs.action.ForumManageAction" method="publishForum">
+			<result name="publish" type="json"></result>
+		</action>
+		
+		<action name="BBSUserRegister" class="com.bbs.action.UserManageActionBBS"
+			method="registerUser">
+			<result name="success" type="json"></result>
+		</action>
+	</package>
+</struts>

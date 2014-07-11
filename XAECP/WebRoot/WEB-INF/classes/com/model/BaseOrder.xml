@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="baseOrder">
+	<typeAlias alias="baseOrder" type="com.model.BaseOrder"/>
+	<select id="listSupplierOrders" parameterClass="baseOrder" resultClass="baseOrder">
+		select 
+				t1.baseOrderId baseOrderId,
+				t1.supplierId supplierId,
+				t2.partnerName supplierName,
+				t1.deposit deposit,
+				t1.orderState orderState,
+				t1.deliverDate deliverDate,
+				t1.fare fare,
+				t1.totalPrice totalPrice,
+				t1.CPIId CPIId,
+				t1.PPIId PPIId,
+				t1.logisticsSupplierId logisticsSupplierId,
+				t1.actualRefund actualrefund,
+				t1.receiveAddressId receiveAddress,
+				t1.sendAddressId sendAddressId
+		from BaseOrder t1,supplier t2
+		where t1.supplierId=t2.partnerId
+		<dynamic>
+			<isNotEmpty property = "orderState" prepend="and">
+				t1.orderState=#orderState#
+			</isNotEmpty>
+			<isNotEmpty property="CPIId" prepend="and">
+				CPIId=#CPIId#
+			</isNotEmpty>
+			<isNotEmpty property="baseOrderId" prepend="and">
+				baseOrderId=#baseOrderId#
+			</isNotEmpty>
+			<isNotNull property="supplierId" prepend="and">
+				supplierId=#supplierId#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<select id="supplierOrderTotalCount" parameterClass="baseOrder" resultClass="int">
+		select count(1)
+		from BaseOrder t1,supplier t2
+		where t1.supplierId=t2.partnerId
+		<dynamic>
+			<isNotEmpty property = "orderState" prepend="and">
+				t1.orderState=#orderState#
+			</isNotEmpty>
+			<isNotEmpty property="CPIId" prepend="and">
+				CPIId=#CPIId#
+			</isNotEmpty>
+			<isNotEmpty property="baseOrderId" prepend="and">
+				baseOrderId=#baseOrderId#
+			</isNotEmpty>
+			<isNotNull property="supplierId" prepend="and">
+				supplierId=#supplierId#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<select id="getProductBySupplierId" parameterClass="string" resultClass="com.model.SupplierProduct">
+		select productId productId,
+			   productName productName,
+			   measureUnit measureUnit,
+			   basePrice basePrice
+	    from supplierProduct
+	    where supplierId=#value#
+	</select>
+	
+	<select id="selectProductByPId" parameterClass="string" resultClass="com.model.SupplierProduct">
+		select	 productId productId,
+			   productName productName,
+			   measureUnit measureUnit,
+			   basePrice basePrice
+		from supplierProduct
+		where productId=#value#
+	</select>
+	
+	<update id="updateBaseOrder" parameterClass="baseOrder">
+		update baseOrder
+		set deposit=#deposit#
+			,fare=#fare#
+			,totalPrice=#totalPrice#
+		where baseOrderId=#baseOrderId#
+	</update>
+	
+	<select id="selectProductCount" parameterClass="hashmap" resultClass="int">
+		select count(*)
+		from baseOrderDetail
+		where baseOrderId=#baseOrderId#
+			and productId=#productId#
+	</select>
+	<update id="updateBaseOrderDetail" parameterClass="hashmap">
+		update baseOrderDetail
+		set price=#price#
+		where baseOrderId=#baseOrderId#
+			 and  productId=#productId#
+	</update>
+	
+	<insert id="insertBaseOrderDetail" parameterClass="hashmap">
+		insert into 
+		baseOrderDetail(baseOrderId,productId,price,number,measureUnit)
+		values(#baseOrderId#,#productId#,#price#,#number#,#measureUnit#)
+		
+	</insert>
+	
+	<select id="assureForm" parameterClass="string" resultClass="baseOrder">
+		select 
+				t1.baseOrderId baseOrderId,
+				t1.supplierId supplierId,
+				t2.partnerName supplierName,
+				t1.deposit deposit,
+				t1.orderState orderState,
+				t1.deliverDate deliverDate,
+				t1.fare fare,
+				t1.totalPrice totalPrice,
+				t1.CPIId CPIId,
+				t1.PPIId PPIId,
+				t1.logisticsSupplierId logisticsSupplierId,
+				t1.actualRefund actualrefund,
+				t1.receiveAddressId receiveAddress,
+				t1.sendAddressId sendAddressId
+		from BaseOrder t1,supplier t2
+		where baseOrderId=#value#
+			and t1.supplierId=t2.partnerId
+	</select>
+	
+	<update id="assureSendGoods" parameterClass="baseOrder">
+		update BaseOrder
+		set
+				logisticsSupplierId=#logisticsSupplierId#,
+				logisticsOrderId=#logisticsOrderId#,
+				sendAddressId=#sendAddressId#,
+				orderState=4
+		where baseOrderId=#baseOrderId#
+				
+	</update>
+	
+	<update id="assuerGetReturnGoods" parameterClass="hashmap">
+		update baseOrder
+		set orderState=#state#
+		where baseOrderId=#baseOrderId#
+	</update>
+	
+	<update id="updateActualRefund" parameterClass="baseOrder">
+		update baseOrder
+		set actualRefund=#actualRefund#
+		where baseOrderId=#baseOrderId#
+	</update>
+</sqlMap>

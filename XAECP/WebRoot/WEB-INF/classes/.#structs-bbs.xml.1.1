@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>
+	<package name="bbsUserManage" extends="struts-default">
+		<action name="BBSUserRegister" class="com.bbs.action.UserManageAction" method="registerUser">
+			<result name="success">/jsp/formNew/forumHome.jsp</result>
+		</action>		
+	</package>
+	
+	<!-- 姜国强start -->
+	<package name="BBSReply" extends="struts-default">
+		<action name="bbsHomeReplyProcess" class="com.bbs.action.BBSReplyAction" method="bbsHomeReplyProcess">
+			<result name="success">/jsp/forumNew/forumContent.jsp</result>
+		</action>
+	</package>
+	<package name="ajaxBBSReply" extends="json-default">
+		<action name="bbsHomeNewSubjectList" class="com.bbs.action.BBSReplyAction" method="bbsHomeNewSubjectList">
+			<result name="list" type="json"></result>
+		</action>
+		<action name="bbsHomeHotSubjectList" class="com.bbs.action.BBSReplyAction" method="bbsHomeHotSubjectList">
+			<result name="list" type="json"></result>
+		</action>
+		<action name="submitBBSReply" class="com.bbs.action.BBSReplyAction" method="submitBBSReply">
+			<result name="bbsReply" type="json"></result>
+		</action>
+	</package>
+	<!-- 姜国强end -->
+	
+</struts>

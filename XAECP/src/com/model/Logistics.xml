@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="logistics">
+	<typeAlias alias="logistics" type="com.model.Supplier"/>
+	
+	<!--  
+	<resultMap id="resultLogistics" class="com.model.Supplier">
+		<result property="partnerId" column="partnerId" />
+		<result property="partnerName" column="partnerName" />
+		<result property="firstAddress" column="firstAddress" />
+		<result property="secondAddress" column="secondAddress" />
+		<result property="country" column="country" />
+		<result property="province" column="province" />
+		<result property="city" column="city" />
+		<result property="website" column="website" />
+		<result property="introduction" column="introduction" />
+		<result property="partnerLevel" column="partnerLevel" nullValue="0"/>
+		<result property="blackList" column="blackList" nullValue="false"/>
+		<result property="contactPerson" column="contactPerson" />
+		<result property="telephone" column="telephone" />
+		<result property="fax" column="fax" />
+		<result property="email" column="email" />
+		<result property="zipCode" column="zipCode" />	
+	</resultMap>
+	-->
+	
+	<resultMap id="resultLogistics" class="com.model.Supplier">
+		<result property="partnerId" column="partnerId" />
+		<result property="partnerName" column="partnerName" />
+		<result property="partnerType" column="partnerType" nullValue="0"/>
+		<result property="partnerLevel" column="partnerLevel" nullValue="0"/>
+		<result property="orderRate" column="orderRate" nullValue="0.0"/>
+		<result property="integrity" column="integrity" nullValue="true"/>
+		<result property="blackList" column="blackList" nullValue="false"/>
+		<result property="firstAddress" column="firstAddress" />
+		<result property="secondAddress" column="secondAddress" />
+		<result property="city" column="city" />
+		<result property="province" column="province" />
+		<result property="country" column="country" />
+		<result property="contactPerson" column="contactPerson" />
+		<result property="telephone" column="telephone" />
+		<result property="fax" column="fax" />
+		<result property="email" column="email" />
+		<result property="zipCode" column="zipCode" />
+		<result property="website" column="website" />
+		<result property="integrityLevel" column="integrityLevel" nullValue="0"/>
+		<result property="introduction" column="introduction" />
+	</resultMap>	
+	
+	
+	<select id="listLogistics" parameterClass="logistics" resultMap="resultLogistics">
+		select partnerId partnerId,
+			partnerName partnerName,
+			partnerType partnerType,
+			partnerLevel partnerLevel,
+			orderRate orderRate,
+			integrity integrity,
+			blackList blackList,
+			firstAddress firstAddress,
+			secondAddress secondAddress,
+			city city,
+			province province,
+			country country,
+			contactPerson contactPerson,
+			telephone telephone,
+			fax fax,
+			email email,
+			zipCode zipCode,
+			website website,
+			integrityLevel integrityLevel,
+			introduction introduction
+	    from Supplier	
+		<dynamic prepend="where">
+			<isNotEmpty property="partnerType" prepend="and">
+				partnerType=#partnerType#
+			</isNotEmpty>
+			<isNotEmpty property="partnerId" prepend="and">
+				partnerId=#partnerId#
+			</isNotEmpty>
+			<isNotEmpty property="partnerName" prepend="and">
+				partnerName LIKE '%$partnerName$%'
+			</isNotEmpty>
+			<isNotEmpty property="city" prepend="and">
+				city=#city#
+			</isNotEmpty>
+			<isNotNull property="partnerLevel" prepend="and">
+				partnerLevel=#partnerLevel#
+			</isNotNull>
+			<isNotNull property="blackList" prepend="and">
+				blackList=#blackList#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<select id="logisticsTotalCount" resultClass="int">
+		select count(1)
+		from Supplier
+		<dynamic prepend="where">
+			<isNotEmpty property="partnerType" prepend="and">
+				partnerType=#partnerType#
+			</isNotEmpty>
+			<isNotEmpty property="partnerId" prepend="and">
+				partnerId=#partnerId#
+			</isNotEmpty>
+			<isNotEmpty property="partnerName" prepend="and">
+				partnerName LIKE '%$partnerName$%'
+			</isNotEmpty>
+			<isNotEmpty property="city" prepend="and">
+				city=#city#
+			</isNotEmpty>
+			<isNotNull property="partnerLevel" prepend="and">
+				partnerLevel=#partnerLevel#
+			</isNotNull>
+			<isNotNull property="blackList" prepend="and">
+				blackList=#blackList#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	
+	<insert id="addLogistics" parameterClass="logistics">
+		insert into Supplier
+		(
+			partnerId,
+			partnerName,
+			partnerType,
+			partnerLevel,
+			firstAddress,
+			secondAddress,
+			country,
+			province,
+			city,
+			website,
+			introduction,
+			blackList,
+			contactPerson,
+			telephone,
+			fax,
+			email,
+			zipCode
+		)  values
+		(
+			#partnerId#,
+			#partnerName#,
+			#partnerType#,
+			#partnerLevel#,
+			#firstAddress#,
+			#secondAddress#,
+			#country#,
+			#province#,
+			#city#,
+			#website#,
+			#introduction#,
+			#blackList#,
+			#contactPerson#,
+			#telephone#,
+			#fax#,
+			#email#,
+			#zipCode#
+		)
+	</insert>
+	
+	<delete id="deleteLogistics" parameterClass="String">
+		delete from Supplier
+		where partnerId = #value#
+	</delete>
+	
+	<update id="updateLogistics" parameterClass="logistics">
+		update Supplier set 
+			partnerId = #partnerId#,
+			partnerName = #partnerName#,
+			partnerLevel = #partnerLevel#,
+			firstAddress = #firstAddress#,
+			secondAddress = #secondAddress#,
+			country = #country#,
+			province = #province#,
+			city = #city#,
+			website = #website#,
+			introduction = #introduction#,
+			blackList = #blackList#,
+			contactPerson = #contactPerson#,
+			telephone = #telephone#,
+			fax = #fax#,
+			email = #email#,
+			zipCode = #zipCode#
+		where partnerId = #partnerId#
+	</update>
+	
+	<select id="getLogisticsById" parameterClass="String" resultMap="resultLogistics">
+		select partnerId partnerId,
+			partnerName partnerName,
+			partnerType partnerType,
+			partnerLevel partnerLevel,
+			orderRate orderRate,
+			integrity integrity,
+			blackList blackList,
+			firstAddress firstAddress,
+			secondAddress secondAddress,
+			city city,
+			province province,
+			country country,
+			contactPerson contactPerson,
+			telephone telephone,
+			fax fax,
+			email email,
+			zipCode zipCode,
+			website website,
+			integrityLevel integrityLevel,
+			introduction introduction
+		from Supplier
+		where partnerId = #value#
+	</select>
+</sqlMap>

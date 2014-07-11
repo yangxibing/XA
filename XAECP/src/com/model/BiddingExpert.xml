@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="biddingExpert">
+	<typeAlias alias="expert" type="com.model.BiddingExpert"/>
+	
+	<insert id="addExpert" parameterClass="expert">
+		insert into BiddingExpert
+		(
+			expertId,
+			expertName,
+			birthday,
+			workUnit,
+			title,
+			personalProfile,
+			photograph,
+			telephone,
+			fax,
+			email,
+			website
+		)  values
+		(
+			#expertId#,
+			#expertName#,
+			#birthday#,
+			#workUnit#,
+			#title#,
+			#personalProfile#,
+			#photograph#,
+			#telephone#,
+			#fax#,
+			#email#,
+			#website#
+		)
+	</insert>
+	
+	<update id="updateExpert" parameterClass="expert">
+		update BiddingExpert set 
+			expertId = #expertId#,
+			expertName  = #expertName#,
+			birthday = #birthday#,
+			workUnit = #workUnit#,
+			title = #title#,
+			personalProfile = #personalProfile#,
+			<dynamic>
+				<isNotEmpty property="photograph" close=",">
+					photograph = #photograph#
+				</isNotEmpty>
+			</dynamic>
+			telephone = #telephone#,
+			fax = #fax#,
+			email = #email#,
+			website = #website#
+		where expertId = #expertId#
+	</update>
+	
+	<select id="queryExpert" parameterClass="expert" resultClass="expert">
+		select expertId expertId,
+			expertName expertName,
+			birthday birthday,
+			workUnit workUnit,
+			title title,
+			personalProfile personalProfile,
+			photograph photograph,
+			telephone telephone,
+			fax fax,
+			email email,
+			website website
+	    from BiddingExpert	
+		<dynamic prepend="where">
+			<isNotEmpty property="workUnit" prepend="and">
+				workUnit=#workUnit#
+			</isNotEmpty>
+			<isNotEmpty property="title" prepend="and">
+				title=#title#
+			</isNotEmpty>
+			<isNotEmpty property="beginDate" prepend="and">
+				<![CDATA[ birthday > #beginDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endDate" prepend="and">
+				<![CDATA[ birthday <= #endDate# ]]>
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="purchaserTotalCount" parameterClass="expert" resultClass="int">
+		select count(1)
+		from BiddingExpert
+		<dynamic prepend="where">
+			<isNotEmpty property="workUnit" prepend="and">
+				workUnit=#workUnit#
+			</isNotEmpty>
+			<isNotEmpty property="title" prepend="and">
+				title=#title#
+			</isNotEmpty>
+			<isNotEmpty property="beginDate" prepend="and">
+				<![CDATA[ birthday > #beginDate# ]]>
+			</isNotEmpty>
+			<isNotEmpty property="endDate" prepend="and">
+				<![CDATA[ birthday <= #endDate# ]]>
+			</isNotEmpty>
+		</dynamic>			
+	</select>
+	
+	<select id="getExpertById" parameterClass="string" resultClass="expert">
+		select expertId expertId,
+			expertName expertName,
+			birthday birthday,
+			workUnit workUnit,
+			title title,
+			personalProfile personalProfile,
+			photograph photograph,
+			telephone telephone,
+			fax fax,
+			email email,
+			website website
+	    from BiddingExpert	
+		where expertId = #value#
+	</select>
+	
+	<delete id="deleteExpertById" parameterClass="String">
+		delete from BiddingExpert
+		where expertId = #value#
+	</delete>
+	
+</sqlMap>

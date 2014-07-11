@@ -1,0 +1,52 @@
+@charset "utf-8";
+/* CSS Document */
+
+#left{ margin-right:5px;}
+#transactionCnt{ float:right; background-color:#FFF; width:798PX; height:250px;margin-bottom:4px; border: solid #A0CFFE; border-width:0 1px 1px 1px; height:510px;}
+#transactionCnt .forumTable{ width:770px; margin-left:10px; height:500px;}
+#transactionCnt .forumTable .LEFTTD{ width:10PX;}
+#transactionCnt .forumTable .MIDDLETD{ display:block; width:660PX; text-align:left; white-space:pre;overflow:hidden; text-overflow:ellipsis;}
+#transactionCnt .forumTable .RIGHTTD{ width:100PX; text-align:right; padding-right:5PX; font-size:12px;color:#444;}
+#foot {width:800px; text-align:right;}
+#foot ul{ list-style-type:none; clear:both; text-align:right; float:right; width:200px; margin-bottom:10px;}
+#foot ul li{ float:left; padding-left:5px; padding-right:5px;}
+#foot ul li a{ color:#0060BF;}
+#foot ul li a:hover{ color:#F60; text-decoration:underline;}
+
+#lead{ font-size:12px; height:17px; margin-bottom:5px;}
+#lead span a{text-decoration:none; font-size:12PX; vertical-align:baseline; font-weight:bold; color:#06C;}
+#lead span a:hover{color:#F33; text-decoration:underline;}
+.fatherList{ display:block; line-height:14px; position:relative; list-style-type:none; padding:0; margin:0; width:60px; height:15px; text-align:left; vertical-align:middle; background-color:#E1F0FF; border:1px solid #B5DAFF; z-index:9999;}
+.fatherList li{ display:block; height:15px; line-height:15px;}
+.subList{ padding:0; margin:0; display:none; position:absolute;top:16px; z-index:9998; list-style-type:none;left:-1px; text-align:left;}
+*html .subList{left:-1;top:15px;}
+*+html .subList{left:-1;top:15px;}
+.subList li{ display:block; width:60px; background-color:#E1F0FF;  border:#B5DAFF solid; border-width:0 1px 1px 1px;}
+.subList li a{padding:3px; font-weight:normal;}
+#back{ height:15px; float:left;}
+
+
+
+.FORUM{ width:1003px; border:1px solid #A0CFFE; margin-bottom:5px; clear:both;}
+.forumInfo{ width:150px; height:auto; border-right:1px solid #A0CFFE;text-align:center; vertical-align:top;}
+#userInfo{width:120px; height:auto; margin-top:10px;margin-left:auto;margin-right:auto; text-align:left; font-size:12px;}
+#userInfo p{ margin-bottom:3px;}
+.forumTitle{ width:850px; height:20px; font-size:12px; border-bottom:1px solid #A0CFFE;}
+.forumTitle .FLOATLEFT{ padding-left:5PX;}
+.forumTitle .FLOATRIGHT{ padding-right:5PX;}
+.forumTitle .LOUZHU{ float:right; font-weight:bold;padding-right:5PX;}
+.forumContent{ width:850px; height:180px; padding:10PX; vertical-align:top; text-align:left; padding-top:20PX;}
+.forumContent img{ max-width:800px; _width:expression(this.scrollWidth>800?"800px":"auto");}
+*html .forumContent{ height:150px;}
+.forumFoot{ width:850px; height:20px; border-top:1px solid #A0CFFE; font-size:12px;}
+.forumFoot .FLOATLEFT{ padding-left:5PX;}
+.forumFoot ul{ list-style-type:none;}
+.forumFoot ul li{ font-family:Tahoma, Geneva, sans-serif; float:left; padding-left:5px; padding-right:5px; line-height:15PX; vertical-align:bottom; border-right:1PX solid #999;}
+.forumFoot ul .LASTLI{ border-right:none;}
+
+
+#response{ width:1003px; border:1px solid #A0CFFE; margin-bottom:10px;}
+#response td{ padding-left:30px; padding-top:2px; padding-bottom:2px;}
+#nextPage{ width:1003px; text-align:right; padding-right:5px; font-size:12px; padding-top:3px; padding-bottom:5px;}
+#nextPage a{ text-decoration:underline; color:#0060BF;}
+#nextPage a:hover{color:#F60; text-decoration:underline;}

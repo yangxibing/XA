@@ -1,0 +1,9 @@
+@charset "utf-8";
+/* CSS Document */
+
+#contentTab{ width:950px; text-align:left;}
+#contentTab .TITLE td{border-bottom:1px dotted #CCC; font-size:12px; font-weight:bold; color:#888;}
+#contentTab .CNT1{ display:block; border-bottom:1px dotted #CCC; border-right:1px dotted #CCC; border-left:1px dotted #CCC; width:620px;white-space:pre;overflow:hidden; text-overflow:ellipsis;}
+#contentTab .CNT2{ border-bottom:1px dotted #CCC; border-right:1px dotted #CCC; font-size:12px; width:110px;}
+#contentTab .CNT3{ border-bottom:1px dotted #CCC; border-right:1px dotted #CCC; font-size:12px; width:110px;}
+#contentTab .CNT4{ border-bottom:1px dotted #CCC; border-right:1px dotted #CCC; font-size:12px; width:110px; display:block;white-space:pre;overflow:hidden; text-overflow:ellipsis;}

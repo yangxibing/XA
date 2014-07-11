@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>	
+	
+	<!-- main.action -->
+	<package name="baseInformation" extends="struts-default">
+<!-- 姜国强  start -->
+		<!-- 价格行情发布管理 -->
+		<action name="queryPriceQuotation" class="com.baseInformation.action.BaseInformationAction" method="queryPriceQuotation">
+			<result name="success">/jsp/baseInformation/priceQuotationManage.jsp</result>
+		</action>
+		
+		<action name="addPriceQuotation" class="com.baseInformation.action.PriceQuotationAction" method="addPriceQuotation">
+			<result name="success">/jsp/baseInformation/priceQuotationManage.jsp</result>
+		</action>
+		
+		<action name="updatePriceQuotation" class="com.baseInformation.action.PriceQuotationAction" method="updatePriceQuotation">
+			<result name="success">/jsp/baseInformation/priceQuotationManage.jsp</result>
+		</action>
+		<action name="deletePriceQuotation" class="com.baseInformation.action.PriceQuotationAction" method="deletePriceQuotation">
+			<result name="success">/jsp/baseInformation/priceQuotationManage.jsp</result>
+		</action>
+		
+		<action name="quotationInformation" class="com.baseInformation.action.BaseInformationAction" method="queryPriceQuotation">
+			<result name="success">/jsp/baseInformation/quotationInformation.jsp</result>
+		</action>
+		
+		<!-- 新闻/公告发布管理 -->
+		<action name="queryNewsBulletin" class="com.baseInformation.action.NewsBulletinAction" method="queryNewsBulletin">
+			<result name="success">/jsp/baseInformation/newsBulletinManage.jsp</result>
+		</action>
+		<action name="deleteNewsBulletin" class="com.baseInformation.action.NewsBulletinAction" method="deleteNewsBulletin">
+			<result name="success">/jsp/baseInformation/newsBulletinManage.jsp</result>
+		</action>
+		<action name="addNewsBulletin" class="com.baseInformation.action.NewsBulletinAction" method="addNewsBulletin">
+			<result name="success">/jsp/baseInformation/newsBulletinManage.jsp</result>
+		</action>
+		<action name="updateNewsBulletin" class="com.baseInformation.action.NewsBulletinAction" method="updateNewsBulletin">
+			<result name="success">/jsp/baseInformation/newsBulletinManage.jsp</result>
+		</action>
+		<action name="queryNewsBulletinInfo" class="com.baseInformation.action.NewsBulletinAction" method="queryNewsBulletinInfo">
+			<result name="success">/jsp/baseInformation/newsBulletinInfo.jsp</result>
+		</action>
+		<action name="homeNewsBulletinMore" class="com.baseInformation.action.NewsBulletinAction" method="homeNewsBulletinMore">
+			<result name="success">/jsp/baseInformation/homeNewsBulletinMore.jsp</result>
+		</action>
+		<action name="homeNewsBulletinSearch" class="com.baseInformation.action.NewsBulletinAction" method="homeNewsBulletinSearch">
+			<result name="success">/jsp/baseInformation/homeNewsBulletinMore.jsp</result>
+		</action>
+<!-- 姜国强  end -->
+	</package>
+
+<!-- 姜国强  start -->	
+	<package name="ajaxBase" extends="json-default">
+		<action name="getQuotationAddList" class="com.baseInformation.action.PriceQuotationAction" method="queryQuotationAddList">
+			<result type="json"></result>
+		</action>
+		<action name="homePriceQuotationList" class="com.baseInformation.action.PriceQuotationAction" method="homePriceQuotationList">
+			<result type="json" name="list"></result>
+		</action>
+	</package>
+	<package name="ajaxQuotation" extends="json-default">
+		<action name="getPriceQuotationById" class="com.baseInformation.action.BaseInformationAction" method="getPriceQuotationById">
+			<result type="json"></result>
+		</action>		
+	</package>
+	<package name="ajaxNewsBulletin" extends="json-default">
+		<action name="queryNewsBulletinById" class="com.baseInformation.action.NewsBulletinAction" method="queryNewsBulletinById">
+			<result type="json" name="newsAjax"></result>
+		</action>
+		<action name="homeNewsBulletinList" class="com.baseInformation.action.NewsBulletinAction" method="homeNewsBulletinList">
+			<result type="json" name="list"></result>
+		</action>
+	</package>
+<!-- 姜国强  end -->
+
+</struts>

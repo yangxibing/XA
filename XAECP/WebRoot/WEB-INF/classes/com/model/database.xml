@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="database">
+	<select id="backup" parameterClass="string">
+		BACKUP DATABASE "b" TO DISK =#value# with init
+	</select>
+	<select id="restore" parameterClass="string">
+		RESTORE DATABASE "b" FROM DISK=#value# with replace
+	</select>
+</sqlMap>

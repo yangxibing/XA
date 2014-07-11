@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap >
+	<typeAlias alias="purchaseOrderDetail" type="com.model.PurchaseOrderDetail"/>
+	<select id="selectProducts" resultClass="purchaseOrderDetail" parameterClass="string">
+		select 
+				
+				purchaseOrderId purchaseOrderId,
+				productId productId,
+				price price,
+				number number,
+				measureUnit measureUnit,
+				returnNumber returnNumber,
+				score score
+		from PurchaseOrderDetail
+		where purchaseOrderId=#value#
+				
+	</select>
+</sqlMap>

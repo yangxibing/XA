@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="supplierProduct">
+	<typeAlias alias="supplierProduct" type="com.model.SupplierProduct"/>
+	<!-- 王永康============================================== -->
+	<select id="productDetail" parameterClass="hashmap" resultClass="supplierProduct">
+		select s1.productId productId,
+			   s1.productName productName,
+			   p1.productTypeName productTypeName,
+			   s1.format format,
+			   s1.basePrice basePrice,
+			   s1.measureUnit measureUnit,
+			   s1.supplierId supplierId
+		from supplierProduct s1, productType p1
+		where s1.supplierId=#partnerId#
+			and s1.productTypeId = p1.productTypeId
+	</select>
+	
+	<insert id="addSupplierProduct" parameterClass="supplierProduct">
+		insert into 
+		supplierProduct(
+						productId,
+						productName,
+						supplierId,
+						productTypeId,
+						basePrice,
+						measureUnit,
+						format,
+						remark
+						)
+		values(	
+						#productId#,
+						#productName#,
+						#supplierId#,
+						#productTypeId#,
+						#basePrice#,
+						#measureUnit#,
+						#format#,
+						#remark#
+				)
+		
+	</insert>
+	
+	<select id="selectSupplierProduct" parameterClass="hashmap" resultClass="supplierProduct">
+		select	
+				sp.productId productId,
+				sp.productName productName,
+				sp.productTypeId productTypeId,
+				pt.productTypeName productTypeName,
+				sp.format format,
+				sp.basePrice basePrice,
+				sp.measureUnit measureUnit,
+				sp.remark remark
+		from SupplierProduct sp left join ProductType pt on sp.productTypeId = pt.productTypeId
+		where productId=#productId#
+	</select>
+	
+	<update id="updateSupplierProduct" parameterClass="supplierProduct">
+		update supplierProduct
+		set 
+				productName =#productName#,
+				productTypeId =#productTypeId#,
+				format =#format#,
+				basePrice =#basePrice#,
+				measureUnit =#measureUnit#,
+				remark =#remark#
+		where productId=#productId#
+	</update>
+	
+	<select id="selectProductBySupplierId" parameterClass="supplierProduct" resultClass="supplierProduct">
+		select 
+						productId productId,
+						productName productName,
+						supplierId supplierId,
+						productTypeId productTypeId,
+						basePrice basePrice,
+						measureUnit measureUnit,
+						format format,
+						remark remark	
+		from	supplierProduct
+		<dynamic prepend="where">
+			<isNotNull property="supplierId" prepend="and">
+				supplierId=#supplierId#
+			</isNotNull>
+			<isNotNull property="productId" prepend="and">
+				productId=#productId#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<select id="getSupplierProductByProductId" parameterClass="String" resultClass="supplierProduct">
+		select 
+						productId productId,
+						productName productName,
+						supplierId supplierId,
+						productTypeId productTypeId,
+						basePrice basePrice,
+						measureUnit measureUnit,
+						format format,
+						remark remark	
+		from	supplierProduct
+		where   productId=#productId#
+	</select>
+	
+		<delete id="deleteSupplierProduct" parameterClass="hashmap">
+		delete from supplierProduct
+		where productId=#productId#
+	</delete>
+	
+	<select id="listSupplierProduct" parameterClass="supplierProduct" resultClass="supplierProduct">
+		select s1.productId productId,
+			   s1.productName productName,
+			   p1.productTypeName productTypeName,
+			   s1.format format,
+			   s1.basePrice basePrice,
+			   s1.measureUnit measureUnit,
+			   s1.supplierId supplierId
+		from supplierProduct s1, productType p1
+		where s1.productTypeId = p1.productTypeId
+		<dynamic>
+			<isNotEmpty property="productId" prepend="and">
+				s1.productId=#productId#
+			</isNotEmpty> 
+			<isNotEmpty property="productName" prepend="and">
+				s1.productName=#productName#
+			</isNotEmpty> 
+			<isNotEmpty property="supplierId" prepend="and">
+				s1.supplierId=#supplierId#
+			</isNotEmpty> 	
+		</dynamic>
+	</select>
+	
+	
+	<select id="supplierProductTotalCount" parameterClass="supplierProduct" resultClass="int">
+		select count(1)
+		from	supplierProduct
+		<dynamic  prepend=" where ">
+			<isNotEmpty property="productId" prepend="and">
+				productId=#productId#
+			</isNotEmpty> 
+			<isNotEmpty property="productName" prepend="and">
+				productName=#productName#
+			</isNotEmpty> 
+			<isNotEmpty property="supplierId" prepend="and">
+				supplierId=#supplierId#
+			</isNotEmpty> 
+		</dynamic>
+	</select>
+	<!-- ============================================ -->
+	
+	<select id="querySupplierProductList" resultClass="com.model.SupplierProduct">
+		select sp.productId productId,
+			sp.productName productName,
+			sp.supplierId supplierId,
+			su.partnerName supplierName,
+			sp.productTypeId productTypeId,
+			sp.basePrice basePrice,
+			sp.measureUnit measureUnit,
+			sp.format format,
+			sp.remark remark
+		from SupplierProduct sp left join Supplier su on sp.supplierId = su.partnerId
+	</select>
+	
+	<select id="querySupplierProductListForS" parameterClass="string" resultClass="com.model.SupplierProduct">
+		select sp.productId productId,
+			sp.productName productName,
+			sp.supplierId supplierId,
+			su.partnerName supplierName,
+			sp.productTypeId productTypeId,
+			sp.basePrice basePrice,
+			sp.measureUnit measureUnit,
+			sp.format format,
+			sp.remark remark
+		from SupplierProduct sp left join Supplier su on sp.supplierId = su.partnerId
+		where sp.supplierId = #value#
+	</select>
+	
+	<select id="listProduct" parameterClass="supplierProduct" resultClass="supplierProduct">
+			<dynamic>
+				<isNotEmpty property="productTypeId">
+					<![CDATA[ 
+						declare @idtable table(id varchar(10), level int)
+						declare @level int
+						set @level = 1
+						insert into @idtable select #productTypeId#, @level
+						while @@rowcount > 0
+							begin
+								set @level = @level + 1
+								insert into @idtable
+									select a.productTypeId, @level
+									from ProductType a, @idtable b
+									where a.parentProductTypeId = b.id and b.level = @level - 1
+							end
+					]]>				
+				</isNotEmpty>
+			</dynamic>	
+		select sp.productId productId, 
+			sp.productName productName,
+			sp.supplierId supplierId,
+			su.partnerName supplierName,
+			sp.productTypeId productTypeId,
+			pt.productTypeName productTypeName,
+			sp.basePrice basePrice,
+			sp.measureUnit measureUnit,
+			sp.format format,
+			sp.remark remark,
+			p.number baseNumber
+		from SupplierProduct sp left join ProductType pt on sp.productTypeId = pt.productTypeId
+							left join Supplier su on sp.supplierId = su.partnerId
+							left join Product p on sp.productId = p.productId
+								<dynamic>
+									<isNotEmpty property="productTypeId" prepend=",">
+										@idtable tb
+									</isNotEmpty>
+								</dynamic>							
+		<dynamic prepend="where">
+			<isNotEmpty property="supplierName" prepend="and">
+				su.partnerName LIKE '%$supplierName$%'
+			</isNotEmpty>
+			<isNotEmpty property="productTypeId" prepend="and">
+				sp.productTypeId = tb.id
+			</isNotEmpty>
+			<isNotEmpty property="productName" prepend="and">
+				sp.productName LIKE '%$productName$%'
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="productTotalCount" resultClass="int">
+			<dynamic>
+				<isNotEmpty property="productTypeId">
+					<![CDATA[ 
+						declare @idtable table(id varchar(10), level int)
+						declare @level int
+						set @level = 1
+						insert into @idtable select #productTypeId#, @level
+						while @@rowcount > 0
+							begin
+								set @level = @level + 1
+								insert into @idtable
+									select a.productTypeId, @level
+									from ProductType a, @idtable b
+									where a.parentProductTypeId = b.id and b.level = @level - 1
+							end
+					]]>				
+				</isNotEmpty>
+			</dynamic>	
+		select count(1)
+		from SupplierProduct sp
+								<dynamic>
+									<isNotEmpty property="productTypeId" prepend=",">
+										@idtable tb
+									</isNotEmpty>
+								</dynamic>							
+		<dynamic prepend="where">
+			<isNotEmpty property="supplierName" prepend="and">
+				su.partnerName LIKE '%$supplierName$%'
+			</isNotEmpty>
+			<isNotEmpty property="productTypeId" prepend="and">
+				sp.productTypeId = tb.id
+			</isNotEmpty>
+			<isNotEmpty property="productName" prepend="and">
+				sp.productName LIKE '%$productName$%'
+			</isNotEmpty>
+		</dynamic>
+	</select>
+</sqlMap>

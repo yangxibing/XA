@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="productQuoteManage">
+
+		<typeAlias alias="enquiry" type="com.model.Enquiry"/>
+	
+	<resultMap class="com.model.Enquiry" id="enquiryResultMap">
+		<result property="askPriceId" column="askPriceId"/>
+		<result property="productTypeId" column="productTypeId"/>
+		<result property="productTypeName" column="productTypeName"/>
+		<result property="measureUnit" column="measureUnit"/>
+		<result property="number" column="number" nullValue="0"/>
+		<result property="deadline" column="deadline"/>
+		<result property="askPriceState" column="askPriceState" nullValue="0"/>
+		<result property="remark" column="remark"/>
+		<result property="isAnswer" column="isAnswer" nullValue="false"/>
+	</resultMap>
+	
+	<select id="listEnquiryForQuote" parameterClass="enquiry" resultMap="enquiryResultMap">
+			<dynamic>
+				<isNotEmpty property="productTypeId">
+					<![CDATA[ 
+						declare @idtable table(id varchar(10), level int)
+						declare @level int
+						set @level = 1
+						insert into @idtable select #productTypeId#, @level
+						while @@rowcount > 0
+							begin
+								set @level = @level + 1
+								insert into @idtable
+									select a.productTypeId, @level
+									from ProductType a, @idtable b
+									where a.parentProductTypeId = b.id and b.level = @level - 1
+							end
+					]]>				
+				</isNotEmpty>
+			</dynamic>	
+		select  ask.askPriceId askPriceId,
+				ask.productTypeId productTypeId,
+				pt.productTypeName productTypeName,
+				ask.measureUnit measureUnit,
+				ask.number number,
+				ask.deadline deadline,
+				ask.askPriceState askPriceState,
+				ask.remark remark,
+				ans.isAnswer isAnswer
+		from AskPrice ask left join AnswerPrice ans on ask.askPriceId=ans.askPriceId 
+						  left join ProductType pt on ask.productTypeId= pt.productTypeId
+								<dynamic>
+									<isNotEmpty property="productTypeId" prepend=",">
+										@idtable tb
+									</isNotEmpty>
+								</dynamic>		
+		where (ans.supplierId = #supplierId# or ans.supplierId is NULL) and (ask.askPriceState = 1 or ask.askPriceState = 2)
+			<dynamic>
+					<isNotEmpty property="productTypeId" prepend="and">
+						ask.productTypeId = tb.id
+					</isNotEmpty>
+				
+				<isNotEmpty property="askPriceId" prepend="and">
+					ask.askPriceId = #askPriceId#
+				</isNotEmpty>
+			</dynamic>
+		group by ask.askPriceId, ask.productTypeId, pt.productTypeName, ask.measureUnit, ask.number, ask.deadline,ask.askPriceState, ask.remark, ans.isAnswer
+		order by ask.askPriceId
+	</select>
+	
+	
+	<select id="enquiryInfoForQuoteTotalCount" parameterClass="enquiry" resultClass="int">
+			<dynamic>
+				<isNotEmpty property="productTypeId">
+					<![CDATA[ 
+						declare @idtable table(id varchar(10), level int)
+						declare @level int
+						set @level = 1
+						insert into @idtable select #productTypeId#, @level
+						while @@rowcount > 0
+							begin
+								set @level = @level + 1
+								insert into @idtable
+									select a.productTypeId, @level
+									from ProductType a, @idtable b
+									where a.parentProductTypeId = b.id and b.level = @level - 1
+							end
+					]]>				
+				</isNotEmpty>
+			</dynamic>		
+	
+		SELECT COUNT(*) from 
+		(select  ask.askPriceId askPriceId,
+				ask.productTypeId productTypeId,
+				pt.productTypeName productTypeName,
+				ask.measureUnit measureUnit,
+				ask.number number,
+				ask.deadline deadline,
+				ask.askPriceState askPriceState,
+				ask.remark remark,
+				ans.isAnswer isAnswer
+		from AskPrice ask left join AnswerPrice ans on ask.askPriceId=ans.askPriceId 
+						  left join ProductType pt on ask.productTypeId= pt.productTypeId
+								<dynamic>
+									<isNotEmpty property="productTypeId" prepend=",">
+										@idtable tb
+									</isNotEmpty>
+								</dynamic>		
+		where (ans.supplierId = #supplierId# or ans.supplierId is NULL) and (ask.askPriceState = 1 or ask.askPriceState = 2)
+			<dynamic>
+					<isNotEmpty property="productTypeId" prepend="and">
+						ask.productTypeId = tb.id
+					</isNotEmpty>
+				
+				<isNotEmpty property="askPriceId" prepend="and">
+					ask.askPriceId = #askPriceId#
+				</isNotEmpty>
+			</dynamic>
+		group by ask.askPriceId, ask.productTypeId, pt.productTypeName, ask.measureUnit, ask.number, ask.deadline,ask.askPriceState, ask.remark, ans.isAnswer
+		) temp
+	</select>
+	
+	
+	<select id="getEnquiryForQuoteById" parameterClass="String" resultClass="enquiry">
+		select ask.askPriceId askPriceId,
+			ask.productTypeId productTypeId,
+			pt.productTypeName productTypeName,
+			ask.measureUnit measureUnit,
+			ask.number number,
+			ask.deadline deadline,
+			ask.askPriceState askPriceState,
+			ask.remark remark
+		from AskPrice ask left join ProductType pt on ask.productTypeId=pt.productTypeId
+		where ask.askPriceId = #value#
+	</select>
+	
+	
+	<typeAlias alias="answerPrice" type="com.model.AnswerPrice"/>
+
+	<resultMap class="com.model.AnswerPrice" id="answerPriceResultMap">
+		<result property="answerPriceId" column="answerPriceId"/>
+		<result property="askPriceId" column="askPriceId"/>
+		<result property="productId" column="productId"/>
+		<result property="productName" column="productName"/>
+		<result property="supplierId" column="supplierId"/>
+		<result property="price" column="price" nullValue="0.0"/>
+		<result property="remark" column="remark" nullValue=""/>
+		<result property="isAnswer" column="isAnswer" nullValue="false"/>
+		<result property="isSelected" column="isSelected" nullValue="false"/>
+	</resultMap>
+	
+	<select id="listProductQuote" parameterClass="answerPrice" resultMap="answerPriceResultMap">
+		select 	ans.answerPriceId answerPriceId,
+ 				ans.askPriceId askPriceId,
+				ans.productId productId,
+				sp.productName productName,
+				ans.supplierId supplierId,
+				ans.price price,
+				ans.remark remark,
+				ans.isAnswer isAnswer,
+				ans.isSelected isSelected
+		from  AnswerPrice ans left join SupplierProduct sp on ans.productId = sp.productId
+		where ans.askPriceId = #askPriceId# and
+			  ans.supplierId = #supplierId# and
+			  ans.isAnswer = 'false'
+	</select>
+	
+	<select id="listProductQuoteDetailAfterFromal" parameterClass="answerPrice" resultMap="answerPriceResultMap">
+		select 	ans.answerPriceId answerPriceId,
+ 				ans.askPriceId askPriceId,
+				ans.productId productId,
+				sp.productName productName,
+				ans.supplierId supplierId,
+				ans.price price,
+				ans.remark remark,
+				ans.isAnswer isAnswer,
+				ans.isSelected isSelected
+		from  AnswerPrice ans left join SupplierProduct sp on ans.productId = sp.productId
+		where ans.askPriceId = #askPriceId# and
+			  ans.supplierId = #supplierId# and
+			  ans.isAnswer = 'true'
+	</select>
+	
+	<select id="getProductQuoteById" parameterClass="String" resultMap="answerPriceResultMap">
+		select 	ans.answerPriceId answerPriceId,
+ 				ans.askPriceId askPriceId,
+				ans.productId productId,
+				sp.productName productName,
+				ans.supplierId supplierId,
+				ans.price price,
+				ans.remark remark,
+				ans.isAnswer isAnswer,
+				ans.isSelected isSelected
+		from  AnswerPrice ans left join SupplierProduct sp on ans.productId = sp.productId
+		where ans.answerPriceId = #value#
+	</select>
+	
+	<insert id="addProductQuote" parameterClass="answerPrice">
+		insert into AnswerPrice
+		(
+ 			askPriceId,
+			productId,
+			supplierId,
+			price,
+			remark,
+			isAnswer,
+			isSelected
+		) values
+		(
+ 			#askPriceId#,
+			#productId#,
+			#supplierId#,
+			#price#,
+			#remark#,
+			#isAnswer#,
+			#isSelected#
+		)
+	</insert>
+	
+	<delete id="deleteProductQuote" parameterClass="String">
+		delete from AnswerPrice 
+		where answerPriceId=#value#
+	</delete>
+	
+	<update id=""></update>
+	
+	
+	<update id="updateProductQuote" parameterClass="answerPrice">
+		update AnswerPrice set
+ 			askPriceId = #askPriceId#,
+			productId = #productId#,
+			supplierId = #supplierId#,
+			price = #price#,
+			remark = #remark#,
+			isAnswer = #isAnswer#,
+			isSelected = #isSelected#
+		where answerPriceId = #answerPriceId#
+	</update>
+	
+	<typeAlias alias="supplierProduct" type="com.model.SupplierProduct"/>
+	
+	<resultMap class="com.model.SupplierProduct" id="spResultMap">
+		<result property="productId" column="productId"/>
+		<result property="productName" column="productName"/>
+		<result property="supplierId" column="supplierId"/>
+		<result property="productTypeId" column="productTypeId"/>
+		<result property="basePrice" column="basePrice" nullValue="0.0"/>
+		<result property="measureUnit" column="measureUnit"/>
+		<result property="format" column="format"/>
+		<result property="remark" column="remark"/>
+	</resultMap>
+	<select id="getProductIdNameListBySupplierId" parameterClass="String" resultMap="spResultMap">
+		select  productId,
+				productName,
+	 			supplierId,
+	 			productTypeId,
+	 			basePrice,
+				measureUnit,
+	 			format,
+	 			remark
+	 	from    SupplierProduct 
+	 	where supplierId = #value#
+	</select>
+	
+	<update id="formalProductQuote" parameterClass="String">
+		update AnswerPrice set
+			isAnswer = 'true'
+		where answerPriceId = #answerPriceId# 
+	</update>
+	
+</sqlMap>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

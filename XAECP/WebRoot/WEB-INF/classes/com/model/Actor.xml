@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="actor">
+	<typeAlias alias="actor" type="com.model.Actor"/>
+	<typeAlias alias="functionTable" type="com.model.FunctionTable"/>
+	<select id="listActors" parameterClass="actor" resultClass="actor">
+		select actorId actorId,
+			   actorName actorName
+	    from actor
+	    <dynamic prepend="where">
+	    	<isNotEmpty property="actorId" prepend="and">
+	    		actorId=#actorId#
+	    	</isNotEmpty>
+	    	<isNotEmpty property = "actorName" prepend = "and">
+	    		actorName=#actorName#
+	    	</isNotEmpty>
+	    </dynamic>
+	</select>
+	
+	<select id="actorsTotalCount" parameterClass="actor" resultClass="int">
+		select count(1)
+	    from actor
+	    <dynamic prepend="where">
+	    	<isNotEmpty property="actorId" prepend="and">
+	    		actorId=#actorId#
+	    	</isNotEmpty>
+	    	<isNotEmpty property = "actorName" prepend = "and">
+	    		actorName=#actorName#
+	    	</isNotEmpty>
+	    </dynamic>
+	</select>
+	
+	<insert id="newActor" parameterClass="actor">
+		insert into actor(actorId, actorName)
+		values(#actorId#,#actorName#)
+	</insert>
+	
+	<update id="updateActor" parameterClass="actor">
+		update actor
+		set actorName = #actorName#
+		where actorId = #actorId#
+	</update>
+	
+	<delete id="deleteActor" parameterClass="string">
+		delete from actor
+		where (actorId in ($value$))
+	</delete>
+	
+	<select id="checkActorIdExist" parameterClass="string" resultClass="int">
+		select count(actorId)
+		from actor
+		where actorId = #actorId#
+	</select>
+	
+	<select id="listFunction" resultClass="functionTable" parameterClass="actor">
+	    <dynamic>
+	    	<isNotNull property ="actorId" >
+	    		select distinct f1.functionId functionId,
+			   		   f1.functionName functionName,
+			           f1.url url,
+			           f1.remark remark
+	            from functionTable f1,actorFunction a1
+	            where
+	    				a1.actorId = #actorId#
+	    				and f1.functionId = a1.functionId
+	    	</isNotNull>
+	    	<isNull property ="actorId">
+	    		select f1.functionId functionId,
+			   		   f1.functionName functionName,
+			           f1.url url,
+			           f1.remark remark
+	            from functionTable f1
+	    	</isNull>
+	    </dynamic>
+	</select>
+	
+	<insert id="saveActorFunction" parameterClass = "map">
+		insert into actorFunction(functionId,actorId)values(#functionId#,#actorId#);
+		
+	</insert>
+	
+	<delete id="deleteActorFunction" parameterClass="string">
+		delete from actorFunction where actorId = #value#
+	</delete>
+</sqlMap>

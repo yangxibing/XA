@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="systemManage">
+	<typeAlias alias="user" type="com.model.XAUser"/>
+	<typeAlias alias="partner" type="com.model.Supplier"/>
+	<typeAlias alias="actor" type="com.model.Actor"/>
+	
+	<select id="listPartner" parameterClass="partner" resultClass="partner">
+		select partnerId partnerId,
+			partnerName partnerName,
+			partnerType partnerType,
+			partnerLevel partnerLevel,
+			orderRate orderRate,
+			integrity integrity,
+			blackList blackList,
+			firstAddress firstAddress,
+			secondAddress secondAddress,
+			city city,
+			province province,
+			country country,
+			contactPerson contactPerson,
+			telephone telephone,
+			fax fax,
+			email email,
+			zipCode zipCode,
+			website website,
+			integrityLevel integrityLevel,
+			introduction introduction
+	    from Supplier
+		<dynamic prepend="where">
+			<isNotEmpty property="partnerType" prepend="and">
+				partnerType=#partnerType#
+			</isNotEmpty>
+		</dynamic>
+		order by partnerName ASC
+	</select>
+	
+	<select id="listActor" parameterClass="actor" resultClass="actor">
+		select actorId actorId,
+				actorName actorName
+		from Actor
+		<dynamic prepend="where">
+			<isNotEmpty property="actorId" prepend="and">
+				actorId = #actorId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="getXAUserList" parameterClass="user" resultClass="user">
+		select xauser.userId userId,
+			xauser.password password,
+			xauser.userName userName,
+			xauser.supplierId supplierId,
+			sup.partnerName supplierName,
+			xauser.actorId actorId,
+			actor.actorName actorName,
+			xauser.passcheckOrNot passcheckOrNot,
+			xauser.remark remark
+		from XAUser xauser left join Supplier sup on xauser.supplierId = sup.partnerId
+					left join Actor actor on xauser.actorId = actor.actorId
+		<dynamic prepend="where">
+			<isNotEmpty property="userId" prepend="and">
+				xauser.userId = #userId#
+			</isNotEmpty>
+			<isNotEmpty property="password" prepend="and">
+				xauser.password = #password#
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend="and">
+			 	xauser.userName = #userName#
+			</isNotEmpty>
+			<isNotEmpty property="supplierId" prepend="and">
+				xauser.supplierId = #supplierId#
+			</isNotEmpty>
+			<isNotEmpty property="actorId" prepend="and">
+				xauser.actorId = #actorId#
+			</isNotEmpty>
+			<isNotEmpty property="passcheckOrNot" prepend="and">
+				xauser.passcheckOrNot = #passcheckOrNot#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="passwordFindBack" parameterClass="user" resultClass="user">
+		select email email,
+			   userName userName,
+			   password password
+		from xauser
+		where userId = #userId#
+			and email = #email#
+	</select>
+	
+	<select id="userTotalCount" parameterClass="user" resultClass="int">
+		select count(1)
+		from XAUser xauser
+		<dynamic prepend="where">
+			<isNotEmpty property="userId" prepend="and">
+				xauser.userId = #userId#
+			</isNotEmpty>
+			<isNotEmpty property="password" prepend="and">
+				xauser.password = #password#
+			</isNotEmpty>
+			<isNotEmpty property="userName" prepend="and">
+			 	xauser.userName = #userName#
+			</isNotEmpty>
+			<isNotEmpty property="supplierId" prepend="and">
+				xauser.supplierId = #supplierId#
+			</isNotEmpty>
+			<isNotEmpty property="actorId" prepend="and">
+				xauser.actorId = #actorId#
+			</isNotEmpty>
+			<isNotEmpty property="passcheckOrNot" prepend="and">
+				xauser.passcheckOrNot = #passcheckOrNot#
+			</isNotEmpty>
+		</dynamic>		
+	</select>
+
+	<select id="getXAUserListLogin" parameterClass="user" resultClass="user">
+		select xauser.userId userId,
+			xauser.password password,
+			xauser.userName userName,
+			xauser.supplierId supplierId,
+			sup.partnerName supplierName,
+			xauser.actorId actorId,
+			actor.actorName actorName,
+			xauser.passcheckOrNot passcheckOrNot,
+			xauser.remark remark
+		from XAUser xauser left join Supplier sup on xauser.supplierId = sup.partnerId
+					left join Actor actor on xauser.actorId = actor.actorId
+		where xauser.userId = #userId# and xauser.password = #password#
+	</select>
+	
+	<select id="getXAUserById" parameterClass="String" resultClass="user">
+		select xauser.userId userId,
+			xauser.password password,
+			xauser.userName userName,
+			xauser.supplierId supplierId,
+			sup.partnerName supplierName,
+			xauser.actorId actorId,
+			actor.actorName actorName,
+			xauser.passcheckOrNot passcheckOrNot,
+			xauser.remark remark
+		from XAUser xauser left join Supplier sup on xauser.supplierId = sup.partnerId
+					left join Actor actor on xauser.actorId = actor.actorId
+		where xauser.userId = #value#		
+	</select>
+	
+	<select id="XAUserExist" parameterClass="user" resultClass="user">
+		select userId userId,
+				password password,
+				userName userName,
+				supplierId supplierId,
+				actorId actorId
+		from XAUser
+		where userId = #userId# and password=#password#
+	</select>
+	
+	<select id="countUserWithSpecifyPasswod" parameterClass="user" resultClass="int">
+		select count(1)
+		from XAUser
+		where userId = #userId# and password=#password#
+	</select>
+	
+	<insert id="addXAUser" parameterClass="user">
+		insert into XAUser (
+			userId,
+			password,
+			userName,
+			supplierId,
+			actorId,
+			passcheckOrNot,
+			remark
+		) values (
+			#userId#,
+			#password#,
+			#userName#,
+			#supplierId#,
+			#actorId#,
+			#passcheckOrNot#,
+			#remark#		
+		)
+	</insert>
+	
+	<update id="updateXAUser" parameterClass="user">
+		update XAUser set
+			password = #password#,
+			userName = #userName#,
+			supplierId = #supplierId#,
+			actorId = #actorId#,
+			passcheckOrNot = #passcheckOrNot#,
+			remark = #remark#
+		where userId = #userId#
+	</update>
+	
+	<update id="updateXAUserState" parameterClass="user">
+		update XAUser set
+			passcheckOrNot = #passcheckOrNot#
+		where userId = #userId#	
+	</update>
+	
+	<update id="updateXAUserPassword" parameterClass="user">
+		update XAUser set
+			password = #newPassword#
+		where userId = #userId#				
+	</update>
+	
+	<delete id="deleteUserById" parameterClass="String">
+		delete from XAUser
+		where userId = #value#
+	</delete>
+</sqlMap>

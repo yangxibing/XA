@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>	
+	
+	<!-- main.action -->
+	<!-- 王永康=========================================================== -->
+	<package name="basicData" extends="struts-default">
+		<action name="listSupplier" class="com.basicData.action.SupplierAction" method="listSupplier">
+			<result name="success">/jsp/basicData/supplyManage.jsp</result>
+		</action>
+		
+		<action name="homeShowSupplierMore" class="com.basicData.action.SupplierAction" method="homeShowSupplierMore">
+			<result name="success">/jsp/basicData/homeCompanyMore.jsp</result>
+		</action>
+		<action name="addSupplier" class="com.basicData.action.SupplierAction" method="addSupplier">
+			<result name="success">/jsp/basicData/supplyManage.jsp</result>
+		</action>
+		<action name="deleteSupplier" class="com.basicData.action.SupplierAction" method="deleteSupplier">
+			<result name="success">/jsp/basicData/supplyManage.jsp</result>
+		</action>	
+		<action name="updateSupplier" class="com.basicData.action.SupplierAction" method="updateSupplier">
+			<result name="success">/jsp/basicData/supplyManage.jsp</result>
+		</action>
+		<action name="productDetail" class="com.basicData.action.SupplierAction" method="productDetail">
+			<result name="success">/jsp/basicData/productManage.jsp</result>
+		</action>
+		<action name="addSupplierProduct" class="com.basicData.action.SupplierProductAction" method="addSupplierProduct">
+			<result name="success">/jsp/basicData/productManage.jsp</result>
+		</action>
+		<action name="updateSupplierProduct" class="com.basicData.action.SupplierProductAction" method="updateSupplierProduct">
+			<result name="success">/jsp/basicData/productManage.jsp</result>
+		</action>
+		<action name="selectProductBySupplierId" class="com.basicData.action.SupplierProductAction" method="selectProductBySupplierId">
+			<result name="success">/jsp/basicData/productManage.jsp</result>
+		</action>
+		<action name="deleteSupplierProduct" class="com.basicData.action.SupplierProductAction" method="deleteSupplierProduct">
+			<result name="success">/jsp/basicData/productManage.jsp</result>
+		</action>
+		<action name="listSupplierProduct" class="com.basicData.action.SupplierProductAction" method="listSupplierProduct">
+			<result name="success">/jsp/basicData/productManage.jsp</result>
+		</action>
+		<action name="productPrice" class="com.basicData.action.SupplierProductAction" method="productPrice">
+			<result name="success">/jsp/basicData/priceManage.jsp</result>
+		</action>
+		<action name="productPriceWatch" class="com.basicData.action.SupplierProductAction" method="productPriceWatch">
+			<result name="success">/jsp/basicData/productPriceWatch.jsp</result>
+		</action>
+		
+		<action name="upload" class="com.basicData.action.UploadAction" method="uploadFile">
+			<result name="success">/jsp/basicData/advertSetting.jsp</result>
+		</action>
+		<action name="hotLine" class="com.basicData.action.UploadAction" method="hotLine">
+			<result name="success">/jsp/basicData/hotLineSetting.jsp</result>
+		</action>
+		
+		<action name="addPrice" class="com.basicData.action.ProductPriceAction" method="addPrice">
+			<result name="success">/jsp/basicData/priceManage.jsp</result>
+		</action>
+		<action name="listPrice" class="com.basicData.action.ProductPriceAction" method="listPrice">
+			<result name="success">/jsp/basicData/priceManage.jsp</result>
+		</action>
+		<action name="updatePrice" class="com.basicData.action.ProductPriceAction" method="updatePrice">
+			<result name="success">/jsp/basicData/priceManage.jsp</result>
+		</action>
+		<action name="deletePrice" class="com.basicData.action.ProductPriceAction" method="deletePrice">
+			<result name="success">/jsp/basicData/priceManage.jsp</result>
+		</action>
+
+<!-- 姜国强 start-->		
+		<!-- Purchaser -->
+		<action name="listPurchaser" class="com.basicData.action.PurchaserAction" method="listPurchaser">
+			<result name="success">/jsp/basicData/purchaseManage.jsp</result>
+		</action>		
+		<action name="addPurchaser" class="com.basicData.action.PurchaserAction" method="addPurchaser">
+			<result name="success">/jsp/basicData/purchaseManage.jsp</result>
+		</action>
+		<action name="updatePurchaser" class="com.basicData.action.PurchaserAction" method="updatePurchaser">
+			<result name="success">/jsp/basicData/purchaseManage.jsp</result>
+		</action>
+		<action name="editPurchaser" class="com.basicData.action.PurchaserAction" method="editPurchaser">
+			<result name="success">/jsp/basicData/purchaseManage.jsp</result>
+		</action>
+		<action name="deletePurchaser" class="com.basicData.action.PurchaserAction" method="deletePurchaser">
+			<result name="success">/jsp/basicData/purchaseManage.jsp</result>
+		</action>
+		
+		<action name="lookupPurchaser" class="com.basicData.action.PurchaserAction" method="listPurchaser">
+			<result name="success">/jsp/basicData/purchaseLookup.jsp</result>
+		</action>
+		<action name="detailPurchaser" class="com.basicData.action.PurchaserAction" method="getIndexPurchaser">
+			<result name="success">/jsp/basicData/purchaseLookup.jsp</result>
+		</action>
+		
+		<!-- BiddingExpert --> 
+		<action name="queryExpert" class="com.basicData.action.BiddingExpertAction" method="queryExpert">
+			<result name="success">/jsp/basicData/expertManage.jsp</result>
+		</action>
+		<action name="deleteExpert" class="com.basicData.action.BiddingExpertAction" method="deleteExpert">
+			<result name="success">/jsp/basicData/expertManage.jsp</result>
+		</action>
+		<action name="addExpert" class="com.basicData.action.BiddingExpertAction" method="addExpert">
+			<result name="success">/jsp/basicData/expertManage.jsp</result>
+		</action>
+		<action name="updateExpert" class="com.basicData.action.BiddingExpertAction" method="updateExpert">
+			<result name="success">/jsp/basicData/expertManage.jsp</result>
+		</action>
+		
+		<action name="selectExpert" class="com.basicData.action.BiddingExpertAction" method="selectExpert">
+			<result name="success">/jsp/basicData/expertInformation.jsp</result>
+		</action>		
+<!-- 姜国强 end-->
+
+<!-- 胡博  start -->
+		<!-- HuBo 产品目录管理 -->
+		<action name="listProductType" class="com.basicData.action.ProductTypeAction" method="listProductType">
+			<result name="success">/jsp/basicData/productTypeManage.jsp</result>
+		</action>
+		
+		<action name="queryProductType" class="com.basicData.action.ProductTypeAction" method="queryProductType">
+			<result name="success">/jsp/basicData/productTypeManage.jsp</result>
+		</action>
+		
+		<action name="addProductType" class="com.basicData.action.ProductTypeAction" method="addProductType">
+			<result name="success">/jsp/basicData/productTypeManage.jsp</result>
+		</action>
+		
+		<action name="deleteProductType" class="com.basicData.action.ProductTypeAction" method="deleteProductType">
+			<result name="success">/jsp/basicData/productTypeManage.jsp</result>
+		</action>
+		
+		<action name="updateProductType" class="com.basicData.action.ProductTypeAction" method="updateProductType">
+			<result name="success">/jsp/basicData/productTypeManage.jsp</result>
+		</action>
+		
+		<!-- 产品目录查看 -->
+		<action name="listProductCatalog" class="com.basicData.action.ProductCatalogAction" method="listProduct">
+			<result name="success">/jsp/basicData/productCatalogView.jsp</result>
+		</action>
+		
+		
+		<!-- 物流商目录管理 Logistics-->
+		<action name="listLogistics" class="com.basicData.action.LogisticsAction" method="listLogistics">
+			<result name="success">/jsp/basicData/logisticsManage.jsp</result>
+		</action>		
+		<action name="addLogistics" class="com.basicData.action.LogisticsAction" method="addLogistics">
+			<result name="success">/jsp/basicData/logisticsManage.jsp</result>
+		</action>
+		<action name="updateLogistics" class="com.basicData.action.LogisticsAction" method="updateLogistics">
+			<result name="success">/jsp/basicData/logisticsManage.jsp</result>
+		</action>
+		<action name="deleteLogistics" class="com.basicData.action.LogisticsAction" method="deleteLogistics">
+			<result name="success">/jsp/basicData/logisticsManage.jsp</result>
+		</action>
+		
+		
+		<action name="lookupLogistics" class="com.basicData.action.LogisticsAction" method="listLogistics">
+			<result name="success">/jsp/basicData/logisticsLookup.jsp</result>
+		</action>
+		<action name="detailLogistics" class="com.basicData.action.LogisticsAction" method="getDetailLogistics">
+			<result name="success">/jsp/basicData/logisticsLookup.jsp</result>
+		</action>
+<!-- 胡博 end   -->				
+	</package>
+	
+	<package name="ajax" extends="json-default">
+	
+<!-- 王永康start -->
+		<action name="selectSupplier" class="com.basicData.action.SupplierAction" method="selectSupplier">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="selectSupplierProduct" class="com.basicData.action.SupplierProductAction" method="selectSupplierProduct">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="selectPrice" class="com.basicData.action.ProductPriceAction" method="selectPrice">
+			<result name="success" type="json"></result>
+		</action>
+		<action name="getHotLineAndAdvert" class="com.basicData.action.UploadAction" method="getHotLineAndAdvert">
+			<result name="advertHotLine" type="json"></result>
+		</action>
+		<action name="homeShowSupplier" class="com.basicData.action.SupplierAction" method="homeShowSupplier">
+			<result name="homeShowSupplier" type="json"></result>
+		</action>
+		<action name="chekProductIdExsitAjax" class="com.basicData.action.SupplierProductAction" method="selectProductBySupplierIdAjax">
+			<result name="chekProductIdExsitAjax" type="json"></result>
+		</action>
+		<action name="checkNumberIntervalExistAjax" class="com.basicData.action.ProductPriceAction" method="checkNumberIntervalExistAjax">
+			<result name="checkNumberIntervalExistAjax" type="json"></result>
+		</action>
+		<action name="checkProductIdExistAjax" class="com.basicData.action.ProductTypeAction" method="checkProductIdExistAjax">
+			<result name="checkProductIdExistAjax" type="json"></result>
+		</action>
+<!-- 王永康end -->		
+
+<!-- 姜国强 start-->			
+		<action name="selectPurchaser" class="com.basicData.action.PurchaserAction" method="selectPurchaser">
+			<result type="json"></result>
+		</action>
+		
+		<action name="getExpertById" class="com.basicData.action.BiddingExpertAction" method="queryExpertById">
+			<result type="json" name="expertInfo"></result>
+		</action>
+		
+		<action name="homeBiddingExpertList" class="com.basicData.action.BiddingExpertAction" method="homeBiddingExpertList">
+			<result type="json" name="list"></result>
+		</action>
+<!-- 姜国强  end-->		
+
+
+<!-- 胡博 start-->
+		<action name="selectLogistics" class="com.basicData.action.LogisticsAction" method="selectLogistics">
+			<result type="json"></result>
+		</action>
+		
+		<action name="selectProductTypeForPT" class="com.basicData.action.ProductTypeAction" method="queryProductType">
+			<result name="ajaxResultSelectProductType" type="json"></result>
+		</action>
+		
+		<action name="getProductTypeList" class="com.basicData.action.ProductTypeAction" method="getProductTypeList">
+			<result name="ProductTypeDropDownList" type="json"></result>
+		</action>
+<!-- 	
+		<action name="queryProductType" class="com.common.QueryProductType" method="queryProductType">
+			<result type="json"></result>
+		</action>
+ -->			
+<!-- 胡博 end -->			
+	</package>
+	<!-- ============================================== -->
+</struts>

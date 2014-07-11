@@ -1,0 +1,59 @@
+@charset "utf-8";
+/* CSS Document */
+body{margin:0;padding:0;}
+.CENTER{margin-left:auto;margin-right:auto; text-align:left;}
+#supply{ font-size:14px;background-color:#FFF;border-width:4px;border-style:double;border-color:#025FBB;height:auto;margin-top:40px;padding:0;}
+#supply #top{ padding:0; margin:0; background-color:#025FBB; margin-bottom:15px;}
+#supply #top span{color:#FFF;}
+#supply #top span h2{ margin:0; padding:0; padding-top:8px; color:#FFF;}
+#DOWN{margin-top:20px; width:1002px;text-align:right; background-color:#68B3FD; border-top:1px solid #025FBB;}
+#supply #search{clear:both; margin-bottom:15px; border-width:0 0 1px 1px;border-style:solid; border-color:#1C8CFD;background-color:#FFF;}
+#supply #search .TITLE{ background-color:#68B3FD;}
+#supply #search td{border-width:1px 1px 0 0; border-style:solid; border-color:#1C8CFD; padding:2px;}
+
+#supply #showlist{margin-bottom:20px;background-color:#fdfeff;text-align:center;border-style:solid;border-width:0 0 1px 1px;border-color:#6BB5FE;}
+#supply #showlist .TITLE{ background-color:#A0CFFE;}
+#supply #showlist td{ padding:1px;border-width:1px 1px 0 0;border-style:solid;border-color:#6BB5FE;}
+
+#supply #register{display:none; margin-bottom:20px;background-color:#FFF;text-align:center;border-style:solid;border-width:1px;border-color:#81BFFE; padding-bottom:5px;}
+#supply #register .TITLE{ background-color:#C0DFFE;}
+#supply #Info{display:none; margin-bottom:20px;background-color:#FFF;text-align:center;border-style:solid;border-width:1px;border-color:#81BFFE; padding-bottom:5px;}
+#supply #Info .TITLE{ background-color:#C0DFFE;}
+
+#supply #register #registCnt{ background-color:#EAF4FF;border-width:0 0 1px 1px;border-style:solid;border-color:#81BFFE; text-align:center;margin-top:10px; margin-bottom:10px;} 
+#supply #Info #registCnt{ background-color:#EAF4FF;border-width:0 0 1px 1px;border-style:solid;border-color:#81BFFE; text-align:center; margin-top:10px; margin-bottom:10px;}
+#supply #register #registCnt td{border-width:1px 1px 0 0;border-style:solid;border-color:#81BFFE; padding:2px;}
+#supply #Info #registCnt td{border-width:1px 1px 0 0;border-style:solid;border-color:#81BFFE; padding:2px;}
+.ALRIGHT{text-align:right;}
+.ALLEFT{text-align:left;}
+
+.FFF{background-color:#C9E3FE;}
+.HOVER:hover{ background-color:#DDD;}
+.TITLE{ height:25px; background-color:#DEEBF7; font-weight:bold;}
+.SHORTINPUT{ width:200px;}
+.SMALLINPUT{ width:100PX;}
+.LONGINPUT{ width:600px;}
+#DOWNUP{ padding-top:2px;}
+
+#supply{width:1002px;}
+#supply #search{width:950px;}
+#supply #showlist{width:950px; text-align:center;}
+#supply #register{width:950px; text-align:center;}
+#supply #register td{ width:950px;}
+#supply #Info{width:950px; text-align:center;}
+
+#supply #register #registCnt{ width:900px;}
+#supply #Info #registCnt{ width:900px;}
+
+#supply #register .INPUTTEXT{  width:250px;}
+#supply #Info .INPUTTEXT{ width:250px;}
+#supply #register #registCnt .ALLEFT{width:35%;}
+#supply #Info #registCnt .ALLEFT{width:35%;}
+#supply #register #registCnt .ALRIGHT{width:15%;}
+#supply #Info #registCnt .ALRIGHT{width:15%;}
+
+#supply #top{ width:1002px; height:40px; float:left; text-align:center;}
+#supply #register #registCnt .EEE{ background-color:#FFF;}
+#supply #Info #registCnt .EEE{ background-color:#FFF;}
+.TITLESPAN1{ margin-left:3PX; font-weight:bold; font-size:14PX;}
+.TITLESPAN2{ padding-left:10px; font-size:12PX; font-weight:bold;}

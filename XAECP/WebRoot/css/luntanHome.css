@@ -1,0 +1,63 @@
+@charset "utf-8";
+/* CSS Document */
+<style>
+#whole{ width:1003px;}
+#login{ height:20px; width:1003px;padding:0; margin-top:0; margin-bottom:4px; background-color:#EAEAEA; font-size:12px;}
+#login td{ height:20px; vertical-align:middle; vertical-align:top; padding-top:1px;}
+.HOMETEXT{ width:80px; height:12px; line-height:12px; display:inline; vertical-align:top;}
+.HOMEBUTTON{font-size: 12px;color: #000000;cursor: pointer;height: 18px; line-height:14px;vertical-align:middle;
+	background-image:url(../images/btBg.png); 
+	border: 1px solid #CCC; display:inline; text-align:center; }
+#logo{ width:1003px; height:140px; margin-bottom:4px;}
+#daoHang{ width:1003px; height:30px; margin-bottom:4px;}
+*html #daoHang{ margin-top:0;}
+*+html #daoHang{ margin-top:0;}
+#navigation, #navigation li ul {list-style-type:none;}    
+#navigation { margin:0;padding:0;width:1004px;height:25px; background-image:url(../images/daoHang.png); background-position:center;}   
+#navigation li{ z-index:3;float:left;text-align:center; height:25px; line-height:25px; vertical-align:baseline; border-right: 1px #7EBEFE solid; padding: 0 15px 0 15px; font-weight:bold; }
+#navigation li a{ vertical-align:baseline;}
+
+.DIVTITLE{ background-image:url(../images/titleBg.png); background-repeat:repeat-x; border:1px solid #A0CFFE; height:20px;}
+.DIVTITLE span{ padding-top:3px; padding-left:3px; padding-right:3px;}
+.DIVTITLE span a{ text-decoration:none; font-size:12PX; margin-top:10PX; vertical-align:baseline; font-weight:bold; color:#06C;}
+.DIVTITLE span a:hover{ color:#F33; text-decoration:underline;}
+.DIVCNT{ background-color:#FDFEFF; border-width:0 1px 1px 1px; border-style:solid; border-color:#A0CFFE;}
+
+.SMALLTITLE{ background-color:#C9E4FF; width:393PX; float:left; border: solid #A0CFFE; border-width:0 1px 0 1px; font-size:12px; font-weight:bold; color:#666;}
+.SMALLTITLE a{ color:#0253A4;}
+.SMALLTITLE a:hover{ color:#F60;}
+.SMALLCNT{ background-color:#FFF; width:393PX; height:500px;; padding-top:1px; float:left; margin-bottom:4px; border: solid #A0CFFE; border-width:0 1px 1px 1px;}
+#content{ width:1003px; height:auto;}
+#left{ width:180px; float:left; width:180px; margin-right:20px;} 
+#left1Cnt{ width:178px;clear:both; text-align:center; height:50px; margin-bottom:5px;} 
+#adv1{ width:180px; height:30px; margin-bottom:5px;}
+#leftHot{ width:178px;clear:both; text-align:left; height:auto; margin-bottom:5px; padding-top:3px;}
+#leftAnnouncement{ width:178px;clear:both; text-align:left; height:154px; margin-bottom:5px;}
+#help{width:178px;clear:both; text-align:left; height:118px; margin-bottom:5px;}
+
+#tieList{list-style-image:url(../images/grayMark.jpg); padding:0; margin:0; padding-left:22px; text-align:left; font-size:12px; width:150px;}
+#tieList li { margin-bottom:5px; vertical-align:bottom; line-height:15px; height:15px; vertical-align:top;} 
+#tieList li span{ display:block; width:140px;  line-height:15px; height:15px; vertical-align:top; white-space:nowrap;overflow:hidden; text-overflow:ellipsis;}
+#tieAnnounce{ list-style-image:url(../images/grayMark.jpg); margin:0; padding:0; font-size:12px;text-align:left; padding-left:25px; l line-height:14px; vertical-align:bottom;}
+#tieAnnounce li { margin-bottom:5px; vertical-align:bottom; height:14px;}
+#tieAnnounce li span{display:block; width:140px; white-space:nowrap;overflow:hidden; text-overflow:ellipsis;}
+#tieHelp{ list-style-image:url(../images/grayMark.jpg); margin:0; padding:0; font-size:12px;text-align:left; padding-left:25px; l line-height:14px; vertical-align:bottom;}
+#tieHelp li { margin-bottom:5px; vertical-align:bottom; height:14px;}
+#tieHelp li span{display:block; width:140px; white-space:nowrap;overflow:hidden; text-overflow:ellipsis;}
+
+#right{ width:800px; float:right; height:auto; margin-bottom:15px;}
+#transaction{ width:798px; float:left; clear:both;}
+#transactionNew{ margin-right:10px;}
+#transactionNewCnt{ margin-right:10px;}
+#searchInput{ width:100px; vertical-align:middle; height:14px; margin-top:13px;}
+#searchButton{ margin-top:14px;}
+
+
+.TITLELEFTSPAN{ font-size:14PX; font-weight:bold; color:#004080;}
+#copyRight{ clear:both;width:1001px; height:60px; background-image:url(../images/cpyBg.png); background-repeat:repeat-x;}
+
+.listContent{ list-style-image:url(../images/contentMark.jpg); padding-left:25px; width:365PX;}
+.listContent li{ width:365PX; clear:both; line-height:20px; height:20px; vertical-align:top;margin-bottom:4px; border-bottom:1px dotted #ccc;}
+.listContent li a { display:block; width:265PX; float:left; height:20px; vertical-align:top;overflow:hidden;text-overflow:ellipsis; white-space:nowrap;}
+.listContent em{ width:90px; float:right; line-height:20px; height:20px; vertical-align:top; font-size:12px; font-style:normal;}
+</style>

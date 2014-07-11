@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap >
+	<typeAlias alias="price" type="com.model.SupplierProductPrice"/>
+	
+	<select id="priceTotalCount" parameterClass="string" resultClass="int">
+		select count(1)
+		from supplierProductPrice
+		where productId = #value#
+	</select>
+	
+	<select id="productPrice" parameterClass="hashmap" resultClass="price">
+		select productId productId,
+			   numberInterval numberInterval,
+			   price price,
+			   remark remark,
+			   measureUnit measureUnit
+		from supplierProductPrice
+		where productId=#productId#
+	</select>
+	
+	<insert id="addPrice" parameterClass="price" >
+		insert into
+		supplierProductPrice(
+							productId,
+							numberInterval,
+							price,
+							remark,
+							measureUnit
+							)values(
+							#productId#,
+							#numberInterval#,
+							#price#,
+							#remark#,
+							#measureUnit#
+							)
+	</insert>
+	
+	<select id="selectPrice" parameterClass="price" resultClass="price">
+		select 
+				productId,
+				numberInterval,
+				price,
+				measureUnit,
+				remark
+		from supplierProductPrice
+		where productId=#productId#
+			  and numberInterval=#numberInterval#
+	</select>
+	
+	<update id="updatePrice" parameterClass="price">
+		update supplierProductPrice
+		set price=#price#,
+			remark=#remark#
+		where 
+			productId=#productId#
+			and numberInterval=#numberInterval#
+	</update>
+	
+	<delete id="deletePrice" parameterClass="hashmap">
+		delete
+		from supplierProductPrice
+		where productId=#productId#
+			and numberInterval=#number#
+	</delete>
+</sqlMap>

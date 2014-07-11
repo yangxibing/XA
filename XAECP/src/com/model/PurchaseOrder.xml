@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="purchaseOrder">
+	<typeAlias alias="order" type="com.model.PurchaseOrder"/>
+	<typeAlias alias="detail" type="com.model.PurchaseOrderDetail"/>
+	
+	<select id="queryPurchaseOrder" parameterClass="order" resultClass="order">
+		select pO.purchaseOrderId purchaseOrderId,
+			sup.partnerId purchaserId,
+			sup.partnerName purchaserName,
+			pO.deposit deposit,
+			pO.orderState orderState,
+			pO.deliverDate deliverDate,
+			pO.receiveAddressId receiveAddressId,
+			pOD.shippingAddress receiveAddress,
+			pOD.zipCode receiveZipCode,
+			pOD.contacter receiver,
+			pOD.telephone receiveTelephone,
+			pO.fare fare,
+			pO.totalPrice totalPrice,
+			pO.CPIId CPIId,
+			pO.logisticsSupplierId logisticsSupplierId,
+			pO.logisticsOrderId logisticsOrderId,
+			pO.sendAddressId sendAddressId,
+			pO.actualRefund actualRefund,
+			sup.orderRate orderRate,
+			tab.evaluateNumber evaluateNumber
+	    from PurchaseOrder pO left join GoodsAddress pOD on pO.receiveAddressId=pOD.addressId
+	    		left join Supplier sup on pO.purchaserId = sup.partnerId
+	    		left join (select pOD.purchaseOrderId, count(*) as evaluateNumber
+	    						from PurchaseOrderDetail pOD
+	    						where pOD.score is null
+	    						group by pOD.purchaseOrderId) tab on pO.purchaseOrderId = tab.purchaseOrderId
+		<dynamic prepend="where">
+			<isNotEmpty property="purchaseOrderId" prepend="and">
+				pO.purchaseOrderId=#purchaseOrderId#
+			</isNotEmpty>
+			<isNotEmpty property="orderState" prepend="and">
+				<isNotEqual property="orderState" compareValue="-1">
+					pO.orderState=#orderState#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty property="CPIId" prepend="and">
+				pO.CPIId=#CPIId#
+			</isNotEmpty>
+			<isNotEmpty property="purchaserId" prepend="and">
+				pO.purchaserId=#purchaserId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="purchaseOrderTotalCount" parameterClass="order" resultClass="int">
+		select count(1)
+	    from PurchaseOrder pO
+		<dynamic prepend="where">
+			<isNotEmpty property="purchaseOrderId" prepend="and">
+				pO.purchaseOrderId=#purchaseOrderId#
+			</isNotEmpty>
+			<isNotEmpty property="orderState" prepend="and">
+				<isNotEqual property="orderState" compareValue="-1">
+					pO.orderState=#orderState#
+				</isNotEqual>
+			</isNotEmpty>
+			<isNotEmpty property="CPIId" prepend="and">
+				pO.CPIId=#CPIId#
+			</isNotEmpty>
+			<isNotEmpty property="purchaserId" prepend="and">
+				pO.purchaserId=#purchaserId#
+			</isNotEmpty>
+		</dynamic>	
+	</select>
+	
+	<select id="getPurchaseOrderMoreById" parameterClass="String" resultClass="order">
+		select pO.purchaseOrderId purchaseOrderId,
+			pO.purchaserId purchaserId,
+			pO.deposit deposit,
+			pO.orderState orderState,
+			pO.deliverDate deliverDate,
+			pO.receiveAddressId receiveAddressId,
+			pOD.shippingAddress receiveAddress,
+			pOD.zipCode receiveZipCode,
+			pOD.contacter receiver,
+			pOD.telephone receiveTelephone,
+			pO.fare fare,
+			pO.totalPrice totalPrice,
+			pO.CPIId CPIId,
+			pO.logisticsSupplierId logisticsSupplierId,
+			pO.logisticsOrderId logisticsOrderId,
+			pO.sendAddressId sendAddressId,
+			pO.actualRefund actualRefund,
+			sup.orderRate orderRate
+	    from PurchaseOrder pO left join GoodsAddress pOD on pO.receiveAddressId=pOD.addressId
+	    		left join Supplier sup on pO.purchaserId = sup.partnerId
+		where pO.purchaseOrderId = #value#
+	</select>
+	
+	<insert id="addPurchaseOrder" parameterClass="order">		
+		<selectKey resultClass="String" type="post" keyProperty="purchaseOrderId" >
+			<![CDATA[
+				insert into PurchaseOrder
+				(
+					purchaserId,
+					orderState,
+					deliverDate,
+					receiveAddressId,
+					fare,
+					totalPrice
+				)  values
+				(
+					#purchaserId#,
+					#orderState#,
+					#deliverDate#,
+					#receiveAddressId#,
+					#fare#,
+					#totalPrice#
+				)   
+	        	select SCOPE_IDENTITY() as value
+        	]]>
+    	</selectKey>  
+	</insert>
+	
+	<insert id="addPurchaseOrderDetail" parameterClass="detail">
+		insert into PurchaseOrderDetail
+		(
+			purchaseOrderId,
+			productId,
+			price,
+			number,
+			measureUnit
+		)  values
+		(
+			#purchaseOrderId#,
+			#productId#,
+			#price#,
+			#number#,
+			#measureUnit#
+		)
+	</insert>
+	
+	<select id="getPurchaseOrderById" parameterClass="String" resultClass="order">
+		select purchaseOrderId purchaseOrderId,
+			purchaserId purchaserId,
+			deposit deposit,
+			orderState orderState,
+			deliverDate deliverDate,
+			fare fare,
+			totalPrice totalPrice,
+			CPIId CPIId,
+			logisticsSupplierId logisticsSupplierId,
+			logisticsOrderId logisticsOrderId,
+			actualRefund actualRefund,
+			receiveAddressId receiveAddressId,
+			sendAddressId sendAddressId
+	    from PurchaseOrder
+	    where purchaseOrderId = #value#
+	</select>
+	
+	<select id="getLogisticsInformation" parameterClass="String" resultClass="order">
+		select sup.partnerId logisticsSupplierId,
+			sup.partnerName logisticsName,
+			sup.website logisticsWebsite,
+			pur.logisticsOrderId logisticsOrderId,
+			pur.receiveAddressId receiveAddressId,
+			pur.sendAddressId sendAddressId,
+			recAdd.shippingAddress receiveAddress,
+			recAdd.zipCode receiveZipCode,
+			recAdd.contacter receiver,
+			recAdd.telephone receiveTelephone,
+			sendAdd.shippingAddress sendAddress,
+			sendAdd.zipCode sendZipCode,
+			sendAdd.contacter sender,
+			sendAdd.telephone sendTelephone		
+		from PurchaseOrder pur left join Supplier sup on pur.logisticsSupplierId = sup.partnerId
+					left join GoodsAddress recAdd on pur.receiveAddressId = recAdd.addressId
+					left join GoodsAddress sendAdd on pur.sendAddressId = sendAdd.addressId
+		where pur.purchaseOrderId = #value#
+	</select>
+	
+	<select id="queryProductList" resultClass="com.model.SupplierProduct">
+		select p.productId productId,
+			p.price price,
+			p.number number,
+			sP.productName productName,
+			sP.supplierId supplierId,
+			sP.productTypeId productTypeId,
+			sP.measureUnit measureUnit,
+			sP.format format,
+			sP.remark remark
+		from Product p left join SupplierProduct sP on p.productId=sp.productId 
+	</select>
+	
+	<delete id="deletePurchaseOrderById" parameterClass="String" >
+		delete from PurchaseOrder
+		where purchaseOrderId = #value#
+	</delete>
+	
+	<select id="queryPurchaseOrderDetailById" parameterClass="detail" resultClass="detail">
+		select detail.purchaseOrderId purchaseOrderId,
+			detail.productId productId,
+			product.productName productName,
+			detail.price price,
+			detail.number number,
+			detail.measureUnit measureUnit,
+			detail.returnNumber returnNumber,
+			detail.score score
+		from PurchaseOrderDetail detail left join SupplierProduct product on detail.productId = product.productId
+		<dynamic prepend="where">
+			<isNotEmpty property="purchaseOrderId" prepend="and">
+				detail.purchaseOrderId=#purchaseOrderId#
+			</isNotEmpty>
+			<isNotEmpty property="productId" prepend="and">
+				detail.productId=#productId#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<select id="countNonEndCentralizedPurchase" parameterClass="String" resultClass="int">
+		select count(1)
+	    from PurchaseOrder
+	    where orderState != 3 and orderState != 6 and orderState != 9 and CPIId = #value#	    	
+	</select>
+	
+	<delete id="deletePurchaseOrderDetailById" parameterClass="String">
+		delete from PurchaseOrderDetail
+		where purchaseOrderId = #value#
+	</delete>
+	
+	<update id="updatePurchaseOrder" parameterClass="order">
+		update PurchaseOrder set
+			purchaserId = #purchaserId#,
+			orderState = #orderState#,
+			deliverDate = #deliverDate#,
+			receiveAddressId = #receiveAddressId#,
+			fare = #fare#,
+			totalPrice = #totalPrice#
+		where purchaseOrderId = #purchaseOrderId#
+	</update>
+	
+	<update id="updatePurchaseOrderDetail" parameterClass="detail">
+		update PurchaseOrderDetail set
+			price = #price#,
+			number = #number#,
+			measureUnit = #measureUnit#
+		where purchaseOrderId = #purchaseOrderId#
+			and productId = #productId#
+	</update>
+	
+	<update id="updatePurchaseOrderState" parameterClass="order">
+		update PurchaseOrder set
+			orderState = #orderState#
+		where purchaseOrderId = #purchaseOrderId#
+	</update>
+	
+	<update id="updatePurchaseOrderDeposit" parameterClass="order">
+		update PurchaseOrder set
+			deposit = #deposit#
+		where purchaseOrderId = #purchaseOrderId#		
+	</update>
+	
+	<update id="updateRejectedPurchaseOrder" parameterClass="order">
+		update PurchaseOrder set
+			actualRefund = #actualRefund#
+		where purchaseOrderId = #purchaseOrderId#		
+	</update>
+	
+	<update id="updateRejectedPurchaseOrderDetail" parameterClass="detail">
+		update PurchaseOrderDetail set
+			returnNumber = #returnNumber#
+		where purchaseOrderId = #purchaseOrderId# and productId = #productId#		
+	</update>
+	
+	<update id="evaluateForProductUpdate" parameterClass="detail">
+		update PurchaseOrderDetail set
+			score = #score#
+		where purchaseOrderId = #purchaseOrderId# and productId = #productId#		
+	</update>
+</sqlMap>

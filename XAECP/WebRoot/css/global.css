@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* CSS Document */
+body{ font-family:Verdana, Geneva, sans-serif; font-size:14px; behavior: url(../css/hover.htc); padding:0; margin:0;}
+div{ padding:0; margin:0; border:0;}
+img{ padding:0; margin:0; border:0;}
+p,ul{ margin:0; padding:0; border:0;}
+table{padding:0 auto;margin:0; border-collapse:collapse; border-spacing:0;}
+
+a{color:#000;text-decoration:none;}
+a:hover{color:#F00;ext-decoration:underline;}
+
+.CENTER{ margin-left:auto; margin-right:auto;}
+.FLOATLEFT{ float:left;}
+.FLOATRIGHT{ float:right;}
+
+.BUTTON { margin:1px; font-size: 12px; cursor: pointer; height: 20px; vertical-align:middle;background-image: url(../images/btBg.png);border: 1px solid #A0A0A0;}
+.REDBUTTON{ margin:1px; font-size: 12px; cursor: pointer; height: 20px; vertical-align: middle;background-image: url(../images/redBtBg.png);border: 1px solid #A0A0A0}
+.ARTBUTTON{ background-color:transparent; border:0; padding:3px; padding-bottom:1px; margin:2px; color:#03C; border-bottom:1px inset #C30; cursor:pointer;}
+.ARTBUTTON:hover{ border-bottom-color:#69F; color:#F00;}
+.BIGBUTTON{margin:1px;width:100px; font-size: 14px; color: #000000; cursor: pointer; height: 30px; vertical-align: text-bottom;background-image: url(../images/bigBtBg.gif);border: 1px solid #000000;}
+.BIGREDBUTTON{
+	margin:1px;
+	font-size: 14px; 
+	color: #000000; 
+	cursor: pointer; 
+	height: 30px;
+	width:100px; 
+	vertical-align: text-bottom;
+	background-image: url(../images/redBtBg.png);
+	border: 1px solid #000000; }
+	
+.BLUEDIV{background-image:url(../images/processBlue.png); background-repeat:no-repeat; width:65px; height:30px; font-size:12px;text-align:center; float:left; color:#000;
+_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/processBlue.png'); /* IE6 */
+_ background-image: none; /* IE6 */}
+.ARTLEFTDIV{float:left; height:30px; vertical-align:middle; padding-top:6px; color:#000;}
+.ARTLEFTDIV span{ font-weight:bold;}
+.BLUEDIV span{ display:block; padding-top:8px; color:#000; font-weight:normal;}
+.ARTDIV{ background-image:url(../images/process.png); background-repeat:no-repeat; width:65px; height:30px; font-size:12px;text-align:center; float:left; color:#000;
+_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/process.png'); /* IE6 */
+_ background-image: none; /* IE6 */}
+.ARTDIV span{ display:block; padding-top:8px; font-weight:normal;}
+
+.ORDERCONTENT{ font-size:18px; font-weight:bold; width:300px; height:40px; background-color:#0255A8; color:#fff; border:2px solid #AAA; vertical-align:middle; margin-top:5px; text-align:center;}
+.ORDERCONTENT span{ display:block; margin-top:8px; text-align:center;}
+.REDORDERCONTENT{ font-size:18px; font-weight:bold; width:300px; height:40px; background-color:#FB9557; color:#fff; border:2px solid #AAA; vertical-align:middle; margin-top:5px; text-align:center;}
+.REDORDERCONTENT span{ display:block; margin-top:8px; text-align:center;}
+.ARTA{ text-decoration:underline; color:#01468B;}
+.ARTA:hover{ color:#F30; text-decoration:underline;}
+
+.BLUESPAN{ color:#000; font-weight:bold; padding-left:5PX;}
+.SMALLSPAN{ color:#000; font-size:12PX; padding-left:3PX;}
+.SPAN12PX{ font-size:12PX;}
+#copyRight{ margin-top:5px;}

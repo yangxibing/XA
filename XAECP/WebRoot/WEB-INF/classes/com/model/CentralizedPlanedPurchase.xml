@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="centralizedPlanedPurchase">
+	<typeAlias alias="centralizedPlanedPurchase" type="com.model.CentralizedPlanedPurchase"/>
+	
+	<select id="listCPR" parameterClass="string" resultClass="centralizedPlanedPurchase">
+		select 
+				c1.cpPurchaseInfoId cpPurchaseInfoId,
+				c1.cpPurchaseInfoTitle cpPurchaseInfoTitle,
+				c1.productTypeId productTypeId,
+				c1.measureUnit measureUnit,
+				c1.centralizedPurchaseState centralizedPurchaseState,
+				c2.demandNumber demandNumber,
+				convert(varchar(10),c2.reportDemandTime,120) reportDemandTime,
+				c2.demandState demandState
+		from CentralizedPlanedPurchaseInfo c1,CentralizedPurchaseDemand c2
+		where c2.purchaserId=#value#
+			and c1.cpPurchaseInfoId=c2.CPIId
+			order by c2.reportDemandTime desc
+	</select>
+	
+	<select id="CPRTotalCount" parameterClass="string" resultClass="int">
+		select count(1)
+		from CentralizedPlanedPurchaseInfo c1,CentralizedPurchaseDemand c2
+		where c2.purchaserId=#value#
+			and c1.cpPurchaseInfoId=c2.CPIId
+	</select>
+	
+	<select id="selectProductsByCPIIdAndSupplierId" parameterClass="hashmap" resultClass="com.model.CentralizedPurchaseSupplyPrice">
+		select 
+				c1.CPIId CPIId,
+				c1.productId productId,
+				c1.price price,
+				s1.productName productName,
+				s1.measureUnit measureUnit
+		from supplierProduct s1,CentralizedPurchaseSupplyPrice c1
+		where c1.CPIId=#CPIId#
+		and c1.productId=s1.productId			
+	</select>
+	
+	<update id="updateDemandState" parameterClass="hashmap">
+		update centralizedPurchaseDemand
+		set demandState=#demandState#
+		where CPIId=#CPIId#
+		and purchaserId=#purchaserId#
+	</update>
+	
+	<!-- 检查集中采购需求表中所有的状态是否为4：需求已确认或:3：取消 -->
+	<select id="selectCount" parameterClass="int" resultClass="int">
+		select count(1) from CentralizedPurchaseDemand
+		where CPIId=#value#
+			and (demandState=0 or demandState=1 or demandState=2)
+			
+	</select>
+	
+	<update id="updateCPI" parameterClass="hashmap">
+		update CentralizedPlanedPurchaseInfo
+		set centralizedPurchaseState=#state#
+		where cpPurchaseInfoId=#CPIId#
+			
+	</update>
+	
+	<select id="getCPIByCPIId" parameterClass="string" resultClass="centralizedPlanedPurchase">
+		select	c1.cpPurchaseInfoTitle cpPurchaseInfoTitle,
+				c1.productTypeId productTypeId,
+				p1.productTypeName productTypeName,
+				c1.purchasePriceInterval purchasePriceInterval,
+				c1.measureUnit measureUnit,
+				c1.publisher publisher,
+				c1.telephone telephone,
+				c1.deadline deadline,
+				c1.publishDate publishDate,
+				c1.centralizedPurchaseState centralizedPurchaseState,
+				c1.briefExplain briefExplain
+				
+		from centralizedPlanedPurchaseInfo c1,productType p1
+		where cpPurchaseInfoId=#value#
+			and c1.productTypeId=p1.productTypeId
+	</select>
+</sqlMap>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.il8n.encoding" value="UTF-8"></constant>	
+	
+	<!-- main.action -->
+	<package name="purchaseOrder" extends="struts-default">
+		<action name="queryPurchaseOrderList" class="com.centralizedPurchase.action.PurchaseOrderAction" method="queryPurchaseOrderList">
+			<result name="success">/jsp/centralizedPurchase/purchaseOrderManage.jsp</result>
+		</action>
+		<action name="deletePurchaseOrder" class="com.centralizedPurchase.action.PurchaseOrderAction" method="deletePurchaseOrder">
+			<result name="success">/jsp/centralizedPurchase/purchaseOrderManage.jsp</result>
+		</action>
+		<action name="addPurchaseOrder" class="com.centralizedPurchase.action.PurchaseOrderAction" method="addPurchaseOrder">
+			<result name="success">/jsp/centralizedPurchase/purchaseOrderManage.jsp</result>
+		</action>
+		<action name="updatePurchaseOrder" class="com.centralizedPurchase.action.PurchaseOrderAction" method="updatePurchaseOrder">
+			<result name="success">/jsp/centralizedPurchase/purchaseOrderManage.jsp</result>
+		</action>
+		<action name="setDefaultAddress" class="com.basicData.action.GoodsAddressAction" method="setDefaultAddress">
+			<result name="success">/jsp/centralizedPurchase/purchaseOrderManage.jsp</result>
+		</action>
+		<action name="cancelPurchaseOrder" class="com.centralizedPurchase.action.PurchaseOrderAction" method="cancelPurchaseOrder">
+			<result name="success">/jsp/centralizedPurchase/purchaseOrderManage.jsp</result>
+		</action>
+		<action name="logisticsInformation" class="com.centralizedPurchase.action.PurchaseOrderAction" method="logisticsInformation">
+			<result name="success">/jsp/centralizedPurchase/logisticsInformation.jsp</result>
+		</action>
+		<action name="comfirmReceiveGoodsUpdate" class="com.centralizedPurchase.action.PurchaseOrderAction" method="comfirmReceiveGoodsUpdate">
+			<result name="success">/jsp/centralizedPurchase/purchaseOrderManage.jsp</result>
+		</action>
+ 		<action name="comfirmReceiveGoods" class="com.centralizedPurchase.action.PurchaseOrderAction" method="comfirmReceiveGoods">
+ 			<result name="success">/jsp/centralizedPurchase/purchaseOrderConfirm.jsp</result>
+ 		</action>
+ 		<action name="payForDeposit" class="com.centralizedPurchase.action.PurchaseOrderAction" method="payForDeposit">
+ 			<result name="success">/jsp/centralizedPurchase/purchaseOrderDeposit.jsp</result>
+ 		</action>
+ 		<action name="payForDepositUpdate" class="com.centralizedPurchase.action.PurchaseOrderAction" method="payForDepositUpdate">
+ 			<result name="success">/jsp/centralizedPurchase/purchaseOrderDeposit.jsp</result>
+ 		</action>
+ 		<action name="payForGoods" class="com.centralizedPurchase.action.PurchaseOrderAction" method="payForGoods">
+ 			<result name="success">/jsp/centralizedPurchase/purchaseOrderPay.jsp</result>
+ 		</action>
+ 		<action name="payForGoodsUpdate" class="com.centralizedPurchase.action.PurchaseOrderAction" method="payForGoodsUpdate">
+ 			<result name="success">/jsp/centralizedPurchase/purchaseOrderPay.jsp</result>
+ 		</action>
+ 		<action name="evaluateForProduct" class="com.centralizedPurchase.action.PurchaseOrderAction" method="evaluateForProduct">
+ 			<result name="success">/jsp/centralizedPurchase/purchaseOrderEvaluate.jsp</result>
+ 		</action>
+ 		<action name="evaluateForProductUpdate" class="com.centralizedPurchase.action.PurchaseOrderAction" method="evaluateForProductUpdate">
+ 			<result name="success">/jsp/centralizedPurchase/purchaseOrderEvaluate.jsp</result>
+ 		</action>
+		<action name="purchaseRejectedMag" class="com.centralizedPurchase.action.PurchaseOrderAction" method="purchaseRejectedMag">
+			<result name="success">/jsp/centralizedPurchase/purchaseRejectedMag.jsp</result>
+		</action>
+		<action name="purchaserConfirmRejected" class="com.centralizedPurchase.action.PurchaseOrderAction" method="purchaserConfirmRejected">
+			<result name="success">/jsp/centralizedPurchase/purchaseRejectedInfo.jsp</result>
+		</action>
+		<action name="purchaseRejectedInfo" class="com.centralizedPurchase.action.PurchaseOrderAction" method="purchaseRejectedInfo">
+			<result name="success">/jsp/centralizedPurchase/purchaseRejectedInfo.jsp</result>
+		</action>
+		
+		<!-- GoodsAddress Model -->
+		<action name="goodsAddressManage" class="com.basicData.action.GoodsAddressAction" method="goodsAddressManage">
+			<result name="success">/jsp/centralizedPurchase/goodsAddressManage.jsp</result>
+		</action>
+		<action name="deleteGoodsAddress" class="com.basicData.action.GoodsAddressAction" method="deleteGoodsAddress">
+			<result name="success">/jsp/centralizedPurchase/goodsAddressManage.jsp</result>
+		</action>
+		<action name="addGoodsAddress" class="com.basicData.action.GoodsAddressAction" method="addGoodsAddress">
+			<result name="success">/jsp/centralizedPurchase/goodsAddressManage.jsp</result>
+		</action>
+		<action name="updateGoodsAddress" class="com.basicData.action.GoodsAddressAction" method="updateGoodsAddress">
+			<result name="success">/jsp/centralizedPurchase/goodsAddressManage.jsp</result>
+		</action>
+	</package>
+	
+	<package name="ajaxPurchaseOrder" extends="json-default">
+		<action name="queryNewInfo" class="com.centralizedPurchase.action.PurchaseOrderAction" method="queryNewInfo">
+			<result name="newInfo" type="json"></result>
+		</action>
+		<action name="queryEditInfo" class="com.centralizedPurchase.action.PurchaseOrderAction" method="queryEditInfo">
+			<result name="editInfo" type="json"></result>
+		</action>
+		<action name="queryDetailInfo" class="com.centralizedPurchase.action.PurchaseOrderAction" method="queryDetailInfo">
+			<result name="detailInfo" type="json"></result>
+		</action>
+		<action name="getGoodsAddressById" class="com.basicData.action.GoodsAddressAction" method="getGoodsAddressById">
+			<result name="addressInfo" type="json"></result>
+		</action>	
+	</package>
+</struts>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap >
+	<typeAlias alias="adv" type="com.model.HotlineAdvertisement"/>
+	<update id="upload" parameterClass="adv">
+		update   
+		serviceHotlineAdvertisement
+		<dynamic prepend="set">
+			<isNotNull property="advertising1" prepend=",">
+				advertising1=#advertising1#
+			</isNotNull>
+			<isNotNull property="advertising2" prepend=",">
+				advertising2=#advertising2#
+			</isNotNull>
+			<isNotNull property="advertising3" prepend=",">
+				advertising3=#advertising3#
+			</isNotNull>
+			<isNotNull property="advertising4" prepend=",">
+				advertising4=#advertising4#
+			</isNotNull>
+			<isNotNull property="advertising5" prepend=",">
+				advertising5=#advertising5#
+			</isNotNull>
+			<isNotNull property="advertising6" prepend=",">
+				advertising6=#advertising6#
+			</isNotNull>
+		</dynamic>
+		<![CDATA[
+			where id=2		
+		]]>	
+	</update>
+	<update id="addHotline" parameterClass="hashmap">
+		update serviceHotlineAdvertisement
+		set serviceHotlineContent=#hotline#
+		where id=2
+	</update>
+	
+	<select id="getHotLineAndAdvert" resultClass="adv">
+		select serviceHotlineContent serviceHotlineContent,
+			   advertising1  advertising1,
+			   advertising2  advertising2,
+			   advertising3  advertising3,
+			   advertising4  advertising4,
+			   advertising5  advertising5,
+			   advertising6  advertising6
+	    from serviceHotlineAdvertisement
+		where id=2     
+	</select>
+</sqlMap>
